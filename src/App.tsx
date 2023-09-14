@@ -1,4 +1,5 @@
 import React from "react";
+import Heading from "./components/Heading/Heading";
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
         >
           Learn React
         </a>
+        <Heading tag="h1">
+          Where teams and <br /> work come together
+        </Heading>
       </header>
     </div>
   );
