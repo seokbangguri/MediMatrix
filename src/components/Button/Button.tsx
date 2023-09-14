@@ -1,6 +1,7 @@
 import React from "react";
+import { ButtonProps } from "./button.props";
 
-const Button = () => {
+const Button = ({ title }: ButtonProps) => {
   return <div>Button</div>;
 };
 
