@@ -25,7 +25,7 @@ module.exports = {
         'full': '100%',
       },
       fontFamily: {
-        'sans': ['Noto sans', serif],
+        'sans': ['Noto sans', 'serif'],
       }
     },
   },
