@@ -23,6 +23,9 @@ module.exports = {
         'xl': '35px',
         'xxl': '60px',
         'full': '100%',
+      },
+      fontFamily: {
+        'sans': ['Noto sans', serif],
       }
     },
   },
