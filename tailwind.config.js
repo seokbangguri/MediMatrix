@@ -26,6 +26,9 @@ module.exports = {
       },
       fontFamily: {
         'sans': ['Noto sans', 'serif'],
+      },
+      backgroundColor: {
+        'gradient-green': 'linear-gradient(45deg, #4BE88E, #00C99F, #00A9A2, #008796, #4F7F9D)',
       }
     },
   },

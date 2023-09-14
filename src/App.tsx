@@ -10,7 +10,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          <div className="gradient-green">Learn React</div>
         </a>
       </header>
     </div>
