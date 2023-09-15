@@ -3,7 +3,6 @@ import { CardProps } from "./card.props";
 import Button from "../Button/Button";
 
 const Card = ({ name, source, children, explain }: CardProps): JSX.Element => {
-
   return (
     <div className="w-72 h-96 bg-[#00000020] rounded-md p-6">
       <img src={source} className="w-60 h-28 rounded-sm" alt={name} />
@@ -15,10 +14,10 @@ const Card = ({ name, source, children, explain }: CardProps): JSX.Element => {
         ))}
       </ul>
       <div className="w-fit m-auto mt-3 bg-white p-2 pl-13 pr-13 rounded-xs">
-        <Button title="touch"></Button>
+        <Button apperance="ghost">Touch</Button>
       </div>
     </div>
   );
-}
+};
 
 export default Card;

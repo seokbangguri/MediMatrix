@@ -1,5 +1,5 @@
 import React from "react";
-import { Footer, Header, Text } from "./components";
+import { Button, Footer, Header, Text } from "./components";
 import Heading from "./components/Heading/Heading";
 import Card from "./components/Card/Card";
 
@@ -23,6 +23,9 @@ function App() {
         </Text>
       </main>
       <Footer />
+      <Button apperance="primary">Get Started. It's FREE</Button>
+      <Button apperance="ghost">Get Started. It's FREE</Button>
+      <Button apperance="custom">Sign Up</Button>
       <Card
         source="https://www.viewhotels.jp/asakusa-annex/wp-content/uploads/sites/6/2020/03/test-img.jpg"
         name="card"
