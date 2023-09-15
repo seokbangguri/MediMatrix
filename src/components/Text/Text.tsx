@@ -1,4 +1,3 @@
-import React from "react";
 import { TextProps } from "./text.props";
 
 const Text = ({
@@ -7,24 +6,29 @@ const Text = ({
   children,
   ...props
 }: TextProps): JSX.Element => {
-  if ((size = "m")) {
+  if (size === "l") {
+    return (
+      <p
+        className={`text-[20px] font-semibold text-light-gray ${styles}`}
+        {...props}
+      >
+        {children}
+      </p>
+    );
+  } else if (size === "m") {
     return (
       <p className={`text-[20px] text-light-gray ${styles}`} {...props}>
         {children}
       </p>
     );
-  } else if ((size = "l")) {
+  } else if (size === "s") {
     return (
-      <p className="" {...props}>
+      <p className={`text-sm text-light-gray ${styles}`} {...props}>
         {children}
       </p>
     );
   } else {
-    return (
-      <p className="" {...props}>
-        {children}
-      </p>
-    );
+    return <p>{children}</p>;
   }
 };
 

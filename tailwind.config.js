@@ -25,14 +25,15 @@ module.exports = {
         full: "100%",
       },
       fontFamily: {
-        'sans': ['Noto sans', 'serif'],
-        'roboto': ['Roboto', 'sans-serif'],
+        sans: ["Noto sans", "serif"],
       },
       backgroundImage: {
         "gradient-green":
           "linear-gradient(45deg, #4BE88E, #00C99F, #00A9A2, #008796, #4F7F9D)",
         "gradient-text":
           "linear-gradient(100deg, #000000 0%, #29CFAE 40%, #42C6B9 50%, #62BFC2 60%, #3ECDB3 90%, #36ACEA 100%)",
+        "gradient-white":
+          "linear-gradient(100deg, #fff 0%, #FFF 40%, #FFFF 50%, #FFF 60%, #FFF 90%, #FFF 100%)",
       },
     },
   },
