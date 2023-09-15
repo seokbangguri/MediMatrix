@@ -1,9 +1,5 @@
 import React from "react";
-<<<<<<< HEAD
-import { Footer, Header, Card } from "./components";
-=======
 import { Footer, Header, Text } from "./components";
->>>>>>> b562dba5689d04a457975128e0a839fa9ccad308
 import Heading from "./components/Heading/Heading";
 
 function App() {
