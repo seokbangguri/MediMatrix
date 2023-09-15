@@ -4,7 +4,8 @@ const Heading = ({ tag, children }: HeadingProps): JSX.Element => {
   switch (tag) {
     case "h1":
       return (
-        <h1 className={`text-[70px] font-bold leading-none text-center`}>
+        <h1 
+          className={`text-[70px] inline font-bold leading-none text-center bg-gradient-text text-transparent bg-clip-text bg-contain `} >
           {children}
         </h1>
       );
