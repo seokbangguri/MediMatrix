@@ -2,7 +2,7 @@ import { Footer, Header } from "./components";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App font-roboto">
       <Header />
       <main></main>
       <Footer />

@@ -7,7 +7,7 @@ module.exports = {
         "button-green": "#3FB6D3",
         white: "#ffffff",
         "white-blue": "#EDFAFE",
-        "white-green": "F0FBF8",
+        "white-green": "#F0FBF8",
         "light-gray": "#24223e",
         gray: "#7f76b3",
         "dark-gray": "#7b73ae",
