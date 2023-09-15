@@ -26,6 +26,7 @@ module.exports = {
       },
       fontFamily: {
         'sans': ['Noto sans', 'serif'],
+        'roboto': ['Roboto', 'sans-serif'],
       },
       backgroundImage: {
         "gradient-green":
