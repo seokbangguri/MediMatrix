@@ -6,7 +6,7 @@ import Home from './pages/Home';
 
 function App() {
   return (
-    <div className="App font-roboto flex flex-col justify-center items-center">
+    <div className="App font-roboto flex flex-col justify-center items-center overflow-x-hidden">
       
         <Router>
         <Header />

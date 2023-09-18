@@ -4,7 +4,8 @@ import Button from "../Button/Button";
 
 const Header = () => {
   return (
-    <header className="fixed top-0 z-50 w-screen lg:max-w-[1445px] flex items-center justify-between py-5 px-5 lg:px-10 bg-white">
+    <header className="fixed top-0 z-30 w-screen bg-white mx-auto">
+      <div className="lg:max-w-[1445px] flex items-center justify-between py-5 px-5 lg:px-10 mx-auto">
       <div className="flex items-center justify-center ">
         <a href="/">
           <img
@@ -53,6 +54,7 @@ const Header = () => {
           <Button apperance="custom">Sign Up</Button>
         </a>
       </nav>
+      </div>
     </header>
   );
 };

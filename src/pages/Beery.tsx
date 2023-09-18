@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Heading, Text, Button } from "../components";
+import Swal from "sweetalert2";
 
 function Beery () {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -28,9 +29,13 @@ function Beery () {
           const fileExtension = file.name.split(".").pop()?.toLowerCase();
           return !allowedExtensions.includes(fileExtension || "");
         });
-    
+
         if (invalidFiles.length > 0) {
-          alert("You can upload only '*.pdf' files.");
+          Swal.fire({
+            title: "유효하지 않은 파일 형식",
+            text: "PDF 파일만 허용됩니다.",
+            icon: "error",
+          });
         }
     
         setSelectedFiles(validFiles);
