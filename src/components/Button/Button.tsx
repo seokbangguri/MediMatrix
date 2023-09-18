@@ -21,7 +21,7 @@ const Button = ({ apperance, styles, children }: ButtonProps) => {
   } else if (apperance === "custom") {
     return (
       <button
-        className={`text-lg bg-button-green font-semibold rounded-xs text-white border-transparent inline-block w-[130px] py-2 border hover:opacity-75 ${styles}`}
+        className={`text-lg bg-button-green font-semibold rounded-xs text-white border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 ${styles}`}
       >
         {children}
       </button>
