@@ -48,9 +48,9 @@ function Beery () {
     };
 
     return (
-        <main className="w-screen lg:max-w-[1445px]">
+        <div className="w-screen lg:max-w-[1445px]">
             <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 h-screen">
-                <Heading tag="h3" className="">
+                <Heading tag="h2" className="">
                     AI-based Beery VMI scoring tool
                 </Heading>
                 <Text size="m" styles="max-w-[700px] text-center pt-5 mb-16">
@@ -76,7 +76,7 @@ function Beery () {
                         </div>
                       ) : (
                         <button onClick={handleFileButtonClick}>
-                            <p>Click to select PDF file or Drop PDF file</p>
+                            <p className="text-[#888888]">Click to select PDF file or Drop PDF file</p>
                         </button>
                       )}
                       {/* 파일 입력(input) 요소를 숨겨놓고 버튼 클릭 시 파일 선택 창 열리도록 함 */}
@@ -90,7 +90,7 @@ function Beery () {
                     </div>
                     <Button apperance="primary" styles="mt-10 lg:w-[300px]">SCORE</Button>
             </section>
-        </main>
+        </div>
     );
 }
 

@@ -1,27 +1,25 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Footer, Header, Products, Partners, Hero, Contact } from "./components";
+import { Footer, Header } from "./components";
 
 import Beery from "./pages/Beery";
+import Home from './pages/Home';
 
 function App() {
   return (
     <div className="App font-roboto flex flex-col justify-center items-center">
-      <Header />
+      
         <Router>
+        <Header />
           <Routes>
-            <Route path="/" element={
-              <main className="w-screen lg:max-w-[1445px]">
-                <Hero />
-                <Products />
-                <Partners />
-                <Contact />
-              </main>
+            <Route path="/" element={         
+                <Home/>
             } />
-            <Route path="/Beery" element={<Beery />} />
+            <Route path="/beery" element={<Beery />} />
             {/* 기타 경로와 페이지 설정 */}
           </Routes>
+          <Footer />
         </Router>
-      <Footer />
+      
     </div>
   );
 }
