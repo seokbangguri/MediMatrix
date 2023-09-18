@@ -2,7 +2,9 @@ import React from "react";
 import image from "../../assets/medimatrix_logo_black.svg";
 import Button from "../Button/Button";
 
+
 const Header = () => {
+ 
   return (
     <header className="fixed top-0 z-50 w-screen lg:max-w-[1445px] flex items-center justify-between py-5 px-5 lg:px-10 bg-white">
       <div className="flex items-center justify-center ">
@@ -50,7 +52,7 @@ const Header = () => {
           </a>
         </div>
         <a href="/">
-          <Button apperance="custom">Sign Up</Button>
+          <Button apperance="custom" ><a href="/signup">Sign Up</a></Button>
         </a>
       </nav>
     </header>

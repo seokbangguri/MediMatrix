@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Heading, Text, Button } from "../components";
+import { Heading, Text, Button, Footer } from "../components";
 
 function Beery () {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -90,6 +90,7 @@ function Beery () {
                     </div>
                     <Button apperance="primary" styles="mt-10 lg:w-[300px]">SCORE</Button>
             </section>
+            <Footer />
         </div>
     );
 }

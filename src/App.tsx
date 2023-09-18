@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Footer, Header } from "./components";
-
+import {  Header } from "./components";
 import Beery from "./pages/Beery";
 import Home from './pages/Home';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 
 function App() {
   return (
     <div className="App font-roboto flex flex-col justify-center items-center">
-      
         <Router>
         <Header />
           <Routes>
@@ -15,9 +15,11 @@ function App() {
                 <Home/>
             } />
             <Route path="/beery" element={<Beery />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
             {/* 기타 경로와 페이지 설정 */}
           </Routes>
-          <Footer />
+          
         </Router>
       
     </div>
