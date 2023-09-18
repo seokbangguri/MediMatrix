@@ -14,7 +14,9 @@ const Card = ({ name, source, children, explain, route }: CardProps): JSX.Elemen
         ))}
       </ul>
       <div className="w-36 h-9 m-auto mt-5 bg-white flex justify-center items-center">
-        <Button apperance="ghost" styles=" py-[2px] text-[14px] rounded-xs"><a href={route}>Get in Touch</a></Button>
+          <Button apperance="ghost" styles=" py-[2px] text-[14px] rounded-xs">
+            <a href={route}>Get in Touch</a>
+          </Button>
       </div>
     </div>
   );
