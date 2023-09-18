@@ -13,7 +13,7 @@ const Heading = ({ tag, children, className }: HeadingProps): JSX.Element => {
     case "h2":
       return (
         <h2
-          className={`text-[32px] md:text-[38px] lg:text-[48px]  leading-none font-bold text-center ${className}`}
+          className={`text-[32px] md:text-[38px] lg:text-[48px]  leading-none font-bold text-center p-4${className}`}
         >
           {children}
         </h2>

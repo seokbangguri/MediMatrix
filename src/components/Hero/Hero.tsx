@@ -5,7 +5,7 @@ import Button from "../Button/Button";
 
 const Hero = () => {
   return (
-    <section className="mt-[140px] px-5 lg:px-10 flex flex-col justify-center items-center py-10">
+    <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 h-screen">
       <Heading tag="h1" className="">
         Where teams and work <br /> come together
       </Heading>
