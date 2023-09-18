@@ -17,7 +17,7 @@ function App() {
                 <Contact />
               </main>
             } />
-            <Route path="/Beery" element={<Beery />} />
+            <Route path="/beery" element={<Beery />} />
             {/* 기타 경로와 페이지 설정 */}
           </Routes>
         </Router>
