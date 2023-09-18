@@ -39,7 +39,7 @@ const SignIn = () => {
                   </div>
                   <Button apperance="primary" type="submit" styles="w-full text-center">Sign in</Button>
                   <p className="text-sm font-light text-[#7a7a7a]">
-                      Don’t have an account yet? <a href="/" className="font-medium text-blue-600 hover:underline ">Sign up</a>
+                      Don’t have an account yet? <a href="/signup" className="font-medium text-blue-600 hover:underline ">Sign up</a>
                   </p>
               </form>
           </div>
