@@ -53,7 +53,7 @@ function Beery () {
     };
 
     return (
-        <div className="w-screen lg:max-w-[1445px]">
+        <div className="w-screen">
             <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 h-screen">
                 <Heading tag="h2" className="">
                     AI-based Beery VMI scoring tool

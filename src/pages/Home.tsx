@@ -3,7 +3,7 @@ import blobImage from "../assets/home-blob.svg"
 import { Products, Partners, Hero, Contact, Footer } from "../components";
 const Home = () => {
 
-  return <div className="static w-screen lg:max-w-[1445px]">
+  return <div className="static w-screen">
     <Hero />
     <Products />
     <Partners />

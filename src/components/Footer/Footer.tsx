@@ -20,7 +20,7 @@ const Footer = () => {
   };
   return (
     <footer style={backgroundStyle} className=" w-screen flex flex-col md:flex-row  justify-center">
-      <div className=" w-screen lg:max-w-[1445px] flex flex-col md:flex-row  justify-between pb-10 pt-32 px-5 lg:px-10">
+      <div className="w-full lg:max-w-[1445px] flex flex-col md:flex-row  justify-between pb-10 pt-32 px-5 lg:px-10">
       <div className="flex flex-col justify-between">
         <a href="/">
           <img
