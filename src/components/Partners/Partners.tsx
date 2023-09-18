@@ -1,17 +1,19 @@
 import React from 'react'
-import {Text, Card, Heading} from "../../components";
+import goqimage from "../../assets/GoQba_logo.svg";
+import chaimage from "../../assets/CHA_logo.png";
+import {Text, Heading} from "../../components";
 
 function Partners() {
   return (
-    <div>
-        <div className='w-[1307px] h-96 bg-white-green p-10 rounded-[100px]'>
+    <div className='mt-32'>
+        <div className='w-[90vw] h-96 bg-white-green p-10 pb-20 rounded-[100px] m-auto'>
             <Heading tag='h2'>Our Partners</Heading>
-            <Text size='l' styles='text-center my-5'>
+            <Text size='l' styles='text-center my-3'>
                 Biggest companies in Korea trust us and you can trust us as well.
             </Text>
-            <div className='flex m-auto'>
-                <img src="" alt="goq" />
-                <img src="" alt="cha" />
+            <div className='flex mx-auto mt-20'>
+                <img src={goqimage} alt="goq" className='w-[25vw] m-auto'/>
+                <img src={chaimage} alt="cha" className='w-[30vw] m-auto'/>
             </div>
         </div>
     </div>
