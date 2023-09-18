@@ -52,8 +52,8 @@ const Header = () => {
             Contact
           </a>
         </div>
-        <a href="/">
-          <Button apperance="custom" ><a href="/signup">Sign Up</a></Button>
+        <a href="/signup">
+          <Button apperance="custom" >Sign Up</Button>
         </a>
       </nav>
       </div>
