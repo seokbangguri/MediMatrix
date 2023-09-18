@@ -6,3 +6,4 @@ export { default as Card } from "./Card/Card";
 export { default as Products } from "./Products/Products";
 export { default as Heading } from "./Heading/Heading";
 export { default as Partners } from "./Partners/Partners";
+export { default as Hero } from "./Hero/Hero";

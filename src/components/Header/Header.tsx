@@ -4,8 +4,8 @@ import Button from "../Button/Button";
 
 const Header = () => {
   return (
-    <header className="fixed top-0 left-0  w-screen lg:max-[1445px] flex items-center justify-between py-5 px-5 lg:px-10">
-      <div className="flex items-center justify-center">
+    <header className="fixed top-0 z-50 w-screen lg:max-w-[1445px] flex items-center justify-between py-5 px-5 lg:px-10">
+      <div className="flex items-center justify-center ">
         <a href="/">
           <img
             className="pt-1"
