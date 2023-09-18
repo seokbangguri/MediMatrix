@@ -1,7 +1,6 @@
 import React from "react";
-import { Products, Partners, Hero, Contact } from "../components";
 import blobImage from "../assets/home-blob.svg"
-
+import { Products, Partners, Hero, Contact, Footer } from "../components";
 const Home = () => {
 
   return <div className="static w-screen lg:max-w-[1445px]">
@@ -37,6 +36,7 @@ const Home = () => {
       }}
       className="absolute right-[-300px] top-[-300px] -z-10"
     ></div>
+    <Footer />
   </div>;
 };
 
