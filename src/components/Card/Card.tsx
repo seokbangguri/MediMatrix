@@ -2,7 +2,7 @@ import React from "react";
 import { CardProps } from "./card.props";
 import Button from "../Button/Button";
 
-const Card = ({ name, source, children, explain }: CardProps): JSX.Element => {
+const Card = ({ name, source, children, explain, route }: CardProps): JSX.Element => {
   return (
     <div className="w-72 h-100 bg-white rounded-md p-6 shadow-2xl m-auto hover:scale-105 duration-200">
       <img src={source} className="w-60 h-28 rounded-sm" alt={name} />
@@ -14,7 +14,9 @@ const Card = ({ name, source, children, explain }: CardProps): JSX.Element => {
         ))}
       </ul>
       <div className="w-36 h-9 m-auto mt-5 bg-white flex justify-center items-center">
-        <Button apperance="ghost" styles=" py-[2px] text-[14px] rounded-xs">Get in Touch</Button>
+          <Button apperance="ghost" styles=" py-[2px] text-[14px] rounded-xs">
+            <a href={route}>Get in Touch</a>
+          </Button>
       </div>
     </div>
   );

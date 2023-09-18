@@ -5,4 +5,5 @@ export interface CardProps {
     source: string;
     children: ReactNode;
     explain: string[];
+    route: string;
 }
