@@ -1,11 +1,12 @@
-import { Footer, Header, Hero } from "./components";
+import { Footer, Header, Hero, Products, Partners } from "./components";
 
 function App() {
   return (
     <div className="App font-roboto flex flex-col justify-center items-center">
       <Header />
-      <main className="w-screen lg:max-w-[1445px]">
-        <Hero />
+      <main>
+        <Products />
+        <Partners />
       </main>
       <Footer />
     </div>
