@@ -12,3 +12,4 @@ export { default as PatientCard } from "./PatientCard/PatientCard";
 export { default as ResultsTable } from './ResultsTable/ResultsTable'
 export { default as ScoringTable } from './ScoringTable/ScoringTable'
 export { default as ResultsCharts } from './ResultsChart/ResultsCharts'
+export { default as ResultsChartAge } from './ResultsChartAge/ResultsChartAge'

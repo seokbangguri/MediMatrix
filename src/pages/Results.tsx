@@ -1,4 +1,4 @@
-import { Footer, Heading, PatientCard, ResultsCharts, ResultsTable, ScoringTable, Text } from '../components'
+import { Heading, PatientCard, ResultsCharts, ResultsChartAge, ResultsTable, ScoringTable, Text, Footer } from '../components'
 
 
 const Results = () => {
@@ -13,11 +13,11 @@ const Results = () => {
         </div>
         <ResultsCharts/>
         <div className='flex gap-5 my-10 max-w-[1445px] px-5'>
-          <ScoringTable/>
-          <div></div>
+        <ScoringTable/>
+        <ResultsChartAge/>
+        <div></div>
         </div>
       </div>
-        
       <Footer/>
     </div>
   )

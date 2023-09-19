@@ -1,58 +1,8 @@
 import React from 'react'
-import {u7,u8,u9,u10,u11,u12,u13,u14,u15,u16,u17,u18,u19,u20,u21,u22,u23,u24,u25,u26,u27,u28,u29,u30} from '../../assets';
+import {u7,u8,u9,u10,u11,u12,u13,u14,u15,u16,u17,u18,u19,u20,u21,u22,u23,u24,u25,u26,u27,u28,u29,u30,} from '../../assets';
 
-const imageArray = [
-    u7,
-    u8,
-    u9,
-    u10,
-    u11,
-    u12,
-    u13,
-    u14,
-    u15,
-    u16,
-    u17,
-    u18,
-    u19,
-    u20,
-    u21,
-    u22,
-    u23,
-    u24,
-    u25,
-    u26,
-    u27,
-    u28,
-    u29,
-    u30,
-];
-const scoreArray = [
-    "1",
-    "1",
-    "1",
-    "1",
-    "1",
-    "1",
-    "1",
-    "1",
-    "1",
-    "1",
-    "0",
-    "1",
-    "0",
-    "1",
-    "1",
-    "1",
-    "1",
-    "0",
-    "0",
-    "0",
-    "0",
-    "0",
-    "0",
-    "0"
-]
+const imageArray = [u7,u8,u9,u10,u11,u12,u13,u14,u15,u16,u17,u18,u19,u20,u21,u22,u23,u24,u25,u26,u27,u28,u29,u30,]
+const scoreArray = ["1","1","1","1","1","1","1","1","1","1","0","1","0","1","1","1","1","0","0","0","0","0","0","0"]
 
 const ResultsTable = ({ image, score, }: { image: string, score: string }) => {
     const imageRange = Array.from({ length: 24 }, (_, index) => index + 7);
