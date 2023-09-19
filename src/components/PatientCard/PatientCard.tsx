@@ -12,9 +12,6 @@ const PatientCard = ({name, id, score, image}: PatientCardProps) => {
         </div>
         <div className="max-h-[500px] overflow-y-scroll ">
             <p className='text-center font-semibold text-lg py-2'>문항별 정답률</p>
-            <div className="flex items-center font-semibold text-black justify-between px-2">4번 <span className=' font-normal text-dark-green'>45.4%</span></div>
-            <div className="flex items-center font-semibold text-black justify-between px-2">5번 <span className=' font-normal text-dark-green'>45.4%</span></div>
-            <div className="flex items-center font-semibold text-black justify-between px-2">6번 <span className=' font-normal text-dark-green'>45.4%</span></div>
             <div className="flex items-center font-semibold text-black justify-between px-2">7번 <span className=' font-normal text-dark-green'>45.4%</span></div>
             <div className="flex items-center font-semibold text-black justify-between px-2">8번 <span className=' font-normal text-dark-green'>45.4%</span></div>
             <div className="flex items-center font-semibold text-black justify-between px-2">9번 <span className=' font-normal text-dark-green'>45.4%</span></div>

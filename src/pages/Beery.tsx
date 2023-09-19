@@ -93,7 +93,9 @@ function Beery () {
                         onChange={handleFileChange}
                       />
                     </div>
-                    <Button apperance="primary" styles="mt-10 lg:w-[300px]">채점</Button>
+                    <a href="/results">
+                        <Button apperance="primary" styles="mt-10 lg:w-[300px]">채점</Button>
+                    </a>
             </section>
             <Footer />
         </div>
