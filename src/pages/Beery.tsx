@@ -56,14 +56,14 @@ function Beery () {
         <div className="w-screen">
             <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 h-screen">
                 <Heading tag="h2" className="">
-                    AI-based Beery VMI scoring tool
+                    AI 기반 Beery VMI 답안 채점도구
                 </Heading>
-                <Text size="m" styles="max-w-[700px] text-center pt-5 mb-16">
-                    Please insert the patient's Beery VMI answer sheet to proceed with the grading.
-                    Please fill out the file name in S(patient number).pdf form for the answer sheet.
+                <Text size="m" styles="max-w-[600px] text-center pt-5 mb-16">
+                    채점을 진행하기 위해 환자의 Beery VMI 답안지를 넣어주세요.<br/>
+                    Beery VMI 답안지는 S(환자번호).pdf 형태로 파일 이름을 작성해주세요.
                 </Text>
                 <Text size="m" styles="text-[#888888] font-bold pb-5">
-                    Upload File
+                    파일 업로드
                 </Text>
                     <div
                       onDrop={handleDrop}
@@ -72,7 +72,7 @@ function Beery () {
                     >
                       {selectedFiles.length > 0 ? (
                         <div>
-                          <p>Selected Files:</p>
+                          <p>업로드 목록:</p>
                           <ul>
                             {selectedFiles.map((file, index) => (
                               <li key={index}>{file.name}</li>
@@ -81,7 +81,7 @@ function Beery () {
                         </div>
                       ) : (
                         <button onClick={handleFileButtonClick}>
-                            <p className="text-[#888888]">Click to select PDF file or Drop PDF file</p>
+                            <p className="text-[#888888]">클릭해서 파일을 추가하거나 마우스로 끌어서 추가할 수 있습니다.</p>
                         </button>
                       )}
                       {/* 파일 입력(input) 요소를 숨겨놓고 버튼 클릭 시 파일 선택 창 열리도록 함 */}
@@ -93,7 +93,7 @@ function Beery () {
                         onChange={handleFileChange}
                       />
                     </div>
-                    <Button apperance="primary" styles="mt-10 lg:w-[300px]">SCORE</Button>
+                    <Button apperance="primary" styles="mt-10 lg:w-[300px]">채점</Button>
             </section>
             <Footer />
         </div>

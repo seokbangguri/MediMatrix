@@ -5,11 +5,10 @@ function Products() {
   return (
     <section className="px-5 lg:px-10 py-10 flex flex-col items-center">
       <Heading tag="h2" className="">
-        Our Products and Services
+        Products and Services
       </Heading>
       <Text size="m" styles="max-w-[480px] text-center m-auto">
-        Complete the form below to connect with our team of experts on
-        implementing digital primary care solutions.
+        기존에 평가를 수기로 작업하고 총점을<br/>산출하는 프로세스를 개선하는 AI 서비스입니다.
       </Text>
       <div className="flex items-center justify-center w-auto gap-6 mt-16 mb-10 flex-wrap">
         <Card

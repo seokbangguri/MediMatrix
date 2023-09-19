@@ -7,10 +7,9 @@ function Partners() {
   return (
     <section className=" lg:px-10 pt-10 pb-16 flex items-center w-full">
       <div className="w-full bg-white-green py-20 rounded-[100px] ">
-        <Heading tag="h2">Our Partners</Heading>
+        <Heading tag="h2">Partners</Heading>
         <Text size="m" styles="text-center my-3 max-w-[600px] m-auto">
-          Biggest companies in Korea trust us and you can trust us as well.
-          Biggest companies in Korea trust us.
+          기업 간 파트너십을 맺어 더 나은 서비스를 위해 노력하고 있습니다.
         </Text>
         <div className="flex items-center justify-center gap-20 mx-auto mt-20">
           <img src={goqimage} alt="goq" className="max-w-[250px]" />

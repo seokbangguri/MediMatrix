@@ -15,15 +15,15 @@ const SignIn = () => {
     <div className="w-[500px] bg-white rounded-lg drop-shadow-2xl ">
           <div className="p-10 space-y-4 md:space-y-6 sm:p-8">
               <Heading tag='h3' className="text-center">
-                  Welcome Back!
+                  로그인
               </Heading>
               <form className="space-y-4 md:space-y-6" action="#">
                   <div>
-                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">이메일</label>
                       <input type="email" name="email" id="email" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="name@company.com" required/>
                   </div>
                   <div>
-                      <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">Password</label>
+                      <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호</label>
                       <input type="password" name="password" id="password" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required/>
                   </div>
                   <div className="flex items-center justify-between">
@@ -32,14 +32,14 @@ const SignIn = () => {
                             <input id="remember" aria-describedby="remember" type="checkbox" className="w-4 h-4 border border-gray-300 rounded  focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required/>
                           </div>
                           <div className="ml-3 text-sm">
-                            <label htmlFor="remember" className="text-[#7a7a7a]">Remember me</label>
+                            <label htmlFor="remember" className="text-[#7a7a7a]">로그인 정보 저장</label>
                           </div>
                       </div>
-                      <a href="/" className="text-sm font-medium text-blue-600 hover:underline ">Forgot password?</a>
+                      <a href="/" className="text-sm font-medium text-blue-600 hover:underline ">비밀번호를 잊어버리셨습니까?</a>
                   </div>
-                  <Button apperance="primary" type="submit" styles="w-full text-center">Sign in</Button>
+                  <Button apperance="primary" type="submit" styles="w-full text-center">로그인</Button>
                   <p className="text-sm font-light text-[#7a7a7a]">
-                      Don’t have an account yet? <a href="/signup" className="font-medium text-blue-600 hover:underline ">Sign up</a>
+                      계정이 없으십니까? <a href="/signup" className="font-medium text-blue-600 hover:underline ">회원가입</a>
                   </p>
               </form>
           </div>
