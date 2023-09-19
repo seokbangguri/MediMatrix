@@ -10,7 +10,7 @@ module.exports = {
         "white-green": "#F0FBF8",
         "light-gray": "#24223e",
         gray: "#7f76b3",
-        "dark-gray": "#7b73ae",
+        "dark-green": "#00C99F",
         black: "#000000",
       },
       gradient: {},
