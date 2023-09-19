@@ -32,7 +32,7 @@ export const TableCard = ({image, score, index}: {
     index: number,
 }) =>  {
     return (
-        <div className="w-[160px] drop-shadow-xl bg-slate-200 px-3 py-3 rounded-sm">
+        <div className="w-[165px] bg-slate-200 px-3 py-3 rounded-sm">
             <img src={image?.length ? image : 'https://www.seekpng.com/png/detail/110-1100707_person-avatar-placeholder.png'} className='w-full max-h-[150px] rounded-sm bg-cover mb-2' alt='patient'/>
             <div className="flex items-center font-medium text-black justify-between px-2">문항번호 <span className=' font-normal text-dark-green'>{index}</span></div>
             <div className="flex items-center font-medium text-black justify-between px-2">점수 <span className=' font-normal text-dark-green'>{score}</span></div>

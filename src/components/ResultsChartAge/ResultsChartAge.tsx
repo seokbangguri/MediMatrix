@@ -96,7 +96,7 @@ const data = [
   ];
 const ResultsChartAge = () => {
   return (
-    <div className='w-[550px] h-[300px] drop-shadow-2xl bg-white p-4 rounded-md'>
+    <div className='w-[600px] h-[300px] bg-white p-4 rounded-md'>
         <h4 className='p-4 pb-6 text-sm font-semibold'>연령대별 채점 결과 점수 통계</h4>
         <div className='w-full h-[200px]'>
             <ResponsiveContainer  width="100%" height="100%" >

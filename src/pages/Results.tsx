@@ -12,10 +12,9 @@ const Results = () => {
             <ResultsTable image='https://placehold.co/600x400' score='1'/>
         </div>
         <ResultsCharts/>
-        <div className='flex gap-5 my-10 max-w-[1445px] px-5'>
+        <div className='flex justify-between my-10 w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
         <ScoringTable/>
         <ResultsChartAge/>
-        <div></div>
         </div>
       </div>
       <Footer/>

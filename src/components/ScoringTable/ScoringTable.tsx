@@ -33,7 +33,7 @@ const ScoringTable = () => {
         },
       ];
   return (
-    <div className="w-[800px] bg-white rounded-lg drop-shadow-2xl p-4">
+    <div className="w-[800px] bg-white rounded-lg p-4">
       <h4 className='p-4 pb-6 text-xl font-semibold'>채점 규칙</h4>
       <table className="w-full table-fixed text-sm text-left text-gray-500 ">
         <tbody className=''>
