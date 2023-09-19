@@ -10,3 +10,5 @@ export { default as Hero } from "./Hero/Hero";
 export { default as Contact } from "./Contact/Contact";
 export { default as PatientCard } from "./PatientCard/PatientCard";
 export { default as ResultsTable } from './ResultsTable/ResultsTable'
+export { default as ScoringTable } from './ScoringTable/ScoringTable'
+export { default as ResultsCharts } from './ResultsChart/ResultsCharts'

@@ -15,11 +15,11 @@ const ResultsTable = ({image, score}: {
             <TableCard image={image} score={score}/>
             <TableCard image={image} score={score}/>
             <TableCard image={image} score={score}/>
-            {/* <TableCard image={image} score={score}/>
             <TableCard image={image} score={score}/>
             <TableCard image={image} score={score}/>
             <TableCard image={image} score={score}/>
-            <TableCard image={image} score={score}/> */}
+            <TableCard image={image} score={score}/>
+            <TableCard image={image} score={score}/>
             {/* <TableCard image={image} score={score}/>
             <TableCard image={image} score={score}/>
             <TableCard image={image} score={score}/>
