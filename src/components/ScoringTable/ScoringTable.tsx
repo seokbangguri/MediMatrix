@@ -30,17 +30,24 @@ const ScoringTable = () => {
       ];
   return (
     <div className="w-[800px] bg-white rounded-lg drop-shadow-2xl p-4">
+      <h4 className='p-4 pb-6 text-xl font-semibold'>채점 규칙</h4>
       <table className="w-full table-fixed text-sm text-left text-gray-500 ">
         <tbody className=''>
           {data.map((item) => (
-            <tr className='bg-white border-b border-[#888]' key={item.index}>
+            <tr className='bg-white border-b border-[#888] flex items-center' key={item.index}>
               <td className="text-center w-1/12 text-dark-green p-2">{item.index}</td>
               <td className='w-2/12 p-2'>
                 <img src={item.image} alt={`example ${item.index}`} className="rounded-sm max-w-[95px]" />
               </td>
               <td className='w-5/12 p-2 text-xs'>{item.text}</td>
-              <td className='w-2/12 p-2'><img src={item.image} alt={`example ${item.index}`} className="rounded-sm max-w-[95px]" /></td>
-              <td className='w-2/12 p-2'><img src={item.image} alt={`example ${item.index}`} className="rounded-sm max-w-[95px]" /></td>
+              <td className='w-2/12 p-2 text-center flex flex-col items-center justify-center'>
+                <span className='text-sm mb-1'>1점 예시</span>
+                <img src={item.image} alt={`example ${item.index}`} className="rounded-sm w-[95px]" />
+                </td>
+              <td className='w-2/12 p-2 text-center flex flex-col items-center justify-center'>
+              <span className='text-sm mb-1'>0점 예시</span>
+                <img src={item.image} alt={`example ${item.index}`} className="rounded-sm w-[95px]" />
+                </td>
             </tr>
           ))}
         </tbody>
