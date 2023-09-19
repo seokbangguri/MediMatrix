@@ -1,4 +1,4 @@
-import { Heading, PatientCard, ResultsCharts, ResultsTable, ScoringTable, Text } from '../components'
+import { Heading, PatientCard, ResultsCharts, ResultsChartAge, ResultsTable, ScoringTable, Text } from '../components'
 
 
 const Results = () => {
@@ -13,6 +13,7 @@ const Results = () => {
         <ResultsCharts/>
         <div className='flex gap-5 my-10'>
         <ScoringTable/>
+        <ResultsChartAge/>
         <div></div>
         </div>
         
