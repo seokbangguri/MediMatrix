@@ -96,7 +96,7 @@ const data = [
   ];
 const ResultsCharts = () => {
   return (
-    <div className='w-full drop-shadow-2xl bg-white p-4 my-10 rounded-md'>
+    <div className='w-full drop-shadow-2xl bg-white p-4 my-10 rounded-md max-w-[1445px] px-5'>
         <h4 className='p-4 pb-6 text-xl font-semibold'>문항별 정답률 통계</h4>
         <div className='w-full h-[250px]'>
             <ResponsiveContainer  width="100%" height="100%" >

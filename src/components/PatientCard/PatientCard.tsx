@@ -2,7 +2,7 @@ import { PatientCardProps } from './patientCard.props'
 
 const PatientCard = ({name, id, score, image}: PatientCardProps) => {
   return (
-    <div className='min-w-[240px] drop-shadow-xl bg-white py-3 px-4 rounded-md h-fit'>
+    <div className='min-w-[240px] bg-white py-3 px-4 rounded-md h-fit'>
         <div className=" border-b border-button-green/20 pb-2">
             <img src={image?.length ? image : 'https://www.seekpng.com/png/detail/110-1100707_person-avatar-placeholder.png'} className='w-full max-h-[150px] rounded-sm bg-cover mb-2' alt='patient'/>
             <p className='text-center font-semibold text-lg py-2'>환자 정보</p>

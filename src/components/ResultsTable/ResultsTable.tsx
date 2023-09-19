@@ -58,7 +58,7 @@ const ResultsTable = ({ image, score, }: { image: string, score: string }) => {
     const imageRange = Array.from({ length: 24 }, (_, index) => index + 7);
 
 return (
-    <div className='w-full h-[807px] drop-shadow-xl bg-white py-3 px-2 rounded-md overflow-x-scroll'>
+    <div className='w-full h-[807px]  bg-white py-3 px-2 rounded-md overflow-x-scroll'>
     <div className="flex flex-wrap justify-center gap-4">
       {imageRange.map((imageNumber, index) => (
           <TableCard
