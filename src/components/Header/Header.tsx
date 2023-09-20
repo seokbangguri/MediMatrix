@@ -22,13 +22,24 @@ const Header = () => {
         <nav className="flex items-center ">
           <div className="flex items-center gap-4 md:gap-6 lg:gap-9">
             <a
-              href="/"
+              href="#home"
               className="text-lg font-semibold text-black tracking-wider hover:opacity-75  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Home
             </a>
             <a
               href="#products"
+              onClick={(e) => {
+                e.preventDefault(); // 기본 동작(링크 이동)을 막습니다.
+                const targetElement = document.querySelector("#products");
+                if (targetElement instanceof HTMLElement) {
+                  const targetPosition = targetElement.offsetTop; // 원하는 위치를 조정하세요.
+                  window.scrollTo({
+                    top: targetPosition,
+                    behavior: "smooth", // 부드럽게 스크롤합니다.
+                  });
+                }
+              }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Products
