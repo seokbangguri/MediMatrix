@@ -32,7 +32,7 @@ const Footer = () => {
           />
         </a>
 
-        <Text size="s" styles="text-white">@ 2023 MetaMatrix | Security | Privacy | Terms</Text>
+        <Text size="s" styles="text-white">&copy; 2023 MediMatrix | Security | Privacy | Terms</Text>
       </div>
       <div className="flex gap-16">
       <div className="flex flex-col text-white gap-2 md:gap-4 lg:gap-6">
