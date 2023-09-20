@@ -5,7 +5,7 @@ const Heading = ({ tag, children, className }: HeadingProps): JSX.Element => {
     case "h1":
       return (
         <h1
-          className={`text-[70px] font-bold leading-none text-center bg-gradient-text text-transparent bg-clip-text p-4 ${className}`}
+          className={`text-[45px] md:text-[55px] xlg:text-[70px] font-bold leading-tight text-center bg-gradient-text text-transparent bg-clip-text p-4 ${className}`}
         >
           {children}
         </h1>
