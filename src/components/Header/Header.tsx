@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header className="fixed top-0 z-30 w-screen bg-white mx-auto">
       <div className="lg:max-w-[1445px] flex items-center justify-between py-5  lg:px-10 mx-auto">
-        <div className="flex items-center justify-center ">
+        <div className="flex items-center justify-center shrink-0">
           <a href="/">
             <img
               className="pt-1"
@@ -65,8 +65,8 @@ const Header = () => {
           </div>
         </nav>
         <div className="flex items-center gap-2">
-          <a href="/signip">
-            <Button  styles="text-lg font-semibold rounded-xs text-black border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 uppercase" >Sign In</Button>
+          <a href="/signin">
+            <Button styles="text-lg font-semibold rounded-xs text-black border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 uppercase" >Sign In</Button>
           </a>
           <a href="/signup">
             <Button apperance="custom" styles="uppercase" >Sign Up</Button>
