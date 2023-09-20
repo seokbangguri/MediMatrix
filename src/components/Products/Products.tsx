@@ -3,7 +3,7 @@ import { Text, Card, Heading } from "../../components";
 
 function Products() {
   return (
-    <section className="px-5 lg:px-10 my-10 flex flex-col items-center" id="products">
+    <section className="px-5 lg:px-10 my-10 flex flex-col items-center">
       <Heading tag="h2" className=''>
         Products and Services
       </Heading>
@@ -22,7 +22,7 @@ function Products() {
         <Card
           route='/beery'
           source="https://www.timesofautism.com/wp-content/uploads/2017/10/Autism-Spectrum-Disorder-Test.png"
-          name="Hodu"
+          name="FuDu"
           explain={["explain1 2-1", "explain2 2-2", "explain3 2-3", "test 2-4"]}
 
         >
@@ -31,7 +31,7 @@ function Products() {
         <Card
           route='/beery'
           source="https://healthjade.net/wp-content/uploads/2019/12/sperm-motility.jpg"
-          name="BrainQ"
+          name="Hongsj"
           explain={["explain1 2-1", "explain2 2-2", "explain3 2-3", "test 2-4"]}
 
         >
@@ -39,8 +39,8 @@ function Products() {
         </Card>
         <Card
           route='/beery'
-          source="https://static.wixstatic.com/media/5376b3_7f00b5099c5b49b69a853c558bd462f0~mv2.png/v1/fill/w_560,h_308,al_c,lg_1,q_85,enc_auto/%EC%95%84%ED%8A%B8%EB%B3%B4%EB%93%9C%20%E2%80%93%206.png"
-          name="SeeZ"
+          source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxjHRfHwDNzqxzweA6eimkRA0S_wRJ0okTuNxwP50vng&s"
+          name="Usmon"
           explain={["explain1 2-1", "explain2 2-2", "explain3 2-3", "test 2-4"]}
 
         >
