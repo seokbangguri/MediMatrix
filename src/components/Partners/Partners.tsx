@@ -5,7 +5,7 @@ import { Text, Heading } from "../../components";
 
 function Partners() {
   return (
-    <section className=" lg:px-10 pt-10 pb-16 flex items-center w-full">
+    <section className=" lg:px-10 pt-10 pb-16 flex items-center w-full" id="partners">
       <div className="w-full bg-white-green py-20 rounded-[100px] ">
         <Heading tag="h2">Partners</Heading>
         <Text size="m" styles="text-center my-3 max-w-[600px] m-auto">
