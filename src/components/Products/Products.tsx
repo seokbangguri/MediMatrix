@@ -14,11 +14,10 @@ function Products() {
         <Card
           source="http://www.portailenfance.ca/wp/wp-content/uploads/2015/08/Beery-VMI-6.png"
           name="Beery VMI"
-          explain={["explain1 1-1", "explain2 1-2", "explain3 1-3", "test 1-4"]}
+          explain={["Early Intervention", "Visiul-Motor Skills", "Diagnostic Tool", "School Readiness"]}
           route="/beery"
         >
-          Complete the form below to connect with our team of experts on
-          implementing.
+          Beery VMI evaluates visual-motor integration skills, assessing how well a person can coordinate their visual perception with fine motor abilities.
         </Card>
         <Card
           route='/beery'
