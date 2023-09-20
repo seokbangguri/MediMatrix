@@ -22,7 +22,7 @@ const Header = () => {
         <nav className="flex items-center ">
           <div className="flex items-center gap-4 md:gap-6 lg:gap-9">
             <a
-              href="/"
+              href="#home"
               className="text-lg font-semibold text-black tracking-wider hover:opacity-75  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Home

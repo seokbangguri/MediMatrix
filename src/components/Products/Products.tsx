@@ -3,7 +3,7 @@ import { Text, Card, Heading } from "../../components";
 
 function Products() {
   return (
-    <section className="px-5 lg:px-10 my-10 flex flex-col items-center" id="products">
+    <section className="px-5 lg:px-10 my-10 flex flex-col items-center">
       <Heading tag="h2" className=''>
         Products and Services
       </Heading>
