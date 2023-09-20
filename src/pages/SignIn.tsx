@@ -4,6 +4,9 @@ import signinBg from '../assets/signin-blob.svg'
 import { auth } from "../firebase/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import * as Yup from 'yup';
+
+//Component
 const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
