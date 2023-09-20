@@ -6,7 +6,7 @@ import { collection, addDoc } from "firebase/firestore";
 import {
     createUserWithEmailAndPassword
 } from "firebase/auth";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const SignUp = () => {
@@ -82,7 +82,7 @@ const SignUp = () => {
                     </div>
                     <div>
                         <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">전화번호</label>
-                        <input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="tel" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter phone number..." />
+                        <input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="tel" name="phone" id="phone" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter phone number..." />
                     </div>
                     <Button apperance="primary" type="submit" styles="w-full text-center">회원가입</Button>
                     <p className="text-sm font-light text-[#7a7a7a]">
