@@ -7,7 +7,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 z-30 w-screen bg-white mx-auto">
-      <div className="lg:max-w-[1445px] flex items-center justify-between py-5 px-5 lg:px-10 mx-auto">
+      <div className="lg:max-w-[1445px] flex items-center justify-between py-5  lg:px-10 mx-auto">
         <div className="flex items-center justify-center ">
           <a href="/">
             <img
@@ -19,7 +19,7 @@ const Header = () => {
             />
           </a>
         </div>
-        <nav className="flex items-center gap-8 md:gap-10 lg:gap-12">
+        <nav className="flex items-center ">
           <div className="flex items-center gap-4 md:gap-6 lg:gap-9">
             <a
               href="/"
@@ -52,10 +52,15 @@ const Header = () => {
               Contact
             </a>
           </div>
-          <a href="/signup">
-            <Button apperance="custom" >Sign Up</Button>
-          </a>
         </nav>
+        <div className="flex items-center gap-2">
+          <a href="/signip">
+            <Button  styles="text-lg font-semibold rounded-xs text-black border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 uppercase" >Sign In</Button>
+          </a>
+          <a href="/signup">
+            <Button apperance="custom" styles="uppercase" >Sign Up</Button>
+          </a>
+        </div>
       </div>
     </header>
   );
