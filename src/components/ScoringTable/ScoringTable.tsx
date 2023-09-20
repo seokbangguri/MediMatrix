@@ -174,7 +174,7 @@ const ScoringTable = () => {
         },
       ];
   return (
-    <div className="w-[800px]  max-h-[900px] bg-white rounded-lg p-4 overflow-x-scroll">
+    <div className="w-[800px]  max-h-[900px] bg-white rounded-lg p-4  overflow-x-hidden overflow-y-scroll !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-[#e3e6e5]">
       <h4 className='p-4 pb-6 text-xl font-semibold'>채점 규칙</h4>
       <table className="w-full table-fixed text-sm text-left text-gray-500">
         <tbody className=''>
