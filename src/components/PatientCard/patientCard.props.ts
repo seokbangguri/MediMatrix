@@ -3,4 +3,5 @@ export interface PatientCardProps {
     id: string,
     score: string,
     image?: string
+    options: string[];
 }

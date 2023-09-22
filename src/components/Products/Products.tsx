@@ -22,8 +22,8 @@ function Products() {
         <Card
           route='/beery'
           source="https://www.timesofautism.com/wp-content/uploads/2017/10/Autism-Spectrum-Disorder-Test.png"
-          name="FuDu"
-          explain={["explain1 2-1", "explain2 2-2", "explain3 2-3", "test 2-4"]}
+          name="Sample1"
+          explain={["explain 1-1", "explain 1-2", "explain 1-3", "explain 1-4"]}
 
         >
           Monitoring rehabilitation training through cognitive tests Customized mild cognitive impairment rehabilitation content.
@@ -31,8 +31,8 @@ function Products() {
         <Card
           route='/beery'
           source="https://healthjade.net/wp-content/uploads/2019/12/sperm-motility.jpg"
-          name="Hongsj"
-          explain={["explain1 2-1", "explain2 2-2", "explain3 2-3", "test 2-4"]}
+          name="Sample2"
+          explain={["explain 2-1", "explain 2-2", "explain 2-3", "explain 2-4"]}
 
         >
           Early dementia prediction AI service that provides customized rehabilitation curation for dementia delay.
@@ -40,11 +40,12 @@ function Products() {
         <Card
           route='/beery'
           source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxjHRfHwDNzqxzweA6eimkRA0S_wRJ0okTuNxwP50vng&s"
-          name="Usmon"
-          explain={["explain1 2-1", "explain2 2-2", "explain3 2-3", "test 2-4"]}
+          name="Sample3"
+          explain={["explain 3-1", "explain 3-2", "explain 3-3", "explain 3-4"]}
 
         >
-          A stroke aftereffects rehabilitation (DTx) program through interaction with XR-based 3D objects.        </Card>
+          A stroke aftereffects rehabilitation (DTx) program through interaction with XR-based 3D objects.
+        </Card>
       </div>
     </section>
   );

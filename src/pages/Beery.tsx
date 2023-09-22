@@ -53,13 +53,13 @@ function Beery() {
         // 드래그 앤 드롭한 파일 중에서 허용된 확장자만 선택
         const validFiles = droppedFiles.filter((file) => {
             const fileExtension = file.name.split(".").pop()?.toLowerCase();
-            const allowedExtensions = ["pdf"]; // 허용할 확장자 목록
+            const allowedExtensions = ["pdf","jpg","jpeg","png"]; // 허용할 확장자 목록
             const isValidExtension = allowedExtensions.includes(fileExtension || "");
 
             if (!isValidExtension) {
                 Swal.fire({
                     title: "유효하지 않은 파일 형식",
-                    text: "PDF 파일만 허용됩니다.",
+                    text: "PDF 파일 및 이미지 파일만 허용됩니다.",
                     icon: "error",
                 });
             }
@@ -119,9 +119,11 @@ function Beery() {
                 <Heading tag="h2" className="">
                     AI 기반 Beery VMI 답안 채점도구
                 </Heading>
-                <Text size="m" styles="max-w-[600px] text-center pt-5 mb-16">
-                    채점을 진행하기 위해 환자의 Beery VMI 답안지를 넣어주세요.<br />
-                    Beery VMI 답안지는 S(환자번호).pdf 형태로 파일 이름을 작성해주세요.
+                <Text size="m" styles="max-w-[700px] text-center pt-5">
+                    채점을 진행하기 위해 환자의 Beery VMI 답안지를 넣어주세요.
+                </Text>
+                <Text size="s" styles=" mb-16">
+                    Beery VMI 답안지는 S(환자번호).pdf 형태 또는 .png .jpg .jpeg 등 형태로 파일 이름을 작성해주세요.
                 </Text>
                 <Text size="m" styles="text-[#888888] font-bold pb-5">
                     파일 업로드
@@ -150,7 +152,7 @@ function Beery() {
                     {/* 파일 입력(input) 요소를 숨겨놓고 버튼 클릭 시 파일 선택 창 열리도록 함 */}
                     <input
                         type="file"
-                        accept=".pdf" // 원하는 파일 형식 지정
+                        accept=".pdf, .jpg, .jpeg, .png" // 원하는 파일 형식 지정
                         ref={fileInputRef}
                         style={{ display: "none" }}
                         onChange={handleFileChange}
