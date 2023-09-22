@@ -14,7 +14,7 @@ const PatientCard = ({name, id, score, image, options}: PatientCardProps) => {
 
     <div className='min-w-[240px] bg-white py-3 px-4 rounded-md h-fit'>
         <div className=" border-b border-button-green/20 pb-2">
-          <select value={selectedOption} onChange={handleSelectChange} className='w-full border border-button-green/20 rounded-sm mb-2'>
+          <select value={selectedOption} onChange={handleSelectChange} className='w-full border border-button-green/20 rounded-sm mb-2 text-center'>
             <option value={selectedOption}>{selectedOption? selectedOption : "-- 환자번호 --"}</option>
             {options.map((option, index) => (
               <option key={index} value={option}>
