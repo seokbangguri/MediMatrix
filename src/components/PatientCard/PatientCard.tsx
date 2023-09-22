@@ -1,4 +1,5 @@
 import { PatientCardProps } from './patientCard.props'
+import data from '../../assets/test-data/data.json'
 import { useState } from 'react';
 
 const PatientCard = ({name, id, score, image, options}: PatientCardProps) => {
@@ -10,13 +11,19 @@ const PatientCard = ({name, id, score, image, options}: PatientCardProps) => {
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(e.target.value);
   };
+    console.log(selectedOption);
+
+  const patients = new Set(data.map((patient) => patient.환자번호));
+  const patientsArray = Array.from(patients);
+  console.log(patientsArray);
+
   return (
 
     <div className='min-w-[240px] bg-white py-3 px-4 rounded-md h-fit'>
         <div className=" border-b border-button-green/20 pb-2">
-          <select value={selectedOption} onChange={handleSelectChange} className='w-full border border-button-green/20 rounded-sm mb-2 text-center'>
-            <option value={selectedOption}>{selectedOption? selectedOption : "-- 환자번호 --"}</option>
-            {options.map((option, index) => (
+          <select value={selectedOption} onChange={handleSelectChange} className='w-full border-4 border-button-green/20 rounded-sm mb-2 text-center'>
+            <option value={selectedOption}>{selectedOption? "환자번호 : " + selectedOption : "-- 환자번호 --"}</option>
+            {patientsArray.map((option, index) => (
               <option key={index} value={option}>
                 {option}
               </option>
