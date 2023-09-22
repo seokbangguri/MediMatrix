@@ -1,14 +1,32 @@
 import { PatientCardProps } from './patientCard.props'
+import { useState } from 'react';
 
-const PatientCard = ({name, id, score, image}: PatientCardProps) => {
+const PatientCard = ({name, id, score, image, options}: PatientCardProps) => {
+
+  const [selectedOption, setSelectedOption] = useState<string | undefined>(
+    undefined
+  );
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(e.target.value);
+  };
   return (
+
     <div className='min-w-[240px] bg-white py-3 px-4 rounded-md h-fit'>
         <div className=" border-b border-button-green/20 pb-2">
-            <img src={image?.length ? image : 'https://www.seekpng.com/png/detail/110-1100707_person-avatar-placeholder.png'} className='w-full max-h-[150px] rounded-sm bg-cover mb-2' alt='patient'/>
-            <p className='text-center font-semibold text-lg py-2'>환자 정보</p>
-            <div className="flex items-center font-semibold text-black justify-between px-2">성명 <span className=' font-normal text-dark-green'>{name}</span></div>
-            <div className="flex items-center font-semibold text-black justify-between px-2">번호 <span className=' font-normal text-dark-green'>{id}</span></div>
-            <div className="flex items-center font-semibold text-black justify-between px-2">총점 <span className=' font-normal text-dark-green'>{score}</span></div>
+          <select value={selectedOption} onChange={handleSelectChange} className='w-full border border-button-green/20 rounded-sm mb-2'>
+            <option value={selectedOption}>{selectedOption? selectedOption : "-- 환자번호 --"}</option>
+            {options.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          <img src={image?.length ? image : 'https://www.seekpng.com/png/detail/110-1100707_person-avatar-placeholder.png'} className='w-full max-h-[150px] rounded-sm bg-cover mb-2' alt='patient'/>
+          <p className='text-center font-semibold text-lg py-2'>환자 정보</p>
+          <div className="flex items-center font-semibold text-black justify-between px-2">성명 <span className=' font-normal text-dark-green'>{name}</span></div>
+          <div className="flex items-center font-semibold text-black justify-between px-2">번호 <span className=' font-normal text-dark-green'>{id}</span></div>
+          <div className="flex items-center font-semibold text-black justify-between px-2">총점 <span className=' font-normal text-dark-green'>{score}</span></div>
         </div>
         <div className="max-h-[500px] overflow-x-hidden overflow-y-scroll !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-[#e3e6e5] ">
             <p className='text-center font-semibold text-lg py-2'>문항별 정답률</p>
