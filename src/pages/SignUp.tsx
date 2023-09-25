@@ -9,6 +9,7 @@ import axios from 'axios';
 //Interface
 interface SignUpValues {
     email: string;
+    name: string;
     password: string;
     confirmPassword: string;
     hospitalName: string;
@@ -21,6 +22,7 @@ const getCharacterValidationError = (str: string) => {
 //Validation
 const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email').required('Required'),
+    name: Yup.string().min(6, 'Minimum 6 characters').required('Required'),
     password: Yup.string().min(8, 'Password must be at least 6 characters').max(16, 'Too long').matches(/[0-9]/, getCharacterValidationError("digit")).matches(/[a-z]/, getCharacterValidationError("lowercase"))
         .required('Required'),
     confirmPassword: Yup.string().required('Please retype your password').oneOf([Yup.ref('password')], 'Passwords must match'),
@@ -45,20 +47,22 @@ const SignUp: React.FC = () => {
     //initial value
     const initialValues: SignUpValues = {
         email: '',
+        name: '',
         password: '',
         confirmPassword: '',
         hospitalName: '',
         phoneNumber: '',
         role: '',
     }
-     
+
     // Handle signup
     const handleSignUp = async (values: SignUpValues, { setSubmitting }: FormikHelpers<SignUpValues>) => {
-        const { email, password, hospitalName, phoneNumber, role } = values;
+        const { email, password, hospitalName, phoneNumber, name, role } = values;
         try {
             // 전송할 데이터
             const userData = {
                 email: email,
+                name: name,
                 password: password,
                 hospitalName: hospitalName,
                 phoneNumber: phoneNumber,
@@ -84,9 +88,8 @@ const SignUp: React.FC = () => {
         setSubmitting(false);
     };
 
-
-    return <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0" style={bgStyle}>
-        <div className="w-[500px] bg-white rounded-lg drop-shadow-xl ">
+    return <div className="flex items-center justify-center px-6 mt-10 mx-auto md:h-screen lg:py-0" style={bgStyle}>
+        <div className="w-[800px] bg-white rounded-lg drop-shadow-2xl ">
             <div className="p-10 space-y-4 md:space-y-6 sm:p-8">
                 <Heading tag='h3' className="text-center">
                     회원가입
@@ -98,41 +101,61 @@ const SignUp: React.FC = () => {
                 >
 
                     {({ isSubmitting }) => (
-                        <Form className="space-y-4 md:space-y-6" >
-                            <div>
-                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">이메일</label>
-                                <Field type="email" name="email" id="email" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="name@company.com" required />
-                                <ErrorMessage name="email" component="div" className="text-red-700 text-sm" />
+                        <Form className="w-full " >
+                            <div className="flex flex-col gap-5 w-full">
+                                <div className="flex w-full gap-6">
+                                    <div className="w-1/2">
+                                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">이름</label>
+                                        <Field type="text" name="name" id="name" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="이름...." required />
+                                        <ErrorMessage name="name" component="div" className="text-red-700 text-sm" />
+                                    </div>
+                                    <div className="w-1/2">
+                                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">이메일</label>
+                                        <Field type="email" name="email" id="email" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="name@company.com" required />
+                                        <ErrorMessage name="email" component="div" className="text-red-700 text-sm" />
+                                    </div>
+                                </div>
+                                <div className="flex w-full gap-6">
+                                    <div className="w-1/2">
+                                        <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">전화번호</label>
+                                        <Field type="tel" name="phoneNumber" id="phoneNumber" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter phone number..." />
+                                        <ErrorMessage name="phoneNumber" component="div" className="text-red-700 text-sm" />
+                                    </div>
+                                    <div className="w-1/2">
+                                        <label htmlFor="hospitalName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">병원 이름</label>
+                                        <Field type="text" name="hospitalName" id="hospitalName" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter hospital name..." required />
+                                        <ErrorMessage name="hospitalName" component="div" className="text-red-700 text-sm" />
+                                    </div></div>
+                                <div className="flex w-full gap-6">
+                                    
+                                    <div className="w-1/2">
+                                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호</label>
+                                        <Field type="password" name="password" id="password" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
+                                        <ErrorMessage name="password" component="div" className="text-red-700 text-sm" />
+                                    </div>
+                                    <div className="w-1/2">
+                                        <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호 확인</label>
+                                        <Field type="password" name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
+                                        <ErrorMessage name="confirmPassword" component="div" className="text-red-700 text-sm" />
+                                    </div></div>
+                                <div className="flex w-full gap-6">
+                                    <div className="w-1/2">
+                                        <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">역할</label>
+                                        <Field as="select" name="role" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required>
+                                            <option value="administrator">관리자</option>
+                                            <option value="therapist">치료사</option>
+                                        </Field>
+
+                                    </div>
+                                    <div className="w-1/2"></div>
+                                </div>
                             </div>
-                            <div>
-                                <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호</label>
-                                <Field type="password" name="password" id="password" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
-                                <ErrorMessage name="password" component="div" className="text-red-700 text-sm" />
+
+
+                            <div className="mt-10 mb-6 text-center">
+                                <Button apperance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>회원가입</Button>
                             </div>
-                            <div>
-                                <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호 확인</label>
-                                <Field type="password" name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
-                                <ErrorMessage name="confirmPassword" component="div" className="text-red-700 text-sm" />
-                            </div>
-                            <div>
-                                <label htmlFor="hospitalName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">병원 이름</label>
-                                <Field type="text" name="hospitalName" id="hospitalName" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter hospital name..." required />
-                                <ErrorMessage name="hospitalName" component="div" className="text-red-700 text-sm" />
-                            </div>
-                            <div>
-                                <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">전화번호</label>
-                                <Field type="tel" name="phoneNumber" id="phoneNumber" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter phone number..." />
-                                <ErrorMessage name="phoneNumber" component="div" className="text-red-700 text-sm" />
-                            </div>
-                            <div>
-                                <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">담당</label>
-                                <Field as="select" name="role"className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required>
-                                    <option value="administrator">관리자</option>
-                                    <option value="therapist">치료사</option>
-                                </Field>
-                            </div>
-                            <Button apperance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>회원가입</Button>
-                            <p className="text-sm font-light text-[#7a7a7a]">
+                            <p className="text-sm font-light text-[#7a7a7a] text-right">
                                 계정이 있으십니까? <a href="/signin" className="font-medium text-blue-600 hover:underline "> 로그인</a>
                             </p>
                         </Form>
