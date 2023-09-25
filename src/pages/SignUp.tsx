@@ -7,8 +7,27 @@ import {
     createUserWithEmailAndPassword
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
+// const validationSchema = Yup.object({
+//     email: Yup.string().email('Invalid email').required('Required'),
+//     password: Yup.string().min(6, 'Password must be at least 6 characters').required('Required'),
+//     confirmPassword: Yup.string()
+//       .oneOf([Yup.ref('password'), null], 'Passwords must match')
+//       .required('Required'),
+//     hospitalName: Yup.string().required('Required'),
+//     phoneNumber: Yup.string().matches(/^[0-9]{3}[0-9]{4}[0-9]{4}$/, 'Invalid phone number'),
+//   });
 
+const bgStyle = {
+    backgroundImage: `url(${signinBg})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '100% auto',
+    backgroundPosition: '0 500px',
+    width: '100%',
+    height: '100vh',
+};
 const SignUp = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState<string>("");
@@ -16,15 +35,14 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [hospitalName, setHospitalName] = useState<string>("");
     const [phoneNumber, setPhoneNumber] = useState<string>("");
-    const bgStyle = {
-        backgroundImage: `url(${signinBg})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: '100% auto', // You can adjust this based on your needs
-        // Other CSS properties for the container
-        backgroundPosition: '0 500px',
-        width: '100%',
-        height: '100vh',
-    };
+    //   const handleSignUp1 = async (values, { setSubmitting }) => {
+    //     const { email, password, hospitalName, phoneNumber } = values;
+
+    //     // Add your form submission logic here
+    //     // ...
+
+    //     setSubmitting(false); // Don't forget to set isSubmitting to false when done
+    //   };
     const handleSignUp = async (e: FormEvent) => {
         e.preventDefault();
         if (password !== confirmPassword) {
