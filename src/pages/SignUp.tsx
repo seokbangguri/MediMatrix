@@ -81,7 +81,7 @@ const SignUp: React.FC = () => {
         setSubmitting(false);
     };
 
-    return <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0" style={bgStyle}>
+    return <div className="flex items-center justify-center px-6 mt-10 mx-auto md:h-screen lg:py-0" style={bgStyle}>
         <div className="w-[500px] bg-white rounded-lg drop-shadow-xl ">
             <div className="p-10 space-y-4 md:space-y-6 sm:p-8">
                 <Heading tag='h3' className="text-center">
