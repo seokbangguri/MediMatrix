@@ -1,14 +1,10 @@
 import { useState, FormEvent } from "react";
 import { Button, Heading } from "../components";
 import signinBg from '../assets/signin-blob.svg'
-import { auth, db } from "../firebase/firebase";
-import { collection, addDoc } from "firebase/firestore";
-import {
-    createUserWithEmailAndPassword
-} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 //Interface
 interface SignUpValues {
@@ -17,6 +13,7 @@ interface SignUpValues {
     confirmPassword: string;
     hospitalName: string;
     phoneNumber?: string;
+    role: string;
 }
 const getCharacterValidationError = (str: string) => {
     return `Your password must have at least 1 ${str} character`;
@@ -51,32 +48,38 @@ const SignUp: React.FC = () => {
         password: '',
         confirmPassword: '',
         hospitalName: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        role: '',
     }
-    //handle signin
+     
+    // Handle signup
     const handleSignUp = async (values: SignUpValues, { setSubmitting }: FormikHelpers<SignUpValues>) => {
-        const { email, password, hospitalName, phoneNumber } = values;
+        const { email, password, hospitalName, phoneNumber, role } = values;
         try {
-            // Create a new user with email and password
-            await createUserWithEmailAndPassword(auth, email, password);
-            // After successful signup, you can update the user's profile or store additional data
-            const user = auth.currentUser;
-            if (user) {
-                // await user.updateProfile({
-                //   displayName: hospitalName,
-                // });
-                const userRef = await addDoc(collection(db, "users"), {
-                    email: email,
-                    hospitalName: hospitalName,
-                    phoneNumber: phoneNumber,
-                })
-            }
-            // Redirect
-            navigate('/')
+            // 전송할 데이터
+            const userData = {
+                email: email,
+                password: password,
+                hospitalName: hospitalName,
+                phoneNumber: phoneNumber,
+                role: role
+            };
 
+            // Axios를 사용하여 서버로 POST 요청 보내기
+            const response = await axios.post('http://localhost:3001/signup', userData);
+
+            // 서버 응답 확인
+            if (response.status === 201) {
+                console.log('회원가입 성공:', response.data);
+                // 회원가입 성공 처리
+                navigate('/'); // 회원가입이 성공하면 홈페이지로 이동
+            } else {
+                console.error('서버 응답 오류:', response.status);
+                // 서버 응답에 따른 처리 (예: 에러 메시지 표시)
+            }
         } catch (error) {
-            console.error("Error signing up:", error);
-            // Handle error, display an error message, or log it
+            console.error('회원가입 에러:', error);
+            // 오류 처리 (예: 에러 메시지 표시)
         }
         setSubmitting(false);
     };
@@ -119,6 +122,13 @@ const SignUp: React.FC = () => {
                                 <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">전화번호</label>
                                 <Field type="tel" name="phoneNumber" id="phoneNumber" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter phone number..." />
                                 <ErrorMessage name="phoneNumber" component="div" className="text-red-700 text-sm" />
+                            </div>
+                            <div>
+                                <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">담당</label>
+                                <Field as="select" name="role"className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required>
+                                    <option value="administrator">관리자</option>
+                                    <option value="therapist">치료사</option>
+                                </Field>
                             </div>
                             <Button apperance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>회원가입</Button>
                             <p className="text-sm font-light text-[#7a7a7a]">
