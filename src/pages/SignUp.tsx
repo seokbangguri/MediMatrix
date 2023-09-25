@@ -1,61 +1,89 @@
 import { useState, FormEvent } from "react";
 import { Button, Heading } from "../components";
 import signinBg from '../assets/signin-blob.svg'
-import { auth, db } from "../firebase/firebase";
-import { collection, addDoc } from "firebase/firestore";
-import {
-    createUserWithEmailAndPassword
-} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
 
+//Interface
+interface SignUpValues {
+    email: string;
+    password: string;
+    confirmPassword: string;
+    hospitalName: string;
+    phoneNumber?: string;
+    role: string;
+}
+const getCharacterValidationError = (str: string) => {
+    return `Your password must have at least 1 ${str} character`;
+};
+//Validation
+const validationSchema = Yup.object({
+    email: Yup.string().email('Invalid email').required('Required'),
+    password: Yup.string().min(8, 'Password must be at least 6 characters').max(16, 'Too long').matches(/[0-9]/, getCharacterValidationError("digit")).matches(/[a-z]/, getCharacterValidationError("lowercase"))
+        .required('Required'),
+    confirmPassword: Yup.string().required('Please retype your password').oneOf([Yup.ref('password')], 'Passwords must match'),
+    hospitalName: Yup.string().required('Required'),
+    phoneNumber: Yup.string()
+        .matches(/^[0-9]{3}[0-9]{4}[0-9]{4}$/, 'Invalid phone number')
+        .nullable()
+        .notRequired(),
+});
 
-const SignUp = () => {
+const bgStyle = {
+    backgroundImage: `url(${signinBg})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '100% auto',
+    backgroundPosition: '0 500px',
+    width: '100%',
+    height: '100vh',
+};
+const SignUp: React.FC = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [confirmPassword, setConfirmPassword] = useState<string>("");
-    const [hospitalName, setHospitalName] = useState<string>("");
-    const [phoneNumber, setPhoneNumber] = useState<string>("");
-    const bgStyle = {
-        backgroundImage: `url(${signinBg})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: '100% auto', // You can adjust this based on your needs
-        // Other CSS properties for the container
-        backgroundPosition: '0 500px',
-        width: '100%',
-        height: '100vh',
-    };
-    const handleSignUp = async (e: FormEvent) => {
-        e.preventDefault();
-        if (password !== confirmPassword) {
-            alert("비밀번호와 확인 비밀번호가 일치하지 않습니다.");
-            return;
-        }
+
+    //initial value
+    const initialValues: SignUpValues = {
+        email: '',
+        password: '',
+        confirmPassword: '',
+        hospitalName: '',
+        phoneNumber: '',
+        role: '',
+    }
+     
+    // Handle signup
+    const handleSignUp = async (values: SignUpValues, { setSubmitting }: FormikHelpers<SignUpValues>) => {
+        const { email, password, hospitalName, phoneNumber, role } = values;
         try {
-            // Create a new user with email and password
-            await createUserWithEmailAndPassword(auth, email, password);
-            // After successful signup, you can update the user's profile or store additional data
-            const user = auth.currentUser;
-            if (user) {
-                // await user.updateProfile({
-                //   displayName: hospitalName,
-                // });
-                // You can also save additional user data to Firestore or Realtime Database here
-                // Example using Firestore:
-                const userRef = await addDoc(collection(db, "users"), {
-                    email: email,
-                    hospitalName: hospitalName,
-                    phoneNumber: phoneNumber,
-                })
+            // 전송할 데이터
+            const userData = {
+                email: email,
+                password: password,
+                hospitalName: hospitalName,
+                phoneNumber: phoneNumber,
+                role: role
+            };
+
+            // Axios를 사용하여 서버로 POST 요청 보내기
+            const response = await axios.post('http://20.214.184.115:3001/signup', userData);
+
+            // 서버 응답 확인
+            if (response.status === 201) {
+                console.log('회원가입 성공:', response.data);
+                // 회원가입 성공 처리
+                navigate('/'); // 회원가입이 성공하면 홈페이지로 이동
+            } else {
+                console.error('서버 응답 오류:', response.status);
+                // 서버 응답에 따른 처리 (예: 에러 메시지 표시)
             }
-            // Redirect or handle the signup success
-            navigate('/')
-            // For example, you can redirect to a different page or display a success message.
         } catch (error) {
-            console.error("Error signing up:", error);
-            // Handle error, display an error message, or log it
+            console.error('회원가입 에러:', error);
+            // 오류 처리 (예: 에러 메시지 표시)
         }
+        setSubmitting(false);
     };
+
 
     return <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0" style={bgStyle}>
         <div className="w-[500px] bg-white rounded-lg drop-shadow-xl ">
@@ -63,32 +91,54 @@ const SignUp = () => {
                 <Heading tag='h3' className="text-center">
                     회원가입
                 </Heading>
-                <form className="space-y-4 md:space-y-6" onSubmit={handleSignUp}>
-                    <div>
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">이메일</label>
-                        <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="name@company.com" required />
-                    </div>
-                    <div>
-                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호</label>
-                        <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
-                    </div>
-                    <div>
-                        <label htmlFor="confirmPassor" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호 확인</label>
-                        <input value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="password" name="confirmPassor" id="confirmPassor" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
-                    </div>
-                    <div>
-                        <label htmlFor="hospital" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">병원 이름</label>
-                        <input value={hospitalName} onChange={(e) => setHospitalName(e.target.value)} type="text" name="hospital" id="hospital" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter hospital name..." required />
-                    </div>
-                    <div>
-                        <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">전화번호</label>
-                        <input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="tel" name="phone" id="phone" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter phone number..." />
-                    </div>
-                    <Button apperance="primary" type="submit" styles="w-full text-center">회원가입</Button>
-                    <p className="text-sm font-light text-[#7a7a7a]">
-                        계정이 있으십니까? <a href="/signin" className="font-medium text-blue-600 hover:underline "> 로그인</a>
-                    </p>
-                </form>
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSignUp}
+                >
+
+                    {({ isSubmitting }) => (
+                        <Form className="space-y-4 md:space-y-6" >
+                            <div>
+                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">이메일</label>
+                                <Field type="email" name="email" id="email" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="name@company.com" required />
+                                <ErrorMessage name="email" component="div" className="text-red-700 text-sm" />
+                            </div>
+                            <div>
+                                <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호</label>
+                                <Field type="password" name="password" id="password" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
+                                <ErrorMessage name="password" component="div" className="text-red-700 text-sm" />
+                            </div>
+                            <div>
+                                <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호 확인</label>
+                                <Field type="password" name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
+                                <ErrorMessage name="confirmPassword" component="div" className="text-red-700 text-sm" />
+                            </div>
+                            <div>
+                                <label htmlFor="hospitalName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">병원 이름</label>
+                                <Field type="text" name="hospitalName" id="hospitalName" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter hospital name..." required />
+                                <ErrorMessage name="hospitalName" component="div" className="text-red-700 text-sm" />
+                            </div>
+                            <div>
+                                <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">전화번호</label>
+                                <Field type="tel" name="phoneNumber" id="phoneNumber" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter phone number..." />
+                                <ErrorMessage name="phoneNumber" component="div" className="text-red-700 text-sm" />
+                            </div>
+                            <div>
+                                <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">담당</label>
+                                <Field as="select" name="role"className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required>
+                                    <option value="administrator">관리자</option>
+                                    <option value="therapist">치료사</option>
+                                </Field>
+                            </div>
+                            <Button apperance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>회원가입</Button>
+                            <p className="text-sm font-light text-[#7a7a7a]">
+                                계정이 있으십니까? <a href="/signin" className="font-medium text-blue-600 hover:underline "> 로그인</a>
+                            </p>
+                        </Form>
+                    )}
+                </Formik>
+
             </div>
         </div>
     </div>;;
