@@ -22,7 +22,7 @@ const getCharacterValidationError = (str: string) => {
 //Validation
 const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email').required('Required'),
-    name: Yup.string().min(6, 'Minimum 6 characters').required('Required'),
+    name: Yup.string().min(2, 'Minimum 2 characters').required('Required'),
     password: Yup.string().min(8, 'Password must be at least 6 characters').max(16, 'Too long').matches(/[0-9]/, getCharacterValidationError("digit")).matches(/[a-z]/, getCharacterValidationError("lowercase"))
         .required('Required'),
     confirmPassword: Yup.string().required('Please retype your password').oneOf([Yup.ref('password')], 'Passwords must match'),
@@ -70,7 +70,7 @@ const SignUp: React.FC = () => {
             };
 
             // Axios를 사용하여 서버로 POST 요청 보내기
-            const response = await axios.post('http://localhost:3001/signup', userData);
+            const response = await axios.post('http://20.214.184.115:3001/signup', userData);
 
             // 서버 응답 확인
             if (response.status === 201) {
