@@ -66,7 +66,7 @@ const SignUp: React.FC = () => {
             };
 
             // Axios를 사용하여 서버로 POST 요청 보내기
-            const response = await axios.post('http://localhost:3001/signup', userData);
+            const response = await axios.post('http://20.214.184.115:3001/signup', userData);
 
             // 서버 응답 확인
             if (response.status === 201) {
