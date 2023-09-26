@@ -36,6 +36,7 @@ const SignIn = () => {
       // 서버 응답 확인
       if (response.status === 200) {
         console.log('로그인 성공:', response.data);
+        sessionStorage.setItem('name', response.data.user.name);
         // 로그인 성공 처리
         navigate('/'); // 로그인이 성공하면 홈페이지로 이동
       } else {

@@ -3,6 +3,7 @@ import { CardProps } from "./card.props";
 import Button from "../Button/Button";
 
 const Card = ({ name, source, children, explain, route }: CardProps): JSX.Element => {
+  
   return (
     <div className="w-72 min-h-[450px] bg-white rounded-md p-6 shadow-2xl m-auto hover:scale-105 duration-200">
       <img src={source} className="w-60 h-28 rounded-sm" alt={name} />
