@@ -1,11 +1,11 @@
 import { Button, Heading } from "../components";
 import signinBg from '../assets/signin-blob.svg'
-import { auth } from "../firebase/firebase";
-import { signInWithEmailAndPassword, Auth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import * as Yup from 'yup';
 import { Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const validationSchema = Yup.object({
   email: Yup.string().email("유효한 이메일을 입력하세요").required("이메일은 필수 항목입니다"),
@@ -20,40 +20,42 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [signInError, setSignInError] = useState<string | null>(null)
 
-  const handleSignIn = async (
-    values: SignInValues,
-    { setSubmitting }: FormikHelpers<SignInValues>
-  ) => {
+  const handleSignIn = async (values: SignInValues, { setSubmitting }: FormikHelpers<SignInValues>) => {
+    const { email, password } = values;
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth as Auth, 
-        values.email,
-        values.password
-      );
-      // User signed in successfully
-      const user = userCredential.user;
-      navigate('/');
-    } catch (error: any) {
-      // Handle error
-      console.error("Error signing in:", error);
-      if (error) {
-        if (error.code === "auth/wrong-password" || error.code === "auth/invalid-login-credentials") {
-          setSignInError("잘못된 이메일 또는 비밀번호입니다.");
-        } else if (error.code === 'auth/user-not-found') {
-          setSignInError("user not found");
-        } else if (error.code === 'auth/too-many-requests') {
-          setSignInError("too many request, try again later");
-        } else {
-          setSignInError("로그인 중 오류가 발생했습니다.");
-        }
+      // 전송할 데이터
+      const userData = {
+        email: email,
+        password: password,
+      };
+  
+      // Axios를 사용하여 서버로 POST 요청 보내기
+      const response = await axios.post('http://20.214.184.115:3001/signin', userData);
+      console.log(response.status);
+  
+      // 서버 응답 확인
+      if (response.status === 200) {
+        console.log('로그인 성공:', response.data);
+        // 로그인 성공 처리
+        navigate('/'); // 로그인이 성공하면 홈페이지로 이동
       } else {
-        // Handle other types of errors here
-        setSignInError("로그인 중 오류가 발생했습니다.");
+        console.error('서버 응답 오류:', response.status);
+        // 서버 응답에 따른 처리 (예: 에러 메시지 표시)
       }
+    } catch (error: any) {
+      console.error('로그인 에러:', error);
+      const emsg:string = error.response.data.error as string;
+      // 오류 처리 (예: 에러 메시지 표시)
+        Swal.fire({
+          title: "로그인 에러",
+          text: emsg,
+          icon: "error",
+        });
     } finally {
       setSubmitting(false);
     }
   };
+  
 
   const bgStyle = {
     backgroundImage: `url(${signinBg})`,
