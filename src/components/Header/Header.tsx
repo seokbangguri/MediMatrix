@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import image from "../../assets/medimatrix_logo_black.svg";
+import userIcon from '../../assets/user.svg'
 import Button from "../Button/Button";
 
 
 const Header = () => {
+  const [user, setUser] = useState(true)
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <header className="fixed top-0 z-30 w-screen bg-white mx-auto">
       <div className="lg:max-w-[1445px] flex items-center justify-between py-5  lg:px-10 mx-auto">
@@ -64,14 +70,44 @@ const Header = () => {
             </a>
           </div>
         </nav>
-        <div className="flex items-center gap-2">
+        {!user ? <div className="flex items-center gap-2">
           <a href="/signin">
             <Button styles="text-lg font-semibold rounded-xs text-black border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 uppercase" >Sign In</Button>
           </a>
           <a href="/signup">
             <Button apperance="custom" styles="uppercase" >Sign Up</Button>
           </a>
-        </div>
+        </div> :
+          <div className="relative inline-block text-left">
+            <button
+              onClick={toggleDropdown}
+              className="px-8 py-2 flex items-center  text-black rounded-md focus:outline-none focus:ring focus:ring-button-green hover:opacity-75"
+            >
+              <img src={userIcon} alt="user" width={20} height={20} />
+              <span className="ml-2 w-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="h-6 w-6">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clip-rule="evenodd" />
+                </svg>
+              </span>
+            </button>
+            {isOpen && (
+              <div className="absolute right-0 mt-4 w-40 bg-white drop-shadow-xl rounded-sm  overflow-hidden">
+                <ul className="list-inside">
+                  <li className="py-2 px-4 hover:bg-neutral-200 cursor-pointer">User</li>
+                  <li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">Setting</li>
+                  <li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer border-t border-slate-400">Sign out</li>
+                </ul>
+              </div>
+            )}
+          </div>
+        }
       </div>
     </header>
   );
