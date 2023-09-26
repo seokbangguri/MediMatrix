@@ -1,6 +1,5 @@
 import { Button, Heading } from "../components";
 import signinBg from '../assets/signin-blob.svg'
-import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import * as Yup from 'yup';
 import { Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
@@ -17,7 +16,6 @@ interface SignInValues {
 }
 //Component
 const SignIn = () => {
-  const navigate = useNavigate();
   const [signInError, setSignInError] = useState<string | null>(null)
 
   const handleSignIn = async (values: SignInValues, { setSubmitting }: FormikHelpers<SignInValues>) => {
@@ -38,7 +36,7 @@ const SignIn = () => {
         console.log('로그인 성공:', response.data);
         sessionStorage.setItem('name', response.data.user.name);
         // 로그인 성공 처리
-        navigate('/'); // 로그인이 성공하면 홈페이지로 이동
+        window.location.href = "/";
       } else {
         console.error('서버 응답 오류:', response.status);
         // 서버 응답에 따른 처리 (예: 에러 메시지 표시)
