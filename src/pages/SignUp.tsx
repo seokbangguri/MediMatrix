@@ -52,7 +52,7 @@ const SignUp: React.FC = () => {
         confirmPassword: '',
         hospitalName: '',
         phoneNumber: '',
-        role: '',
+        role: 'therapists',
     }
 
     // Handle signup
@@ -68,6 +68,7 @@ const SignUp: React.FC = () => {
                 phoneNumber: phoneNumber,
                 role: role
             };
+            console.log(userData);
 
             // Axios를 사용하여 서버로 POST 요청 보내기
             const response = await axios.post('http://20.214.184.115:3001/signup', userData);
@@ -142,8 +143,8 @@ const SignUp: React.FC = () => {
                                     <div className="w-1/2">
                                         <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">역할</label>
                                         <Field as="select" name="role" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required>
-                                            <option value="administrator">관리자</option>
                                             <option value="therapist">치료사</option>
+                                            <option value="administrator">관리자</option>
                                         </Field>
 
                                     </div>
