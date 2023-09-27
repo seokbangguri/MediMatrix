@@ -19,6 +19,8 @@ const Header = () => {
   function handleSignOut() {
     // 세션 스토리지에서 데이터 삭제
     sessionStorage.removeItem('name');
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('role');
     window.location.reload();
   }
 

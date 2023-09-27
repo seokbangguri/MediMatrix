@@ -19,8 +19,8 @@ const dbConfig = {
   database: process.env.DB_DATABASE,
 };
 
+//회원가입
 app.post("/signup", async (req, res) => {
-	console.log(req.body);
   try {
     const { name, email, password, hospitalName, phoneNumber, role } = req.body;
 
@@ -61,10 +61,11 @@ app.post("/signup", async (req, res) => {
       res.status(201).json({ message: "회원가입 성공" });
     }
   } catch (error) {
-    console.error("회원가입 에러:", error);
     res.status(500).json({ error: "회원가입 중 오류가 발생했습니다." });
   }
 });
+
+//로그인
 app.post("/signin", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -112,10 +113,144 @@ app.post("/signin", async (req, res) => {
 
     connection.end();
   } catch (error) {
-    console.error("로그인 에러:", error);
     res.status(500).json({ error: "로그인 중 오류가 발생했습니다." });
   }
 });
+
+//사용자 데이터 불러오기
+app.post("/mypage", async (req, res) => {
+  const { email } = req.body;
+
+  const connection = await mysql.createConnection(dbConfig);
+  const [administrators] = await connection.execute(
+    "SELECT * FROM administrators WHERE email = ?",
+    [email]
+  )
+  const [therapists] = await connection.execute(
+    "SELECT * FROM therapists WHERE email = ?",
+    [email]
+  )
+
+  let user = null;
+
+  if (therapists.length > 0) {
+    // therapists 테이블에서 사용자 발견
+    user = therapists[0];
+  } else if (administrators.length > 0) {
+    // administrators 테이블에서 사용자 발견
+    user = administrators[0];
+  }
+
+  if (user) {
+    // 사용자 데이터를 클라이언트로 응답으로 보냅니다.
+    res.status(200).json(user);
+  } else {
+    // 사용자를 찾을 수 없을 경우 적절한 응답을 보냅니다.
+    res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
+  }
+});
+
+//정보 수정
+app.post("/updatedata", async (req, res) => {
+  try {
+    const { name, email, phoneNumber, hospitalName } = req.body;
+
+    // MySQL 데이터베이스 연결
+    const connection = await mysql.createConnection(dbConfig);
+    const [administrators] = await connection.execute(
+      "SELECT * FROM administrators WHERE email = ?",
+      [email]
+    )
+    const [therapists] = await connection.execute(
+      "SELECT * FROM therapists WHERE email = ?",
+      [email]
+    )
+  
+    let user = null;
+  
+    if (therapists.length > 0) {
+      // therapists 테이블에서 사용자 발견
+      user = "therapists";
+    } else if (administrators.length > 0) {
+      // administrators 테이블에서 사용자 발견
+      user = "administrators";
+    }
+
+    // 사용자 데이터 업데이트
+    const [result] = await connection.execute(
+      `UPDATE ${user} SET name = ?, email = ?, hp = ?, hospital = ? WHERE email = ?`,
+      [ name, email, phoneNumber, hospitalName, email]
+    );
+
+    connection.end();
+
+    if (result.affectedRows === 1) {
+      // 업데이트가 성공한 경우
+      res.status(200).json({ message: "사용자 데이터 업데이트 성공" });
+    } else {
+      // 업데이트가 실패한 경우 (해당 이메일을 가진 사용자를 찾을 수 없음)
+      res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
+    }
+  } catch (error) {
+    console.error("사용자 데이터 업데이트 에러:", error);
+    res.status(500).json({ error: "데이터 업데이트 중 오류가 발생했습니다." });
+  }
+});
+//수정중
+app.post("/updatepw", async (req, res) => {
+  try {
+    const { currentPW, newPW, email } = req.body;
+
+    // MySQL 데이터베이스 연결
+    const connection = await mysql.createConnection(dbConfig);
+    const [administrators] = await connection.execute(
+      "SELECT * FROM administrators WHERE email = ?",
+      [email]
+    )
+    const [therapists] = await connection.execute(
+      "SELECT * FROM therapists WHERE email = ?",
+      [email]
+    )
+  
+    let user = null;
+  
+    if (therapists.length > 0) {
+      // therapists 테이블에서 사용자 발견
+      user = "therapists";
+      const passwordMatch = await bcrypt.compare(currentPW, therapists[0].password);
+      if( passwordMatch ) {// 사용자 데이터 업데이트
+        const [result] = await connection.execute(
+          `UPDATE ${user} SET password = ? WHERE email = ?`,
+          [ newPW, email]
+        );
+      }
+    } else if (administrators.length > 0) {
+      // administrators 테이블에서 사용자 발견
+      user = "administrators";
+      const passwordMatch = await bcrypt.compare(currentPW, therapists[0].password);
+      if( passwordMatch ) {// 사용자 데이터 업데이트
+        const [result] = await connection.execute(
+          `UPDATE ${user} SET password = ? WHERE email = ?`,
+          [ newPW, email]
+        );
+      }
+    }
+
+    connection.end();
+
+    if (result.affectedRows === 1) {
+      // 업데이트가 성공한 경우
+      res.status(200).json({ message: "사용자 비밀번호 변경 성공" });
+    } else {
+      // 업데이트가 실패한 경우 (해당 이메일을 가진 사용자를 찾을 수 없음)
+      res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
+    }
+  } catch (error) {
+    console.error("사용자 데이터 업데이트 에러:", error);
+    res.status(500).json({ error: "데이터 업데이트 중 오류가 발생했습니다." });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`서버가 포트 ${port}에서 실행 중입니다.`);

@@ -3,7 +3,6 @@ import signinBg from '../assets/signin-blob.svg'
 import axios from 'axios';
 import * as Yup from 'yup';
 import { Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
-import { useState } from "react";
 import Swal from "sweetalert2";
 
 const validationSchema = Yup.object({
@@ -16,7 +15,6 @@ interface SignInValues {
 }
 //Component
 const SignIn = () => {
-  const [signInError, setSignInError] = useState<string | null>(null)
 
   const handleSignIn = async (values: SignInValues, { setSubmitting }: FormikHelpers<SignInValues>) => {
     const { email, password } = values;
@@ -35,6 +33,8 @@ const SignIn = () => {
       if (response.status === 200) {
         console.log('로그인 성공:', response.data);
         sessionStorage.setItem('name', response.data.user.name);
+        sessionStorage.setItem('email', response.data.user.email);
+        sessionStorage.setItem('role', response.data.user.role);
         // 로그인 성공 처리
         window.location.href = "/";
       } else {
@@ -54,7 +54,6 @@ const SignIn = () => {
       setSubmitting(false);
     }
   };
-  
 
   const bgStyle = {
     backgroundImage: `url(${signinBg})`,
@@ -103,7 +102,6 @@ const SignIn = () => {
                 {/* Display validation error if any */}
                 <ErrorMessage name="password" component="div" className="text-red-600 text-sm" />
               </div>
-              {signInError && <div className="text-red-600 text-sm">{signInError}</div>}
               <Button apperance="primary" type="button" styles="w-full text-center">로그인</Button>
               <p className="text-sm font-light text-[#7a7a7a]">
                 계정이 없으십니까? <a href="/signup" className="font-medium text-blue-600 hover:underline ">회원가입</a>
