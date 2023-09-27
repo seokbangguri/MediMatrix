@@ -1,5 +1,5 @@
 
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+// import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Heading from '../Heading/Heading';
 
 const data = [
@@ -99,14 +99,14 @@ const ResultsChartAge = () => {
     <div className='w-[600px] h-[300px] bg-white p-4 rounded-md'>
       <h4 className='p-4 pb-6 text-sm font-semibold'>연령대별 채점 결과 점수 통계</h4>
       <div className='w-full h-[200px]'>
-        <ResponsiveContainer width="100%" height="100%" >
+        {/* <ResponsiveContainer width="100%" height="100%" >
           <BarChart width={200} height={40} data={data}>
             <XAxis dataKey="name" />
             <YAxis type="number" domain={[0, 30]} />
             <Tooltip />
             <Bar dataKey="uv" fill="#3FB6D3" />
           </BarChart>
-        </ResponsiveContainer>
+        </ResponsiveContainer> */}
       </div>
       <h4 className='p-4 text-sm font-semibold'>채점시 유의사항</h4>
       <ul className='text-sm max-w-[480px] list-disc w-full ml-10 list-inside space-y-2'>
