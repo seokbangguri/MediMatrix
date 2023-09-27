@@ -3,9 +3,9 @@ import signinBg from '../assets/signin-blob.svg'
 import axios from 'axios';
 import * as Yup from 'yup';
 import { Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
-import { useState } from "react";
 import Swal from "sweetalert2";
 import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi'
+import { useState } from 'react';
 
 const validationSchema = Yup.object({
   email: Yup.string().email("유효한 이메일을 입력하세요").required("이메일은 필수 항목입니다"),
@@ -41,6 +41,8 @@ const SignIn = () => {
       if (response.status === 200) {
         console.log('로그인 성공:', response.data);
         sessionStorage.setItem('name', response.data.user.name);
+        sessionStorage.setItem('email', response.data.user.email);
+        sessionStorage.setItem('role', response.data.user.role);
         // 로그인 성공 처리
         window.location.href = "/";
       } else {
@@ -60,7 +62,6 @@ const SignIn = () => {
       setSubmitting(false);
     }
   };
-
 
   const bgStyle = {
     backgroundImage: `url(${signinBg})`,
@@ -112,7 +113,6 @@ const SignIn = () => {
                 {/* Display validation error if any */}
                 <ErrorMessage name="password" component="div" className="text-red-600 text-sm" />
               </div>
-              {signInError && <div className="text-red-600 text-sm">{signInError}</div>}
               <Button apperance="primary" type="button" styles="w-full text-center">로그인</Button>
               <p className="text-sm font-light text-[#7a7a7a]">
                 계정이 없으십니까? <a href="/signup" className="font-medium text-blue-600 hover:underline ">회원가입</a>

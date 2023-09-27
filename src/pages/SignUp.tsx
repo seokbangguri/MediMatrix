@@ -85,7 +85,9 @@ const SignUp: React.FC = () => {
             if (response.status === 201) {
                 console.log('회원가입 성공:', response.data);
                 // 회원가입 성공 처리
-                sessionStorage.setItem('name', name);
+                sessionStorage.setItem('name',name);
+                sessionStorage.setItem('email', email);
+                sessionStorage.setItem('role', role);
                 window.location.href = "/"; // 회원가입이 성공하면 홈페이지로 이동
             } else {
                 console.error('서버 응답 오류:', response.status);
