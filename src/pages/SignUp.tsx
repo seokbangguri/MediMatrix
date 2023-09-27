@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useState } from "react";
 
 //Interface
 interface SignUpValues {
@@ -42,6 +43,10 @@ const bgStyle = {
     height: '100vh',
 };
 const SignUp: React.FC = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
     const navigate = useNavigate();
 
     //initial value
@@ -77,7 +82,7 @@ const SignUp: React.FC = () => {
             if (response.status === 201) {
                 console.log('회원가입 성공:', response.data);
                 // 회원가입 성공 처리
-                sessionStorage.setItem('name',name);
+                sessionStorage.setItem('name', name);
                 window.location.href = "/"; // 회원가입이 성공하면 홈페이지로 이동
             } else {
                 console.error('서버 응답 오류:', response.status);
@@ -129,7 +134,7 @@ const SignUp: React.FC = () => {
                                         <ErrorMessage name="hospitalName" component="div" className="text-red-700 text-sm" />
                                     </div></div>
                                 <div className="flex w-full gap-6">
-                                    
+
                                     <div className="w-1/2">
                                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호</label>
                                         <Field type="password" name="password" id="password" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />

@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi'
 
 const validationSchema = Yup.object({
   email: Yup.string().email("유효한 이메일을 입력하세요").required("이메일은 필수 항목입니다"),
@@ -16,7 +17,12 @@ interface SignInValues {
 }
 //Component
 const SignIn = () => {
-  const [signInError, setSignInError] = useState<string | null>(null)
+  const [signInError, setSignInError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSignIn = async (values: SignInValues, { setSubmitting }: FormikHelpers<SignInValues>) => {
     const { email, password } = values;
@@ -26,11 +32,11 @@ const SignIn = () => {
         email: email,
         password: password,
       };
-  
+
       // Axios를 사용하여 서버로 POST 요청 보내기
       const response = await axios.post('http://20.214.184.115:3001/signin', userData);
       console.log(response.status);
-  
+
       // 서버 응답 확인
       if (response.status === 200) {
         console.log('로그인 성공:', response.data);
@@ -43,18 +49,18 @@ const SignIn = () => {
       }
     } catch (error: any) {
       console.error('로그인 에러:', error);
-      const emsg:string = error.response.data.error as string;
+      const emsg: string = error.response.data.error as string;
       // 오류 처리 (예: 에러 메시지 표시)
-        Swal.fire({
-          title: "로그인 에러",
-          text: emsg,
-          icon: "error",
-        });
+      Swal.fire({
+        title: "로그인 에러",
+        text: emsg,
+        icon: "error",
+      });
     } finally {
       setSubmitting(false);
     }
   };
-  
+
 
   const bgStyle = {
     backgroundImage: `url(${signinBg})`,
@@ -92,14 +98,17 @@ const SignIn = () => {
               </div>
               <div>
                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호</label>
+                <div className="relative">
                 <Field
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   name="password"
                   id="password"
                   autoComplete="current-password"
                   placeholder="••••••••"
                   className="bg-stone-100 border border-gray-300 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 />
+                <button onClick={togglePasswordVisibility}  type='button' className="p-1 text-lg absolute top-2 right-2 ">{showPassword ? <PiEyeBold/> : <PiEyeClosedBold/>}</button>
+                </div>
                 {/* Display validation error if any */}
                 <ErrorMessage name="password" component="div" className="text-red-600 text-sm" />
               </div>
