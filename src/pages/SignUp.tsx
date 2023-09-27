@@ -77,7 +77,6 @@ const SignUp: React.FC = () => {
                 phoneNumber: phoneNumber,
                 role: role
             };
-            console.log(userData);
 
             // Axios를 사용하여 서버로 POST 요청 보내기
             const response = await axios.post('http://20.214.184.115:3001/signup', userData);
