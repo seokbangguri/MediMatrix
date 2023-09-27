@@ -1,9 +1,10 @@
 import { Button, Heading } from "../components";
 import signinBg from '../assets/signin-blob.svg'
-import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useState } from "react";
+import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 
 //Interface
 interface SignUpValues {
@@ -42,7 +43,15 @@ const bgStyle = {
     height: '100vh',
 };
 const SignUp: React.FC = () => {
-    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+    const togglePasswordVisibility = (type: 'password' | 'confirm') => {
+        if (type === 'password') {
+            setShowPassword(!showPassword);
+        } else {
+            setShowPasswordConfirm(!showPasswordConfirm);
+        }
+    };
 
     //initial value
     const initialValues: SignUpValues = {
@@ -68,7 +77,6 @@ const SignUp: React.FC = () => {
                 phoneNumber: phoneNumber,
                 role: role
             };
-            console.log(userData);
 
             // Axios를 사용하여 서버로 POST 요청 보내기
             const response = await axios.post('http://20.214.184.115:3001/signup', userData);
@@ -131,16 +139,20 @@ const SignUp: React.FC = () => {
                                         <ErrorMessage name="hospitalName" component="div" className="text-red-700 text-sm" />
                                     </div></div>
                                 <div className="flex w-full gap-6">
-                                    
+
                                     <div className="w-1/2">
                                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호</label>
-                                        <Field type="password" name="password" id="password" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
+                                        <div className="relative">
+                                            <Field type={showPassword ? 'text' : 'password'} name="password" id="password" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
+                                            <button onClick={() => togglePasswordVisibility('password')} type='button' className="p-1 text-lg absolute top-2 right-2 ">{showPassword ? <PiEyeBold /> : <PiEyeClosedBold />}</button>
+                                        </div>
                                         <ErrorMessage name="password" component="div" className="text-red-700 text-sm" />
                                     </div>
                                     <div className="w-1/2">
                                         <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호 확인</label>
-                                        <Field type="password" name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
-                                        <ErrorMessage name="confirmPassword" component="div" className="text-red-700 text-sm" />
+                                        <div className="relative"><Field type={showPasswordConfirm ? 'text' : 'password'} name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
+                                            <button onClick={() => togglePasswordVisibility('confirm')} type='button' className="p-1 text-lg absolute top-2 right-2 ">{showPasswordConfirm ? <PiEyeBold /> : <PiEyeClosedBold />}</button>
+                                        </div><ErrorMessage name="confirmPassword" component="div" className="text-red-700 text-sm" />
                                     </div></div>
                                 <div className="flex w-full gap-6">
                                     <div className="w-1/2">
@@ -149,7 +161,6 @@ const SignUp: React.FC = () => {
                                             <option value="therapist">치료사</option>
                                             <option value="administrator">관리자</option>
                                         </Field>
-
                                     </div>
                                     <div className="w-1/2"></div>
                                 </div>

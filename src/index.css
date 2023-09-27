@@ -17,6 +17,13 @@
 *,
 html {
   scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -26,6 +33,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }

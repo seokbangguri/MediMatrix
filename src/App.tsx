@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Results from './pages/Results';
+import Setting from './pages/Setting';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/results" element={<Results />} />
+            <Route path="/setting" element={<Setting />} />
             {/* 기타 경로와 페이지 설정 */}
           </Routes>
           

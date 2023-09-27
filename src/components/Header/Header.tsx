@@ -9,7 +9,7 @@ const Header = () => {
   useEffect(() => {
 
   }, [user]);
-  
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -113,8 +113,8 @@ const Header = () => {
             {isOpen && (
               <div className="absolute right-0 mt-4 w-40 bg-white drop-shadow-xl rounded-sm  overflow-hidden">
                 <ul className="list-inside">
-                  <li className="py-2 px-4 hover:bg-neutral-200 cursor-pointer">User</li>
-                  <li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">Setting</li>
+                  <li className="py-2 px-4 hover:bg-neutral-200 cursor-pointer">{user}님</li>
+                  <a href="/setting"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">My page</li></a>
                   <li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer border-t border-slate-400" onClick={handleSignOut}>Sign out</li>
                 </ul>
               </div>
