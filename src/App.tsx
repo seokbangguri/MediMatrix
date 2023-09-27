@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp';
 import Results from './pages/Results';
 
 function App() {
+
   return (
     <div className="App font-roboto flex flex-col justify-center items-center">
         <Router>

@@ -1,9 +1,26 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Heading, Text, Button, Footer } from "../components";
 import Swal from "sweetalert2";
 import uploadIcon from '../assets/upload-icon.svg';
 
 function Beery() {
+    const signinSession = sessionStorage.getItem('name');
+    // 페이지가 처음 로딩될 때만 실행되는 함수
+    useEffect(() => {
+        // 여기에 원하는 동작을 추가하세요.
+        if(!signinSession){
+            Swal.fire({
+                title: "로그인 후 이용 가능합니다.",
+                icon: "error",
+                confirmButtonText: "확인",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/signin";
+                }
+            });
+        }
+    }, []);
+
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
 

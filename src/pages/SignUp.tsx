@@ -1,4 +1,3 @@
-import { useState, FormEvent } from "react";
 import { Button, Heading } from "../components";
 import signinBg from '../assets/signin-blob.svg'
 import { useNavigate } from "react-router-dom";
@@ -22,6 +21,7 @@ const getCharacterValidationError = (str: string) => {
 //Validation
 const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email').required('Required'),
+    //email: Yup.string().matches(/^[^@\s]+@[^@\s]+\.[^@\s]+$/, '이메일 형식에 맞지 않습니다.').required('이메일을 입력해주세요.'),
     name: Yup.string().min(2, 'Minimum 2 characters').required('Required'),
     password: Yup.string().min(8, 'Password must be at least 6 characters').max(16, 'Too long').matches(/[0-9]/, getCharacterValidationError("digit")).matches(/[a-z]/, getCharacterValidationError("lowercase"))
         .required('Required'),
@@ -77,7 +77,8 @@ const SignUp: React.FC = () => {
             if (response.status === 201) {
                 console.log('회원가입 성공:', response.data);
                 // 회원가입 성공 처리
-                navigate('/'); // 회원가입이 성공하면 홈페이지로 이동
+                sessionStorage.setItem('name',name);
+                window.location.href = "/"; // 회원가입이 성공하면 홈페이지로 이동
             } else {
                 console.error('서버 응답 오류:', response.status);
                 // 서버 응답에 따른 처리 (예: 에러 메시지 표시)
