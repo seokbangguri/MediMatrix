@@ -119,34 +119,38 @@ app.post("/signin", async (req, res) => {
 
 //사용자 데이터 불러오기
 app.post("/mypage", async (req, res) => {
-  const { email } = req.body;
+  try {
+    const { email } = req.body;
 
-  const connection = await mysql.createConnection(dbConfig);
-  const [administrators] = await connection.execute(
-    "SELECT * FROM administrators WHERE email = ?",
-    [email]
-  )
-  const [therapists] = await connection.execute(
-    "SELECT * FROM therapists WHERE email = ?",
-    [email]
-  )
+    const connection = await mysql.createConnection(dbConfig);
+    const [administrators] = await connection.execute(
+      "SELECT * FROM administrators WHERE email = ?",
+      [email]
+    )
+    const [therapists] = await connection.execute(
+      "SELECT * FROM therapists WHERE email = ?",
+      [email]
+    )
 
-  let user = null;
+    let user = null;
 
-  if (therapists.length > 0) {
-    // therapists 테이블에서 사용자 발견
-    user = therapists[0];
-  } else if (administrators.length > 0) {
-    // administrators 테이블에서 사용자 발견
-    user = administrators[0];
-  }
+    if (therapists.length > 0) {
+      // therapists 테이블에서 사용자 발견
+      user = therapists[0];
+    } else if (administrators.length > 0) {
+      // administrators 테이블에서 사용자 발견
+      user = administrators[0];
+    }
 
-  if (user) {
-    // 사용자 데이터를 클라이언트로 응답으로 보냅니다.
-    res.status(200).json(user);
-  } else {
-    // 사용자를 찾을 수 없을 경우 적절한 응답을 보냅니다.
-    res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
+    if (user) {
+      // 사용자 데이터를 클라이언트로 응답으로 보냅니다.
+      res.status(200).json(user);
+    } else {
+      // 사용자를 찾을 수 없을 경우 적절한 응답을 보냅니다.
+      res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "데이터 불러오기 실패" });
   }
 });
 
