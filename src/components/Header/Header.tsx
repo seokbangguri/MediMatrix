@@ -21,11 +21,11 @@ const Header = () => {
     sessionStorage.removeItem('name');
     sessionStorage.removeItem('email');
     sessionStorage.removeItem('role');
-    window.location.reload();
+    window.location.href = "/";
   }
 
   return (
-    <header className="fixed top-0 z-30 w-screen bg-white mx-auto">
+    <header className="fixed top-0 z-30 w-screen bg-white mx-auto drop-shadow-xl">
       <div className="lg:max-w-[1445px] flex items-center justify-between py-5 px-5 md:px-10 mx-auto">
         <div className="flex items-center justify-center shrink-0">
           <a href="/">
@@ -85,10 +85,10 @@ const Header = () => {
         </nav>
         {!user ? <div className="flex items-center gap-2">
           <a href="/signin">
-            <Button styles="text-lg font-semibold rounded-xs text-black border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 uppercase" >Sign In</Button>
+            <Button styles="text-lg font-semibold rounded-xs text-black border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 uppercase" >로그인</Button>
           </a>
           <a href="/signup">
-            <Button apperance="custom" styles="uppercase" >Sign Up</Button>
+            <Button apperance="custom" styles="uppercase" >회원가입</Button>
           </a>
         </div> :
           <div className="relative inline-block text-left">
@@ -114,8 +114,8 @@ const Header = () => {
               <div className="absolute right-0 mt-4 w-40 bg-white drop-shadow-xl rounded-sm  overflow-hidden">
                 <ul className="list-inside">
                   <li className="py-2 px-4 hover:bg-neutral-200 cursor-pointer">{user}님</li>
-                  <a href="/setting"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">My page</li></a>
-                  <li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer border-t border-slate-400" onClick={handleSignOut}>Sign out</li>
+                  <a href="/setting"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer border-t border-slate-400">마이페이지</li></a>
+                  <li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer" onClick={handleSignOut}>로그아웃</li>
                 </ul>
               </div>
             )}

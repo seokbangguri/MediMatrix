@@ -3,7 +3,8 @@ import signinBg from '../assets/signin-blob.svg'
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useState } from "react";
+import Swal from 'sweetalert2';
+import { useState, useEffect } from "react";
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 
 //Interface
@@ -43,6 +44,19 @@ const bgStyle = {
     height: '100vh',
 };
 const SignUp: React.FC = () => {
+    useEffect(() => {
+      if(sessionStorage.getItem('name')) {
+        Swal.fire({
+          title: '이미 로그인되어 있습니다!',
+          text: '확인을 누르면 홈페이지로 이동합니다.',
+          icon: 'info',
+          confirmButtonText: '확인',
+        }).then(() => {
+          window.location.href = "/";
+        });
+      }
+      
+    },[]);
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
     const togglePasswordVisibility = (type: 'password' | 'confirm') => {
@@ -83,19 +97,15 @@ const SignUp: React.FC = () => {
 
             // 서버 응답 확인
             if (response.status === 201) {
-                console.log('회원가입 성공:', response.data);
-                // 회원가입 성공 처리
                 sessionStorage.setItem('name',name);
                 sessionStorage.setItem('email', email);
                 sessionStorage.setItem('role', role);
                 window.location.href = "/"; // 회원가입이 성공하면 홈페이지로 이동
             } else {
                 console.error('서버 응답 오류:', response.status);
-                // 서버 응답에 따른 처리 (예: 에러 메시지 표시)
             }
         } catch (error) {
             console.error('회원가입 에러:', error);
-            // 오류 처리 (예: 에러 메시지 표시)
         }
         setSubmitting(false);
     };
@@ -158,8 +168,8 @@ const SignUp: React.FC = () => {
                                     <div className="w-1/2">
                                         <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">역할</label>
                                         <Field as="select" name="role" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required>
-                                            <option value="therapist">치료사</option>
-                                            <option value="administrator">관리자</option>
+                                            <option value="therapists">치료사</option>
+                                            <option value="administrators">관리자</option>
                                         </Field>
                                     </div>
                                     <div className="w-1/2"></div>
