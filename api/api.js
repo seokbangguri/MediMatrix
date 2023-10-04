@@ -51,7 +51,7 @@ app.post("/signup", async (req, res) => {
       // 데이터베이스에 회원 정보 추가
       const [result] = await connection.execute(
         `INSERT INTO ${
-          role === "administrator" ? "administrators (name, email, password, hospital, hp) VALUES (?, ?, ?, ?, ?)" : "therapists (name, email, password, hospital, hp) VALUES (?, ?, ?, ?, ?)"
+          role === "administrators" ? "administrators (name, email, password, hospital, hp) VALUES (?, ?, ?, ?, ?)" : "therapists (name, email, password, hospital, hp) VALUES (?, ?, ?, ?, ?)"
         }`,
         [name, email, hash, hospitalName, phoneNumber]
       );
@@ -125,14 +125,14 @@ app.post("/mypage", async (req, res) => {
     let user = null;
 
     const connection = await mysql.createConnection(dbConfig);
-    if (role == 'administrator') {
+    if (role == 'administrators') {
       const [administrators] = await connection.execute(
         "SELECT * FROM administrators WHERE email = ?",
         [email]
       )
       user = administrators[0];
     }
-    else if (role == 'therapist') {
+    else if (role == 'therapists') {
       const [therapists] = await connection.execute(
         "SELECT * FROM therapists WHERE email = ?",
         [email]
@@ -162,34 +162,16 @@ app.post("/mypage", async (req, res) => {
 //정보 수정
 app.post("/updatedata", async (req, res) => {
   try {
-    const { name, email, phoneNumber, hospitalName } = req.body;
-	  console.log(req.body);
+    const { email, name, hospitalName, phoneNumber, role, pemail } = req.body;
+    console.log(req.body);
 
     // MySQL 데이터베이스 연결
     const connection = await mysql.createConnection(dbConfig);
-    const [administrators] = await connection.execute(
-      "SELECT * FROM administrators WHERE email = ?",
-      [email]
-    )
-    const [therapists] = await connection.execute(
-      "SELECT * FROM therapists WHERE email = ?",
-      [email]
-    )
-  
-    let user = null;
-  
-    if (therapists.length > 0) {
-      // therapists 테이블에서 사용자 발견
-      user = "therapists";
-    } else if (administrators.length > 0) {
-      // administrators 테이블에서 사용자 발견
-      user = "administrators";
-    }
 
     // 사용자 데이터 업데이트
     const [result] = await connection.execute(
-      `UPDATE ${user} SET name = ?, email = ?, hp = ?, hospital = ? WHERE email = ?`,
-      [ name, email, phoneNumber, hospitalName, email]
+      `UPDATE ${role} SET name = ?, email = ?, hp = ?, hospital = ? WHERE email = ?`,
+      [ name, email, phoneNumber, hospitalName, pemail]
     );
 
     connection.end();
