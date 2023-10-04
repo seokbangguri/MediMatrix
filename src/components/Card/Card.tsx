@@ -7,9 +7,9 @@ const Card = ({ name, source, children, explain, route }: CardProps): JSX.Elemen
   return (
     <div className="w-72 min-h-[450px] bg-white rounded-md p-6 shadow-2xl m-auto hover:scale-105 duration-200">
       <img src={source} className="w-60 h-28 rounded-sm" alt={name} />
-      <p className="text-xl mt-3">{name}</p>
-      <p className="text-sm mt-3 min-h-[80px]">{children}</p>
-      <ul className="mt-3">
+      <p className="text-xl font-semibold mt-3">{name}</p>
+      <p className="text-sm mt-2 text-[#353535] min-h-[80px]">{children}</p>
+      <ul className="mt-3 list-inside">
         {explain.map((item, index) => (
           <li className="text-sm list-disc ml-3" key={index}>{item}</li>
         ))}

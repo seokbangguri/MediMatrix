@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 z-30 w-screen bg-white mx-auto">
-      <div className="lg:max-w-[1445px] flex items-center justify-between py-5  lg:px-10 mx-auto">
+      <div className="lg:max-w-[1445px] flex items-center justify-between py-5 px-5 md:px-10 mx-auto">
         <div className="flex items-center justify-center shrink-0">
           <a href="/">
             <img

@@ -20,7 +20,7 @@ const Footer = () => {
   };
   return (
     <footer style={backgroundStyle} className="w-screen flex flex-col md:flex-row  justify-center">
-      <div className="w-full lg:max-w-[1445px] flex flex-col md:flex-row  justify-between pb-10 pt-32 px-5 lg:px-10">
+      <div className="w-full lg:max-w-[1445px] flex flex-col md:flex-row  justify-between items-center gap-10 pb-10 pt-32 px-5 lg:px-10">
       <div className="flex flex-col justify-between">
         <a href="/">
           <img
@@ -34,7 +34,7 @@ const Footer = () => {
 
         <Text size="s" styles="text-white">&copy; 2023 MediMatrix | Security | Privacy | Terms</Text>
       </div>
-      <div className="flex gap-16">
+      <div className="flex flex-col md:flex-row gap-16">
       <div className="flex flex-col text-white gap-2 md:gap-4 lg:gap-6">
           <a
             href="/"
