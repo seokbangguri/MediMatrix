@@ -142,7 +142,12 @@ app.post("/mypage", async (req, res) => {
 
     if (user != null) {
       // 사용자 데이터를 클라이언트로 응답으로 보냅니다.
-      res.status(200).json({ message:'데이터 조회 성공', user: user});
+      res.status(200).json({
+        email: user.email,
+        name: user.name,
+        hospitalName: user.hospital,
+        phoneNumber: user.hp,
+    });
     } else {
       // 사용자를 찾을 수 없을 경우 적절한 응답을 보냅니다.
       res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
@@ -158,6 +163,7 @@ app.post("/mypage", async (req, res) => {
 app.post("/updatedata", async (req, res) => {
   try {
     const { name, email, phoneNumber, hospitalName } = req.body;
+	  console.log(req.body);
 
     // MySQL 데이터베이스 연결
     const connection = await mysql.createConnection(dbConfig);
