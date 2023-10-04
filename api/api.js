@@ -9,6 +9,7 @@ const saltRounds = 10; // 솔트(Salt) 라운드 수
 const app = express();
 const port = 3001;
 
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
