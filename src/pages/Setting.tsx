@@ -144,7 +144,7 @@ const Setting = () => {
                 // 서버 응답에 따른 처리 (예: 에러 메시지 표시)
             }
         } catch (error) {
-            console.error('회원가입 에러:', error);
+            console.error('비밀번호 변경 에러:', error);
             // 오류 처리 (예: 에러 메시지 표시)
         }
         setSubmitting(false);
