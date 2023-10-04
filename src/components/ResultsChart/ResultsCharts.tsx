@@ -39,7 +39,7 @@ const data = [
       pv: 100,
       amt: 100,
     },
-    {f
+    {
       name: '5세',
       uv: 60,
       pv: 100,
