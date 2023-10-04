@@ -43,7 +43,7 @@ const SignIn = () => {
         sessionStorage.setItem('name', response.data.user.name);
         sessionStorage.setItem('email', response.data.user.email);
         if(response.data.user.admin === null) {
-          sessionStorage.setItem('role', 'therapaist');
+          sessionStorage.setItem('role', 'therapist');
         }
         else {
           sessionStorage.setItem('role', 'administrator');

@@ -9,6 +9,7 @@ const saltRounds = 10; // 솔트(Salt) 라운드 수
 const app = express();
 const port = 3001;
 
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -120,35 +121,35 @@ app.post("/signin", async (req, res) => {
 //사용자 데이터 불러오기
 app.post("/mypage", async (req, res) => {
   try {
-    const { email } = req.body;
-
-    const connection = await mysql.createConnection(dbConfig);
-    const [administrators] = await connection.execute(
-      "SELECT * FROM administrators WHERE email = ?",
-      [email]
-    )
-    const [therapists] = await connection.execute(
-      "SELECT * FROM therapists WHERE email = ?",
-      [email]
-    )
-
+    const { email, role } = req.body;
+    console.log(email);
+    console.log(role);
     let user = null;
 
-    if (therapists.length > 0) {
-      // therapists 테이블에서 사용자 발견
-      user = therapists[0];
-    } else if (administrators.length > 0) {
-      // administrators 테이블에서 사용자 발견
+    const connection = await mysql.createConnection(dbConfig);
+    if (role == 'administrator') {
+      const [administrators] = await connection.execute(
+        "SELECT * FROM administrators WHERE email = ?",
+        [email]
+      )
       user = administrators[0];
     }
+    else if (role == 'therapist') {
+      const [therapists] = await connection.execute(
+        "SELECT * FROM therapists WHERE email = ?",
+        [email]
+      )
+      user = therapists[0];
+    }
 
-    if (user) {
+    if (user != null) {
       // 사용자 데이터를 클라이언트로 응답으로 보냅니다.
-      res.status(200).json(user);
+      res.status(200).json({ message:'데이터 조회 성공', user: user});
     } else {
       // 사용자를 찾을 수 없을 경우 적절한 응답을 보냅니다.
       res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
     }
+    connection.end();
   } catch (error) {
     res.status(500).json({ error: "데이터 불러오기 실패" });
   }
