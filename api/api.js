@@ -191,54 +191,46 @@ app.post("/updatedata", async (req, res) => {
 //수정중
 app.post("/updatepw", async (req, res) => {
   try {
-    const { currentPW, newPW, email } = req.body;
-
-    // MySQL 데이터베이스 연결
-    const connection = await mysql.createConnection(dbConfig);
-    const [administrators] = await connection.execute(
-      "SELECT * FROM administrators WHERE email = ?",
-      [email]
-    )
-    const [therapists] = await connection.execute(
-      "SELECT * FROM therapists WHERE email = ?",
-      [email]
-    )
-  
+    const { currentPW, newPW, email, role } = req.body;
     let user = null;
-  
-    if (therapists.length > 0) {
-      // therapists 테이블에서 사용자 발견
-      user = "therapists";
-      const passwordMatch = await bcrypt.compare(currentPW, therapists[0].password);
-      if( passwordMatch ) {// 사용자 데이터 업데이트
+
+    const connection = await mysql.createConnection(dbConfig);
+    if (role == 'administrators') {
+      const [administrators] = await connection.execute(
+        "SELECT * FROM administrators WHERE email = ?",
+        [email]
+      )
+      user = administrators[0];
+    }
+    else if (role == 'therapists') {
+      const [therapists] = await connection.execute(
+        "SELECT * FROM therapists WHERE email = ?",
+        [email]
+      )
+      user = therapists[0];
+    }
+
+    const passwordMatch = await bcrypt.compare(user.password, currentPW);
+    if (passwordMatch) {
+      if (!await bcrypt.compare(currentPW, newPW)) {
         const [result] = await connection.execute(
-          `UPDATE ${user} SET password = ? WHERE email = ?`,
-          [ newPW, email]
+          `UPDATE ${role} SET password = ? WHERE email = ?`,
+          [newPW, email]
         );
+        if (result.affectedRows === 1) {
+          res.status(200).json({ message: "비밀번호 변경 완료" });
+        } else {
+          res.status(404).json({ error: "비밀번호 변경 실패" });
+        }
+      } else {
+        res.status(404).json({ error: "새로운 비밀번호와 현재 비밀번호가 똑같습니다." });
       }
-    } else if (administrators.length > 0) {
-      // administrators 테이블에서 사용자 발견
-      user = "administrators";
-      const passwordMatch = await bcrypt.compare(currentPW, therapists[0].password);
-      if( passwordMatch ) {// 사용자 데이터 업데이트
-        const [result] = await connection.execute(
-          `UPDATE ${user} SET password = ? WHERE email = ?`,
-          [ newPW, email]
-        );
-      }
+    } else {
+      res.status(500).json({ error: "현재 비밀번호가 맞지 않습니다." });
     }
 
     connection.end();
-
-    if (result.affectedRows === 1) {
-      // 업데이트가 성공한 경우
-      res.status(200).json({ message: "사용자 비밀번호 변경 성공" });
-    } else {
-      // 업데이트가 실패한 경우 (해당 이메일을 가진 사용자를 찾을 수 없음)
-      res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
-    }
   } catch (error) {
-    console.error("사용자 데이터 업데이트 에러:", error);
     res.status(500).json({ error: "데이터 업데이트 중 오류가 발생했습니다." });
   }
 });
