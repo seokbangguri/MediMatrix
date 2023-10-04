@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
 import Swal from "sweetalert2";
 import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const validationSchema = Yup.object({
   email: Yup.string().email("유효한 이메일을 입력하세요").required("이메일은 필수 항목입니다"),
@@ -17,6 +17,20 @@ interface SignInValues {
 }
 //Component
 const SignIn = () => {
+  useEffect(() => {
+    if(sessionStorage.getItem('name')) {
+      Swal.fire({
+        title: '이미 로그인되어 있습니다!',
+        text: '확인을 누르면 홈페이지로 이동합니다.',
+        icon: 'info',
+        confirmButtonText: '확인',
+      }).then(() => {
+        window.location.href = "/";
+      });
+    }
+    
+  },[]);
+
   const [signInError, setSignInError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -35,29 +49,24 @@ const SignIn = () => {
 
       // Axios를 사용하여 서버로 POST 요청 보내기
       const response = await axios.post('http://20.214.184.115:3001/signin', userData);
-      console.log(response.status);
 
       // 서버 응답 확인
       if (response.status === 200) {
-        console.log('로그인 성공:', response.data);
         sessionStorage.setItem('name', response.data.user.name);
         sessionStorage.setItem('email', response.data.user.email);
         if(response.data.user.admin === null) {
-          sessionStorage.setItem('role', 'therapist');
+          sessionStorage.setItem('role', 'therapists');
         }
         else {
-          sessionStorage.setItem('role', 'administrator');
+          sessionStorage.setItem('role', 'administrators');
         }
-        // 로그인 성공 처리
-        // window.location.href = "/";
+        window.location.href = "/";
       } else {
         console.error('서버 응답 오류:', response.status);
-        // 서버 응답에 따른 처리 (예: 에러 메시지 표시)
       }
     } catch (error: any) {
       console.error('로그인 에러:', error);
       const emsg: string = error.response.data.error as string;
-      // 오류 처리 (예: 에러 메시지 표시)
       Swal.fire({
         title: "로그인 에러",
         text: emsg,
