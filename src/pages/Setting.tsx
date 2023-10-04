@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { Button, Heading } from '../components'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 //Interface
 interface UpdateInfo {
@@ -35,6 +35,7 @@ const passwordValidationSchema = Yup.object({
     confirmPassword: Yup.string().required('Please retype your password').oneOf([Yup.ref('password')], 'Passwords must match'),
 
 })
+
 const Setting = () => {
     const [changePassword, setChangePassword] = useState<boolean>(false)
     //initial value
@@ -48,6 +49,28 @@ const Setting = () => {
         password: '',
         confirmPassword: '',
     }
+    useEffect(() => {
+      // API 요청 보내기
+      const fetchData = async () => {
+        try {
+          const response = await axios.post('http://20.214.184.115:3001/mypage', {
+            email: sessionStorage.getItem('email'), // 이메일 데이터를 넣어주세요.
+          });
+          // API 응답을 userData state에 저장
+        //   setUserData(response.data);
+          console.log(response.data);
+        } catch (error) {
+          console.error('API 요청 에러:', error);
+          // 오류 처리 (예: 에러 메시지 표시)
+        }
+      };
+  
+      // fetchData 함수 호출
+      fetchData();
+  
+      // useEffect의 의존성 배열에 빈 배열을 넣으면 컴포넌트가 마운트될 때 한 번만 실행됩니다.
+    }, []);
+
     // Handle update info
     const handleUpdate = async (values: any, { setSubmitting }: any) => {
         const { email, password, hospitalName, phoneNumber, name, role } = values;

@@ -42,9 +42,14 @@ const SignIn = () => {
         console.log('로그인 성공:', response.data);
         sessionStorage.setItem('name', response.data.user.name);
         sessionStorage.setItem('email', response.data.user.email);
-        sessionStorage.setItem('role', response.data.user.role);
+        if(response.data.user.admin === null) {
+          sessionStorage.setItem('role', 'therapaist');
+        }
+        else {
+          sessionStorage.setItem('role', 'administrator');
+        }
         // 로그인 성공 처리
-        window.location.href = "/";
+        // window.location.href = "/";
       } else {
         console.error('서버 응답 오류:', response.status);
         // 서버 응답에 따른 처리 (예: 에러 메시지 표시)
