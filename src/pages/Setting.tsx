@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Button, Heading } from '../components'
 import { useState, useEffect } from 'react';
@@ -38,64 +39,74 @@ const passwordValidationSchema = Yup.object({
 
 const Setting = () => {
     const [changePassword, setChangePassword] = useState<boolean>(false)
-    //initial value
-    const infoInitialValues: UpdateInfo = {
+    const [initialFormValues, setInitialFormValues] = useState<UpdateInfo>({
         email: '',
         name: '',
         hospitalName: '',
         phoneNumber: '',
+    });
+    //initial value
+    const infoInitialValues: UpdateInfo = {
+        email: initialFormValues.email,
+        name: initialFormValues.name,
+        hospitalName: initialFormValues.hospitalName,
+        phoneNumber: initialFormValues.phoneNumber,
     }
     const passwordInitialValues: UpdatePassword = {
         password: '',
         confirmPassword: '',
     }
-        // API 요청 보내기
+
+    useEffect(() => {
+        if(!sessionStorage.getItem('name')) {
+          Swal.fire({
+            title: '잘못된 접근!',
+            text: '확인을 누르면 메인로 이동합니다.',
+            icon: 'error',
+            confirmButtonText: '확인',
+          }).then(() => {
+            window.location.href = "/";
+          });
+        } else {
         const fetchData = async () => {
             try {
                 const data = {
                     email: sessionStorage.getItem('email'),
                     role: sessionStorage.getItem('role'),
                 };
-
                 const response = await axios.post('http://20.214.184.115:3001/mypage', data);
-                console.log(response.data);
+                setInitialFormValues(response.data);
             } catch (error) {
                 console.error('API 요청 에러:', error);
-                // 오류 처리 (예: 에러 메시지 표시)
             }
         };
         fetchData();
+        }
+    }, []);
 
     // Handle update info
     const handleUpdate = async (values: any, { setSubmitting }: any) => {
-        const { email, hospitalName, phoneNumber, name, role } = values;
+        const { email, hospitalName, phoneNumber, name } = values;
         try {
-            // 전송할 데이터
-            const userData = {
+            const updateData = {
                 email: email,
                 name: name,
                 hospitalName: hospitalName,
                 phoneNumber: phoneNumber,
-                role: role
+                role: sessionStorage.getItem('role'),
+                pemail: sessionStorage.getItem('email'),
             };
-            console.log(userData);
 
-            // Axios를 사용하여 서버로 POST 요청 보내기
-            const response = await axios.post('http://20.214.184.115:3001/updatedata', userData);
+            const response = await axios.post('http://20.214.184.115:3001/updatedata', updateData);
 
-            // 서버 응답 확인
             if (response.status === 201) {
-                console.log('회원가입 성공:', response.data);
-                // 회원가입 성공 처리
                 sessionStorage.setItem('name', name);
-                window.location.href = "/"; // 회원가입이 성공하면 홈페이지로 이동
+                window.location.href = "/";
             } else {
                 console.error('서버 응답 오류:', response.status);
-                // 서버 응답에 따른 처리 (예: 에러 메시지 표시)
             }
         } catch (error) {
-            console.error('회원가입 에러:', error);
-            // 오류 처리 (예: 에러 메시지 표시)
+            console.error('정보 수정 에러:', error);
         }
         setSubmitting(false);
     };
@@ -161,28 +172,26 @@ const Setting = () => {
                                             Type on the input boxes to change your info, and click save button.
                                         </p>
                                         <div className="">
-                                            <Field type="text" name="name" id="name" className="bg-stone-100 border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="이름" required />
+                                            <Field type="text" name="name" id="name" className="bg-stone-100 border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder={initialFormValues.name} />
                                             <ErrorMessage name="name" component="div" className="text-red-700 text-sm" />
                                         </div>
                                         <div className="">
-                                            <Field type="email" name="email" id="email" className="bg-stone-100 border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="이메일" required />
+                                            <Field type="email" name="email" id="email" className="bg-stone-100 border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder={initialFormValues.email} required />
                                             <ErrorMessage name="email" component="div" className="text-red-700 text-sm" />
                                         </div>
                                         <div className="">
-                                            <Field type="tel" name="phoneNumber" id="phoneNumber" className="bg-stone-100 border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="전화번호" required />
+                                            <Field type="tel" name="phoneNumber" id="phoneNumber" className="bg-stone-100 border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder={initialFormValues.phoneNumber} required />
                                             <ErrorMessage name="phoneNumber" component="div" className="text-red-700 text-sm" />
                                         </div>
                                         <div className="">
-                                            <Field type="text" name="hospitalName" id="hospitalName" className="bg-stone-100 border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="병원 이름" required />
+                                            <Field type="text" name="hospitalName" id="hospitalName" className="bg-stone-100 border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder={initialFormValues.hospitalName} required />
                                             <ErrorMessage name="hospitalName" component="div" className="text-red-700 text-sm" />
                                         </div>
                                         <div className="flex items-center justify-center gap-8">
-                                            <a href="/signin">
+                                            <a href='/'>
                                                 <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >Cancel</Button>
                                             </a>
-                                            <a href="/signup">
                                                 <Button apperance="custom" styles="uppercase" >Save</Button>
-                                            </a>
                                         </div>
                                         <p></p>
                                     </div>
@@ -217,12 +226,10 @@ const Setting = () => {
                                                 </div>
                                             </div>
                                             <div className="flex items-center justify-center gap-8">
-                                                <a href="/signin">
+                                                <a href="/">
                                                     <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >Cancel</Button>
                                                 </a>
-                                                <a href="/signup">
                                                     <Button apperance="custom" styles="uppercase" >Change</Button>
-                                                </a>
                                             </div>
                                         </div>
 
