@@ -45,7 +45,6 @@ const Setting = () => {
         hospitalName: '',
         phoneNumber: '',
     });
-    console.log(initialFormValues);
     //initial value
     const infoInitialValues: UpdateInfo = {
         email: initialFormValues.email,
@@ -75,7 +74,8 @@ const Setting = () => {
                     email: sessionStorage.getItem('email'),
                     role: sessionStorage.getItem('role'),
                 };
-                const response = await axios.post('http://20.214.184.115:3001/mypage', data);
+                console.log(data);
+                const response = await axios.post('http://20.214.184.115:3001/setting', data);
                 setInitialFormValues(response.data);
             } catch (error) {
                 console.error('API 요청 에러:', error);
