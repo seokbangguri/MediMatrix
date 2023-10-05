@@ -232,7 +232,8 @@ app.post("/updatepw", async (req, res) => {
       user = therapists[0];
     }
 
-    const passwordMatch = await bcrypt.compare(user.password, currentPW);
+    const hashedPassword = await bcrypt.hash(currentPW, saltRounds);
+    const passwordMatch = await bcrypt.compare(user.password, hashedPassword);
     if (passwordMatch) {
       if (!await bcrypt.compare(currentPW, newPW)) {
         const [result] = await connection.execute(
