@@ -108,11 +108,31 @@ const Setting = () => {
             if (response.status === 200) {
                 sessionStorage.setItem('name', updatedName);
                 sessionStorage.setItem('email', updatedEmail);
-                window.location.reload();
+                console.log('회원정보 변경 성공:', response.data);
+                Swal.fire({
+                    icon: 'success',
+                    title: '회원정보 변경 완료!',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.reload();
+                });
             } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: response.status,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 console.error('서버 응답 오류:', response.status);
             }
         } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: '에러가 발생했습니다.',
+                showConfirmButton: false,
+                timer: 1500
+            })
             console.error('정보 수정 에러:', error);
         }
         setSubmitting(false);
@@ -136,14 +156,30 @@ const Setting = () => {
             // 서버 응답 확인
             if (response.status === 200) {
                 console.log('비밀번호 변경 성공:', response.data);
-                // 회원가입 성공 처리
-                // sessionStorage.setItem('name', name);
-                window.location.href = "/"; // 회원가입이 성공하면 홈페이지로 이동
+                Swal.fire({
+                    icon: 'success',
+                    title: '비밀번호 변경 완료!',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                  window.location.reload();
+                });
             } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: response.status,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 console.error('서버 응답 오류:', response.status);
-                // 서버 응답에 따른 처리 (예: 에러 메시지 표시)
             }
         } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: '에러가 발생했습니다.',
+                showConfirmButton: false,
+                timer: 1500
+            })
             console.error('비밀번호 변경 에러:', error);
             // 오류 처리 (예: 에러 메시지 표시)
         }
