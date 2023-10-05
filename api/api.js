@@ -24,7 +24,7 @@ app.use((err, req, res, next) => {
 //   database: process.env.DB_DATABASE,
 // };
 
-const pool = require("./db_pool");
+const pool = require("./dbPool");
 
 //회원가입
 app.post("/signup", async (req, res) => {
