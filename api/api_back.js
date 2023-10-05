@@ -12,10 +12,6 @@ const port = 3001;
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
 
 const dbConfig = {
   host: process.env.DB_HOST,
@@ -66,7 +62,6 @@ app.post("/signup", async (req, res) => {
       res.status(201).json({ message: "회원가입 성공" });
     }
   } catch (error) {
-          console.error("에러", error);
     res.status(500).json({ error: "회원가입 중 오류가 발생했습니다." });
   }
 });
@@ -78,7 +73,6 @@ app.post("/signin", async (req, res) => {
 
     // MySQL 데이터베이스 연결
     const connection = await mysql.createConnection(dbConfig);
-    
     // therapists 테이블에서 이메일로 사용자 정보 검색
     const [therapists] = await connection.execute(
       "SELECT * FROM therapists WHERE email = ?",
@@ -119,13 +113,12 @@ app.post("/signin", async (req, res) => {
 
     connection.end();
   } catch (error) {
-          console.error("에러", error);
     res.status(500).json({ error: "로그인 중 오류가 발생했습니다." });
   }
 });
 
 //사용자 데이터 불러오기
-app.post("/setting", async (req, res) => {
+app.post("/mypage", async (req, res) => {
   try {
     const { email, role } = req.body;
     let user = null;
@@ -161,7 +154,6 @@ app.post("/setting", async (req, res) => {
 
     connection.end();
   } catch (error) {
-          console.error("에러", error);
     res.status(500).json({ error: "데이터 불러오기 실패" });
   }
 });
@@ -238,7 +230,6 @@ app.post("/updatepw", async (req, res) => {
 
     connection.end();
   } catch (error) {
-	  console.error("에러", error);
     res.status(500).json({ error: "데이터 업데이트 중 오류가 발생했습니다." });
   }
 });
