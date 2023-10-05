@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2/promise"); // 수정: mysql2/promise 모듈 사용
@@ -231,10 +231,8 @@ app.post("/updatepw", async (req, res) => {
       )
       user = therapists[0];
     }
-
     const hash = await bcrypt.hash(newPW, saltRounds);
     const passwordMatch = await bcrypt.compare(currentPW, user.password);
-	  console.log(passwordMatch);
     if (passwordMatch) {
       if (!await bcrypt.compare(currentPW, newPW)) {
         const [result] = await connection.execute(

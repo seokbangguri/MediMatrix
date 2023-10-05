@@ -31,7 +31,7 @@ const infoValidationSchema = Yup.object({
         .notRequired(),
 });
 const passwordValidationSchema = Yup.object({
-    password: Yup.string().min(8, 'Password must be at least 6 characters').max(16, 'Too long').matches(/[0-9]/, getCharacterValidationError("digit")).matches(/[a-z]/, getCharacterValidationError("lowercase"))
+    password: Yup.string().min(6, 'Password must be at least 6 characters').max(16, 'Too long').matches(/[0-9]/, getCharacterValidationError("digit")).matches(/[a-z]/, getCharacterValidationError("lowercase"))
         .required('Required'),
     confirmPassword: Yup.string().required('Please retype your password'),
 
@@ -123,8 +123,8 @@ const Setting = () => {
         try {
             // 전송할 데이터
             const userData = {
-                password: password,
-                confirmPassword: confirmPassword,
+                currentPW: password,
+                newPW: confirmPassword,
                 email: sessionStorage.getItem('email'),
                 role: sessionStorage.getItem('role'),
             };
