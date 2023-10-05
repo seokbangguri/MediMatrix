@@ -232,12 +232,14 @@ app.post("/updatepw", async (req, res) => {
       user = therapists[0];
     }
 
-    const passwordMatch = await bcrypt.compare(user.password, currentPW);
+    const hash = await bcrypt.hash(newPW, saltRounds);
+    const passwordMatch = await bcrypt.compare(currentPW, user.password);
+	  console.log(passwordMatch);
     if (passwordMatch) {
       if (!await bcrypt.compare(currentPW, newPW)) {
         const [result] = await connection.execute(
           `UPDATE ${role} SET password = ? WHERE email = ?`,
-          [newPW, email]
+          [hash, email]
         );
         if (result.affectedRows === 1) {
           res.status(200).json({ message: "비밀번호 변경 완료" });
