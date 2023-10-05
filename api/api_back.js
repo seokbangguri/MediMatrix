@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2/promise"); // 수정: mysql2/promise 모듈 사용
@@ -12,19 +12,13 @@ const port = 3001;
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
 
-// const dbConfig = {
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_DATABASE,
-// };
-
-const pool = require("./db_pool");
+const dbConfig = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+};
 
 //회원가입
 app.post("/signup", async (req, res) => {
@@ -35,8 +29,7 @@ app.post("/signup", async (req, res) => {
     const hash = await bcrypt.hash(password, saltRounds);
 
     // MySQL 데이터베이스 연결
-    // const connection = await mysql.createConnection(dbConfig);
-    const connection = await pool.getConnection();
+    const connection = await mysql.createConnection(dbConfig);
 
     // 중복 이메일 검사
     const [existingTherapist] = await connection.execute(
@@ -63,14 +56,12 @@ app.post("/signup", async (req, res) => {
         [name, email, hash, hospitalName, phoneNumber]
       );
 
-      // connection.end();
-    connection.release();
+      connection.end();
 
       // 회원가입 성공
       res.status(201).json({ message: "회원가입 성공" });
     }
   } catch (error) {
-    console.error("에러", error);
     res.status(500).json({ error: "회원가입 중 오류가 발생했습니다." });
   }
 });
@@ -81,9 +72,7 @@ app.post("/signin", async (req, res) => {
     const { email, password } = req.body;
 
     // MySQL 데이터베이스 연결
-    // const connection = await mysql.createConnection(dbConfig);
-    const connection = await pool.getConnection();
-
+    const connection = await mysql.createConnection(dbConfig);
     // therapists 테이블에서 이메일로 사용자 정보 검색
     const [therapists] = await connection.execute(
       "SELECT * FROM therapists WHERE email = ?",
@@ -122,24 +111,19 @@ app.post("/signin", async (req, res) => {
       res.status(401).json({ error: "유효하지 않은 이메일 또는 비밀번호입니다." });
     }
 
-    // connection.end();
-    connection.release();
-
+    connection.end();
   } catch (error) {
-    console.error("에러", error);
     res.status(500).json({ error: "로그인 중 오류가 발생했습니다." });
   }
 });
 
 //사용자 데이터 불러오기
-app.post("/setting", async (req, res) => {
+app.post("/mypage", async (req, res) => {
   try {
     const { email, role } = req.body;
     let user = null;
 
-    // const connection = await mysql.createConnection(dbConfig);
-    const connection = await pool.getConnection();
-
+    const connection = await mysql.createConnection(dbConfig);
     if (role == 'administrators') {
       const [administrators] = await connection.execute(
         "SELECT * FROM administrators WHERE email = ?",
@@ -168,11 +152,8 @@ app.post("/setting", async (req, res) => {
       res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
     }
 
-    // connection.end();
-    connection.release();
-
+    connection.end();
   } catch (error) {
-    console.error("에러", error);
     res.status(500).json({ error: "데이터 불러오기 실패" });
   }
 });
@@ -184,8 +165,7 @@ app.post("/updatedata", async (req, res) => {
     console.log(req.body);
 
     // MySQL 데이터베이스 연결
-    // const connection = await mysql.createConnection(dbConfig);
-    const connection = await pool.getConnection();
+    const connection = await mysql.createConnection(dbConfig);
 
     // 사용자 데이터 업데이트
     const [result] = await connection.execute(
@@ -193,8 +173,7 @@ app.post("/updatedata", async (req, res) => {
       [ name, email, phoneNumber, hospitalName, pemail]
     );
 
-    // connection.end();
-    connection.release();
+    connection.end();
 
     if (result.affectedRows === 1) {
       // 업데이트가 성공한 경우
@@ -214,9 +193,7 @@ app.post("/updatepw", async (req, res) => {
     const { currentPW, newPW, email, role } = req.body;
     let user = null;
 
-    // const connection = await mysql.createConnection(dbConfig);
-    const connection = await pool.getConnection();
-
+    const connection = await mysql.createConnection(dbConfig);
     if (role == 'administrators') {
       const [administrators] = await connection.execute(
         "SELECT * FROM administrators WHERE email = ?",
@@ -251,11 +228,8 @@ app.post("/updatepw", async (req, res) => {
       res.status(500).json({ error: "현재 비밀번호가 맞지 않습니다." });
     }
 
-    // connection.end();
-    connection.release();
-    
+    connection.end();
   } catch (error) {
-    console.error("에러", error);
     res.status(500).json({ error: "데이터 업데이트 중 오류가 발생했습니다." });
   }
 });
