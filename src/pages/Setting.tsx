@@ -31,7 +31,7 @@ const infoValidationSchema = Yup.object({
         .notRequired(),
 });
 const passwordValidationSchema = Yup.object({
-    password: Yup.string().min(8, 'Password must be at least 6 characters').max(16, 'Too long').matches(/[0-9]/, getCharacterValidationError("digit")).matches(/[a-z]/, getCharacterValidationError("lowercase"))
+    password: Yup.string().min(6, 'Password must be at least 6 characters').max(16, 'Too long').matches(/[0-9]/, getCharacterValidationError("digit")).matches(/[a-z]/, getCharacterValidationError("lowercase"))
         .required('Required'),
     confirmPassword: Yup.string().required('Please retype your password'),
 
@@ -45,7 +45,6 @@ const Setting = () => {
         hospitalName: '',
         phoneNumber: '',
     });
-    console.log(initialFormValues);
     //initial value
     const infoInitialValues: UpdateInfo = {
         email: initialFormValues.email,
@@ -75,7 +74,8 @@ const Setting = () => {
                     email: sessionStorage.getItem('email'),
                     role: sessionStorage.getItem('role'),
                 };
-                const response = await axios.post('http://20.214.184.115:3001/mypage', data);
+                console.log(data);
+                const response = await axios.post('http://20.214.184.115:3001/setting', data);
                 setInitialFormValues(response.data);
             } catch (error) {
                 console.error('API 요청 에러:', error);
@@ -123,8 +123,8 @@ const Setting = () => {
         try {
             // 전송할 데이터
             const userData = {
-                password: password,
-                confirmPassword: confirmPassword,
+                currentPW: password,
+                newPW: confirmPassword,
                 email: sessionStorage.getItem('email'),
                 role: sessionStorage.getItem('role'),
             };
@@ -144,7 +144,7 @@ const Setting = () => {
                 // 서버 응답에 따른 처리 (예: 에러 메시지 표시)
             }
         } catch (error) {
-            console.error('회원가입 에러:', error);
+            console.error('비밀번호 변경 에러:', error);
             // 오류 처리 (예: 에러 메시지 표시)
         }
         setSubmitting(false);
