@@ -64,17 +64,17 @@ const Header = () => {
               Products
             </a>
             <a
-              href="/"
+              href="#partners"
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
-              About Us
+              Partners
             </a>
-            <a
-              href="/"
+            {/* <a
+              href="#"
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               News
-            </a>
+            </a> */}
             <a
               href="#contact"
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"

@@ -7,7 +7,7 @@ import heroBg from '../../assets/none.svg';
 
 const Hero = () => {
   return (
-    <section id="home" className="px-5 flex flex-col justify-center lg:max-w-[1445px] lg:px-10 mx-auto pt-20 h-screen">
+    <section id="home" className="px-5 flex flex-col justify-center lg:max-w-[1445px] lg:px-10 mx-auto pt-20 h-screen relative">
       <div className="flex flex-col md:flex-row items-center justify-between gap-2">
         <div className="flex flex-col items-start w-full">
           <Heading tag="h1" className="mt-[180px] text-left">
@@ -20,7 +20,7 @@ const Hero = () => {
         </div>
         <div className="-mr-16 w-full"><img src={heroBg} alt="" className="w-full" /></div>
       </div>
-      <div id="products"></div>
+      <div id="products" className="absolute inset-x-0 bottom-24"></div>
     </section>
   );
 };

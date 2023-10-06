@@ -5,7 +5,7 @@ import { Text, Heading } from "../../components";
 
 function Partners() {
   return (
-    <section className=" lg:px-10 pt-10 pb-16 flex items-center w-full" id="partners">
+    <section className="lg:px-10 pt-10 pb-16 flex items-center w-full lg:max-w-[1445px] mx-auto relative" id="partners">
       <div className="w-full bg-white-green py-20 rounded-[100px] ">
         <Heading tag="h2">Partners</Heading>
         <Text size="m" styles="text-center my-3 max-w-[600px] m-auto">
@@ -16,6 +16,7 @@ function Partners() {
           <img src={chaimage} alt="cha" className="max-w-[340px]" />
         </div>
       </div>
+      <div id="contact" className="absolute inset-x-0 bottom-28"></div>
     </section>
   );
 }
