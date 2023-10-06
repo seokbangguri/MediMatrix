@@ -3,7 +3,7 @@ import { Text, Heading, Button } from "../../components";
 
 function Contact() {
   return (
-    <section className="lg:px-10 mt-20 mb-20 flex items-center w-full" id="contact">
+    <section className="lg:px-10 mt-20 mb-20 flex items-center w-full lg:max-w-[1445px] mx-auto" id="contact">
       <div className="w-full bg-white-blue py-20 rounded-[100px] ">
         <Heading tag="h2">Contact Us</Heading>
         <Text size="m" styles="text-center my-3 max-w-[600px] m-auto text-sm md:text-lg">

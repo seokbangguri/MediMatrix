@@ -4,7 +4,7 @@ import { Text, Card, Heading } from "../../components";
 function Products() {
 
   return (
-    <section className="px-5 lg:px-10 my-10 flex flex-col items-center">
+    <section className="px-5 my-10 flex flex-col justify-center lg:max-w-[1445px] lg:px-10 mx-auto relative">
       <Heading tag="h2" className=''>
         Products and Services
       </Heading>
@@ -48,6 +48,7 @@ function Products() {
           A stroke aftereffects rehabilitation (DTx) program through interaction with XR-based 3D objects.
         </Card>
       </div>
+      <div id="partners" className="absolute inset-x-0 bottom-28"></div>
     </section>
   );
 }
