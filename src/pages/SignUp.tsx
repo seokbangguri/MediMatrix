@@ -109,11 +109,11 @@ const SignUp: React.FC = () => {
                   icon: "error",
                 });
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('회원가입 에러:', error);
             Swal.fire({
               title: "회원가입 에러",
-              text: '에러가 발생했습니다.',
+              text: error.response.data.error,
               icon: "error",
             });
         }
