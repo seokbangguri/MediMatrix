@@ -1,10 +1,10 @@
-// require('dotenv').config();
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
-const mysql = require("mysql2/promise"); // 수정: mysql2/promise 모듈 사용
+const mysql = require("mysql2/promise");
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
-const saltRounds = 10; // 솔트(Salt) 라운드 수
+const saltRounds = parseInt(process.env.HASH_SALT);
 
 const app = express();
 const port = 3001;
@@ -17,13 +17,6 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-// const dbConfig = {
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_DATABASE,
-// };
-
 const pool = require("./dbPool");
 
 //회원가입
@@ -35,7 +28,6 @@ app.post("/signup", async (req, res) => {
     const hash = await bcrypt.hash(password, saltRounds);
 
     // MySQL 데이터베이스 연결
-    // const connection = await mysql.createConnection(dbConfig);
     const connection = await pool.getConnection();
 
     // 중복 이메일 검사
@@ -57,14 +49,12 @@ app.post("/signup", async (req, res) => {
 
       // 데이터베이스에 회원 정보 추가
       const [result] = await connection.execute(
-        `INSERT INTO ${
-          role === "administrators" ? "administrators (name, email, password, hospital, hp) VALUES (?, ?, ?, ?, ?)" : "therapists (name, email, password, hospital, hp) VALUES (?, ?, ?, ?, ?)"
+        `INSERT INTO ${role === "administrators" ? "administrators (name, email, password, hospital, hp) VALUES (?, ?, ?, ?, ?)" : "therapists (name, email, password, hospital, hp) VALUES (?, ?, ?, ?, ?)"
         }`,
         [name, email, hash, hospitalName, phoneNumber]
       );
 
-      // connection.end();
-    connection.release();
+      connection.release();
 
       // 회원가입 성공
       res.status(201).json({ message: "회원가입 성공" });
@@ -81,7 +71,6 @@ app.post("/signin", async (req, res) => {
     const { email, password } = req.body;
 
     // MySQL 데이터베이스 연결
-    // const connection = await mysql.createConnection(dbConfig);
     const connection = await pool.getConnection();
 
     // therapists 테이블에서 이메일로 사용자 정보 검색
@@ -122,7 +111,6 @@ app.post("/signin", async (req, res) => {
       res.status(401).json({ error: "유효하지 않은 이메일 또는 비밀번호입니다." });
     }
 
-    // connection.end();
     connection.release();
 
   } catch (error) {
@@ -137,7 +125,6 @@ app.post("/setting", async (req, res) => {
     const { email, role } = req.body;
     let user = null;
 
-    // const connection = await mysql.createConnection(dbConfig);
     const connection = await pool.getConnection();
 
     if (role == 'administrators') {
@@ -162,13 +149,12 @@ app.post("/setting", async (req, res) => {
         name: user.name,
         hospitalName: user.hospital,
         phoneNumber: user.hp,
-    });
+      });
     } else {
       // 사용자를 찾을 수 없을 경우 적절한 응답을 보냅니다.
       res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
     }
 
-    // connection.end();
     connection.release();
 
   } catch (error) {
@@ -184,16 +170,14 @@ app.post("/updatedata", async (req, res) => {
     console.log(req.body);
 
     // MySQL 데이터베이스 연결
-    // const connection = await mysql.createConnection(dbConfig);
     const connection = await pool.getConnection();
 
     // 사용자 데이터 업데이트
     const [result] = await connection.execute(
       `UPDATE ${role} SET name = ?, email = ?, hp = ?, hospital = ? WHERE email = ?`,
-      [ name, email, phoneNumber, hospitalName, pemail]
+      [name, email, phoneNumber, hospitalName, pemail]
     );
 
-    // connection.end();
     connection.release();
 
     if (result.affectedRows === 1) {
@@ -214,7 +198,6 @@ app.post("/updatepw", async (req, res) => {
     const { currentPW, newPW, email, role } = req.body;
     let user = null;
 
-    // const connection = await mysql.createConnection(dbConfig);
     const connection = await pool.getConnection();
 
     if (role == 'administrators') {
@@ -251,9 +234,8 @@ app.post("/updatepw", async (req, res) => {
       res.status(500).json({ error: "현재 비밀번호가 맞지 않습니다." });
     }
 
-    // connection.end();
     connection.release();
-    
+
   } catch (error) {
     console.error("에러", error);
     res.status(500).json({ error: "데이터 업데이트 중 오류가 발생했습니다." });

@@ -1,46 +1,56 @@
-# Getting Started with Create React App
+# Medimatrix 프로젝트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Medimatrix는 의료 기관 및 선생님들을 위한 플랫폼입니다. 환자 관리, 예약 관리, 데이터 분석 등의 기능을 제공하여 의료 서비스를 효율적으로 관리할 수 있습니다.
 
-## Available Scripts
+## 주요 기술 스택
 
-In the project directory, you can run:
+- Node.js
+- Express.js
+- MySQL
+- React.js
+- 등
 
-### `npm start`
+## 설치 및 실행 방법
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. **의존성 설치**
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+   ```
+   npm install
+   ```
 
-### `npm test`
+2. **환경 변수 설정**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   `.env` 파일을 생성하고 아래와 같이 환경 변수를 설정합니다.
 
-### `npm run build`
+   ```plaintext
+   DB_HOST=your_database_host
+   DB_USER=your_database_user
+   DB_PASSWORD=your_database_password
+   DB_DATABASE=your_database_name
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. **클라이언트 실행**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```
+   npm start
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. **서버 실행**
 
-### `npm run eject`
+   클라이언트 디렉토리로 이동하여 클라이언트를 실행합니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   ```
+   cd api
+   npm install
+   node api.js
+   ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. **브라우저에서 확인**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+   [http://localhost:3000](http://localhost:3000) 에 접속하여 프로젝트를 확인합니다.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 기능 목록
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 회원가입 및 로그인 기능
+- 의료 기관 및 선생님 정보 등록 및 수정
+- 환자 예약 및 관리
