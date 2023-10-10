@@ -63,13 +63,17 @@ const SignIn = () => {
         window.location.href = "/";
       } else {
         console.error('서버 응답 오류:', response.status);
+        Swal.fire({
+          title: "로그인 에러",
+          text: response.statusText,
+          icon: "error",
+        });
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('로그인 에러:', error);
-      const emsg: string = error.response.data.error as string;
       Swal.fire({
         title: "로그인 에러",
-        text: emsg,
+        text: '에러가 발생했습니다.',
         icon: "error",
       });
     } finally {

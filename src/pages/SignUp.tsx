@@ -103,9 +103,19 @@ const SignUp: React.FC = () => {
                 window.location.href = "/"; // 회원가입이 성공하면 홈페이지로 이동
             } else {
                 console.error('서버 응답 오류:', response.status);
+                Swal.fire({
+                  title: "회원가입 에러",
+                  text: response.statusText,
+                  icon: "error",
+                });
             }
         } catch (error) {
             console.error('회원가입 에러:', error);
+            Swal.fire({
+              title: "회원가입 에러",
+              text: '에러가 발생했습니다.',
+              icon: "error",
+            });
         }
         setSubmitting(false);
     };
