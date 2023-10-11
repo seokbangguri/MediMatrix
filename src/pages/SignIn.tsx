@@ -69,11 +69,11 @@ const SignIn = () => {
           icon: "error",
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('로그인 에러:', error);
       Swal.fire({
         title: "로그인 에러",
-        text: '에러가 발생했습니다.',
+        text: error.response.data.error,
         icon: "error",
       });
     } finally {

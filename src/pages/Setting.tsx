@@ -92,50 +92,73 @@ const Setting = () => {
         const updatedHospitalName = hospitalName || initialFormValues.hospitalName;
         const updatedPhoneNumber = phoneNumber || initialFormValues.phoneNumber;
         const updatedName = name || initialFormValues.name;
-    
-        try {
-            const updateData = {
-                email: updatedEmail,
-                name: updatedName,
-                hospitalName: updatedHospitalName,
-                phoneNumber: updatedPhoneNumber,
-                role: sessionStorage.getItem('role'),
-                pemail: sessionStorage.getItem('email'),
-            };
 
-            const response = await axios.post('http://20.214.184.115:3001/updatedata', updateData);
-
-            if (response.status === 200) {
-                sessionStorage.setItem('name', updatedName);
-                sessionStorage.setItem('email', updatedEmail);
-                console.log('회원정보 변경 성공:', response.data);
-                Swal.fire({
-                    icon: 'success',
-                    title: '회원정보 변경 완료!',
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(() => {
-                    window.location.reload();
-                });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: response.status,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-                console.error('서버 응답 오류:', response.status);
-            }
-        } catch (error) {
+        if (email !== '' || hospitalName !== '' || phoneNumber !== '' || name !== '') {
             Swal.fire({
-                icon: 'error',
-                title: '에러가 발생했습니다.',
+                title: '정보를 수정 하시겠습니까?',
+                text: "수정 후 되돌릴 수 없습니다!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '수정',
+                cancelButtonText: '취소'
+              }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const updateData = {
+                            email: updatedEmail,
+                            name: updatedName,
+                            hospitalName: updatedHospitalName,
+                            phoneNumber: updatedPhoneNumber,
+                            role: sessionStorage.getItem('role'),
+                            pemail: sessionStorage.getItem('email'),
+                        };
+            
+                        const response = await axios.post('http://20.214.184.115:3001/updatedata', updateData);
+            
+                        if (response.status === 200) {
+                            sessionStorage.setItem('name', updatedName);
+                            sessionStorage.setItem('email', updatedEmail);
+                            console.log('회원정보 변경 성공:', response.data);
+                            Swal.fire({
+                                icon: 'success',
+                                title: '회원정보 변경 완료!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: response.status,
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            console.error('서버 응답 오류:', response.status);
+                        }
+                    } catch (error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '에러가 발생했습니다.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        console.error('정보 수정 에러:', error);
+                    }
+                    setSubmitting(false);
+
+                }
+              }) 
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: '수정사항이 없습니다!',
                 showConfirmButton: false,
                 timer: 1500
             })
-            console.error('정보 수정 에러:', error);
         }
-        setSubmitting(false);
     };
     //Handle reset password
     const handleResetPassword = async (values: any, { setSubmitting }: any) => {
@@ -198,7 +221,7 @@ const Setting = () => {
                         <h6 className='pb-2 text-md text-semibold'>회원정보</h6>
                         <div className=" flex flex-col gap-5 pb-5 border-b border-[#cecece] ">
                             <label htmlFor="name" className="block text-sm font-medium text-gray-900 dark:text-white py-2.5">이름</label>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-900 dark:text-white py-2.5">이메일</label>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-900 dark:text-white py-2.5">이메일(수정불가)</label>
                             <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-900 dark:text-white py-2.5">전화번호</label>
                             <label htmlFor="hospitalName" className="block text-sm font-medium text-gray-900 dark:text-white py-2.5">병원 이름</label>
                         </div>
@@ -217,19 +240,19 @@ const Setting = () => {
                                             수정하고 싶으시면, 수정 내용을 입력하시고 저장 버튼을 누르시면 됩니다.
                                         </p>
                                         <div className="">
-                                            <Field type="text" name="name" id="name" className="bg-stone-100 border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder={initialFormValues.name} />
+                                            <Field type="text" name="name" id="name" className="bg-white border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder={initialFormValues.name} />
                                             <ErrorMessage name="name" component="div" className="text-red-700 text-sm" />
                                         </div>
                                         <div className="">
-                                            <Field type="email" name="email" id="email" className="bg-stone-100 border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder={initialFormValues.email} />
+                                            <Field type="email" name="email" id="email" className="bg-stone-100 placeholder:text-slate-600 border border-[#888] text-gray-900 sm:text-sm rounded-xs block w-full p-2.5  " placeholder={initialFormValues.email} readOnly />
                                             <ErrorMessage name="email" component="div" className="text-red-700 text-sm" />
                                         </div>
                                         <div className="">
-                                            <Field type="tel" name="phoneNumber" id="phoneNumber" className="bg-stone-100 border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder={initialFormValues.phoneNumber} />
+                                            <Field type="tel" name="phoneNumber" id="phoneNumber" className="bg-white border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder={initialFormValues.phoneNumber} />
                                             <ErrorMessage name="phoneNumber" component="div" className="text-red-700 text-sm" />
                                         </div>
                                         <div className="">
-                                            <Field type="text" name="hospitalName" id="hospitalName" className="bg-stone-100 border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder={initialFormValues.hospitalName} />
+                                            <Field type="text" name="hospitalName" id="hospitalName" className="bg-white border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder={initialFormValues.hospitalName} />
                                             <ErrorMessage name="hospitalName" component="div" className="text-red-700 text-sm" />
                                         </div>
                                         <div className="flex items-center justify-center gap-8">
