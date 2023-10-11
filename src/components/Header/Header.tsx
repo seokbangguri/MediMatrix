@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import image from "../../assets/medimatrix_logo_black.svg";
 import userIcon from '../../assets/user.svg'
 import Button from "../Button/Button";
+import { moving } from "../../testcode";
 
 
 const Header = () => {
@@ -24,6 +25,16 @@ const Header = () => {
     window.location.href = "/";
   }
 
+  const scrollToSection = (sectionId: string) => {
+    const targetElement = document.querySelector(sectionId);
+    if (targetElement instanceof HTMLElement) {
+      targetElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <header className="fixed top-0 z-30 w-screen bg-white mx-auto drop-shadow-xl">
       <div className="lg:max-w-[1445px] flex items-center justify-between py-5 px-5 md:px-10 mx-auto">
@@ -41,30 +52,31 @@ const Header = () => {
         <nav className="flex items-center ">
           <div className="flex items-center gap-4 md:gap-6 lg:gap-9">
             <a
-              href="#home"
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                  scrollToSection("#home");
+                }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-75  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Home
             </a>
             <a
-              href="#products"
+              href="/"
               onClick={(e) => {
-                e.preventDefault(); // 기본 동작(링크 이동)을 막습니다.
-                const targetElement = document.querySelector("#products");
-                if (targetElement instanceof HTMLElement) {
-                  const targetPosition = targetElement.offsetTop; // 원하는 위치를 조정하세요.
-                  window.scrollTo({
-                    top: targetPosition,
-                    behavior: "smooth", // 부드럽게 스크롤합니다.
-                  });
-                }
+                e.preventDefault();
+                scrollToSection("#products");
               }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Products
             </a>
             <a
-              href="#partners"
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("#partners");
+              }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Partners
@@ -76,7 +88,11 @@ const Header = () => {
               News
             </a> */}
             <a
-              href="#contact"
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("#contact");
+              }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Contact
