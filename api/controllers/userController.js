@@ -1,26 +1,8 @@
-require('dotenv').config({ path: './.env'});
-const express = require("express");
-const cors = require("cors");
-const mysql = require("mysql2/promise");
-const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
-const saltRounds = parseInt(process.env.HASH_SALT);
-
-const app = express();
-const port = 3001;
-
-app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cors());
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-
 const pool = require("./dbPool");
 
-//회원가입
-app.post("/signup", async (req, res) => {
+async function signup(req, res) {
+  // 회원가입 로직 구현
   try {
     const { name, email, password, hospitalName, phoneNumber, role } = req.body;
 
@@ -63,10 +45,10 @@ app.post("/signup", async (req, res) => {
     console.error("에러", error);
     res.status(500).json({ error: "회원가입 중 오류가 발생했습니다." });
   }
-});
+}
 
-//로그인
-app.post("/signin", async (req, res) => {
+async function signin(req, res) {
+  // 로그인 로직 구현
   try {
     const { email, password } = req.body;
 
@@ -117,10 +99,10 @@ app.post("/signin", async (req, res) => {
     console.error("에러", error);
     res.status(500).json({ error: "로그인 중 오류가 발생했습니다." });
   }
-});
+}
 
-//사용자 데이터 불러오기
-app.post("/setting", async (req, res) => {
+async function loadUserData(req, res) {
+  // 사용자 데이터 로드 로직 구현
   try {
     const { email, role } = req.body;
     let user = null;
@@ -161,10 +143,10 @@ app.post("/setting", async (req, res) => {
     console.error("에러", error);
     res.status(500).json({ error: "데이터 불러오기 실패" });
   }
-});
+}
 
-//정보 수정
-app.post("/updatedata", async (req, res) => {
+async function updateData(req, res) {
+  // 사용자 정보 업데이트 로직 구현
   try {
     const { email, name, hospitalName, phoneNumber, role, pemail } = req.body;
     console.log(req.body);
@@ -191,10 +173,10 @@ app.post("/updatedata", async (req, res) => {
     console.error("사용자 데이터 업데이트 에러:", error);
     res.status(500).json({ error: "데이터 업데이트 중 오류가 발생했습니다." });
   }
-});
+}
 
-//비밀번호 수정
-app.post("/updatepw", async (req, res) => {
+async function updatePassword(req, res) {
+  // 비밀번호 업데이트 로직 구현
   try {
     const { currentPW, newPW, email, role } = req.body;
     let user = null;
@@ -241,10 +223,12 @@ app.post("/updatepw", async (req, res) => {
     console.error("에러", error);
     res.status(500).json({ error: "데이터 업데이트 중 오류가 발생했습니다." });
   }
-});
+}
 
-
-app.listen(port, () => {
-  console.log(`서버가 포트 ${port}에서 실행 중입니다.`);
-});
-
+module.exports = {
+  signup,
+  signin,
+  loadUserData,
+  updateData,
+  updatePassword
+};
