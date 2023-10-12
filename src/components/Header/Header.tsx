@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import image from "../../assets/medimatrix_logo_black.svg";
 import userIcon from '../../assets/user.svg'
 import Button from "../Button/Button";
-import { moving } from "../../testcode";
 
 
 const Header = () => {
@@ -40,7 +39,13 @@ const Header = () => {
     <header className="fixed top-0 z-30 w-screen bg-white mx-auto drop-shadow-xl">
       <div className="lg:max-w-[1445px] flex items-center justify-between py-5 px-5 md:px-10 mx-auto">
         <div className="flex items-center justify-center shrink-0">
-          <a href="/">
+          <a href="/"
+              onClick={(e) => {
+                if (window.location.pathname == '/') {
+                  e.preventDefault();
+                  scrollToSection("#home");
+                }
+              }}>
             <img
               className="pt-1"
               src={image}

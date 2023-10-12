@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { useState, useEffect } from "react";
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 
+const apiUrl = process.env.REACT_APP_API_URL;
 //Interface
 interface SignUpValues {
     email: string;
@@ -93,13 +94,14 @@ const SignUp: React.FC = () => {
             };
 
             // Axios를 사용하여 서버로 POST 요청 보내기
-            const response = await axios.post('http://20.214.184.115:3001/signup', userData);
+            const response = await axios.post(apiUrl+'/signup', userData);
 
             // 서버 응답 확인
             if (response.status === 201) {
                 sessionStorage.setItem('name',name);
                 sessionStorage.setItem('email', email);
                 sessionStorage.setItem('role', role);
+                sessionStorage.setItem('hospital', hospitalName);
                 window.location.href = "/"; // 회원가입이 성공하면 홈페이지로 이동
             } else {
                 console.error('서버 응답 오류:', response.status);

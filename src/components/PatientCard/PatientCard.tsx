@@ -15,7 +15,6 @@ const PatientCard = ({name, id, score, image, options}: PatientCardProps) => {
 
   const patients = new Set(data.map((patient) => patient.환자번호));
   const patientsArray = Array.from(patients);
-  console.log(patientsArray);
 
   return (
 
