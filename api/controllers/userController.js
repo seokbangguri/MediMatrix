@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const pool = require("./dbPool");
+const pool = require("../dbPool");
 
 async function signup(req, res) {
   // 회원가입 로직 구현
