@@ -7,6 +7,7 @@ import { moving } from "../../testcode";
 
 const Header = () => {
   var user = sessionStorage.getItem('name');
+  var role = sessionStorage.getItem('role');
   useEffect(() => {
 
   }, [user]);
@@ -54,8 +55,10 @@ const Header = () => {
             <a
               href="/"
               onClick={(e) => {
-                e.preventDefault();
+                if (window.location.pathname == '/') {
+                  e.preventDefault();
                   scrollToSection("#home");
+                }
                 }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-75  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
@@ -64,8 +67,10 @@ const Header = () => {
             <a
               href="/"
               onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("#products");
+                if (window.location.pathname == '/') {
+                  e.preventDefault();
+                  scrollToSection("#products");
+                }
               }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
@@ -74,24 +79,22 @@ const Header = () => {
             <a
               href="/"
               onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("#partners");
+                if (window.location.pathname == '/') {
+                  e.preventDefault();
+                  scrollToSection("#partners");
+                }
               }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Partners
             </a>
-            {/* <a
-              href="#"
-              className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
-            >
-              News
-            </a> */}
             <a
               href="/"
               onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("#contact");
+                if (window.location.pathname == '/') {
+                  e.preventDefault();
+                  scrollToSection("#contact");
+                }
               }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
@@ -129,8 +132,12 @@ const Header = () => {
             {isOpen && (
               <div className="absolute right-0 mt-4 w-40 bg-white drop-shadow-xl rounded-sm  overflow-hidden">
                 <ul className="list-inside">
-                  <li className="py-2 px-4 hover:bg-neutral-200 cursor-pointer">{user}님</li>
+                  <li className="py-2 px-4 font-semibold">{user}님</li>
                   <a href="/setting"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer border-t border-slate-400">마이페이지</li></a>
+                  {role == 'therapists' ? 
+                  <a href="/results"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">환자 관리</li></a> : 
+                  <a href="/admin"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">치료사 관리</li></a>
+                  }
                   <li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer" onClick={handleSignOut}>로그아웃</li>
                 </ul>
               </div>
