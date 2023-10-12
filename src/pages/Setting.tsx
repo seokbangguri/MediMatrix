@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Button, Heading } from '../components'
 import { useState, useEffect } from 'react';
 
+const apiUrl = process.env.REACT_APP_API_URL;
 //Interface
 interface UpdateInfo {
     email: string;
@@ -74,8 +75,7 @@ const Setting = () => {
                     email: sessionStorage.getItem('email'),
                     role: sessionStorage.getItem('role'),
                 };
-                console.log(data);
-                const response = await axios.post('http://20.214.184.115:3001/setting', data);
+                const response = await axios.post(apiUrl+'/setting', data);
                 setInitialFormValues(response.data);
             } catch (error) {
                 console.error('API 요청 에러:', error);
@@ -115,7 +115,7 @@ const Setting = () => {
                             pemail: sessionStorage.getItem('email'),
                         };
             
-                        const response = await axios.post('http://20.214.184.115:3001/updatedata', updateData);
+                        const response = await axios.post(apiUrl+'/updatedata', updateData);
             
                         if (response.status === 200) {
                             sessionStorage.setItem('name', updatedName);
@@ -174,7 +174,7 @@ const Setting = () => {
             console.log(userData);
 
             // Axios를 사용하여 서버로 POST 요청 보내기
-            const response = await axios.post('http://20.214.184.115:3001/updatepw', userData);
+            const response = await axios.post(apiUrl+'/updatepw', userData);
 
             // 서버 응답 확인
             if (response.status === 200) {

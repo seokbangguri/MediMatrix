@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi'
 import { useState, useEffect } from 'react';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const validationSchema = Yup.object({
   email: Yup.string().email("유효한 이메일을 입력하세요").required("이메일은 필수 항목입니다"),
   password: Yup.string().required("비밀번호는 필수 항목입니다"),
@@ -48,10 +50,11 @@ const SignIn = () => {
       };
 
       // Axios를 사용하여 서버로 POST 요청 보내기
-      const response = await axios.post('http://20.214.184.115:3001/signin', userData);
+      const response = await axios.post(apiUrl+'/signin', userData);
 
       // 서버 응답 확인
       if (response.status === 200) {
+        sessionStorage.setItem('hospital', response.data.user.hospital);
         sessionStorage.setItem('name', response.data.user.name);
         sessionStorage.setItem('email', response.data.user.email);
         if(response.data.user.admin === null) {
