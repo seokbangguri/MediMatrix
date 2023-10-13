@@ -11,7 +11,6 @@ const PatientCard = ({name, id, score, image, options}: PatientCardProps) => {
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(e.target.value);
   };
-    console.log(selectedOption);
 
   const patients = new Set(data.map((patient) => patient.환자번호));
   const patientsArray = Array.from(patients);
