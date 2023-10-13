@@ -25,16 +25,6 @@ const Header = () => {
     window.location.href = "/";
   }
 
-  const scrollToSection = (sectionId: string) => {
-    const targetElement = document.querySelector(sectionId);
-    if (targetElement instanceof HTMLElement) {
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
-
   return (
     <header className="fixed top-0 z-30 w-screen bg-white mx-auto drop-shadow-xl">
       <div className="lg:max-w-[1445px] flex items-center justify-between py-5 px-5 md:px-10 mx-auto">
@@ -43,7 +33,7 @@ const Header = () => {
               onClick={(e) => {
                 if (window.location.pathname == '/') {
                   e.preventDefault();
-                  scrollToSection("#home");
+                  window.location.href = '#home';
                 }
               }}>
             <img
@@ -58,11 +48,11 @@ const Header = () => {
         <nav className="flex items-center ">
           <div className="flex items-center gap-4 md:gap-6 lg:gap-9">
             <a
-              href="/"
+              href="/#home"
               onClick={(e) => {
                 if (window.location.pathname == '/') {
                   e.preventDefault();
-                  scrollToSection("#home");
+                  window.location.href = '#home';
                 }
                 }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-75  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
@@ -70,11 +60,11 @@ const Header = () => {
               Home
             </a>
             <a
-              href="/"
+              href="/#products"
               onClick={(e) => {
                 if (window.location.pathname == '/') {
                   e.preventDefault();
-                  scrollToSection("#products");
+                  window.location.href = '#products';
                 }
               }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
@@ -82,11 +72,11 @@ const Header = () => {
               Products
             </a>
             <a
-              href="/"
+              href="/#partners"
               onClick={(e) => {
                 if (window.location.pathname == '/') {
                   e.preventDefault();
-                  scrollToSection("#partners");
+                  window.location.href = '#partners';
                 }
               }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
@@ -94,11 +84,11 @@ const Header = () => {
               Partners
             </a>
             <a
-              href="/"
+              href="/#contact"
               onClick={(e) => {
                 if (window.location.pathname == '/') {
                   e.preventDefault();
-                  scrollToSection("#contact");
+                  window.location.href = '#contact';
                 }
               }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"

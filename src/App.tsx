@@ -11,7 +11,7 @@ import Admin from './pages/admin';
 function App() {
 
   return (
-    <div className="App font-roboto flex flex-col justify-center items-center">
+    <div className="App font-roboto flex flex-col justify-center items-center select-none">
       <Router>
         <Header />
         <Routes>

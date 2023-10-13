@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Heading, Text, Button, Footer } from "../components";
+import { Heading, Text, Button, Footer, Loading } from "../components";
 import Swal from "sweetalert2";
 import uploadIcon from '../assets/upload-icon.svg';
 import hospital from '../contracted';
 
 function Beery() {
-    const signinSession = sessionStorage.getItem('name');
-    const hos = sessionStorage.getItem('hospital');
+    const [visible, setVisible] = useState(false);
+
     // 페이지가 처음 로딩될 때만 실행되는 함수
     useEffect(() => {
         // 여기에 원하는 동작을 추가하세요.
+        const signinSession = sessionStorage.getItem('name');
+        const hos = sessionStorage.getItem('hospital');
         if(!signinSession || hos == null){
             Swal.fire({
                 title: "로그인 후 이용 가능합니다.",
@@ -140,6 +142,7 @@ function Beery() {
                 icon: "warning",
             });
         } else {
+            setVisible(true);
             // 파일이 있을 때 채점 페이지로 이동
             window.location.href = "/results";
         }
@@ -147,6 +150,7 @@ function Beery() {
 
     return (
         <div className="w-screen">
+            <Loading context="Beery 채점 중 입니다." hidden={visible} />
             <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 h-screen">
                 <Heading tag="h2" className="">
                     AI 기반 Beery VMI 답안 채점도구

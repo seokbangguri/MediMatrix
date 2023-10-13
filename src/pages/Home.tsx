@@ -3,6 +3,23 @@ import blobImage from "../assets/home-blob.svg"
 import { Products, Partners, Hero, Contact, Footer } from "../components";
 const Home = () => {
 
+  const scrollToSection = (sectionId: string) => {
+    const targetElement = document.querySelector(sectionId);
+    if (targetElement instanceof HTMLElement) {
+      targetElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
+  window.onload = function () {
+    const hash = window.location.hash;
+    if (hash) {
+      scrollToSection(hash);
+    }
+  }
+
   return <div className="static w-screen">
     <Hero />
     <Products />
