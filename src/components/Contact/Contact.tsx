@@ -10,7 +10,7 @@ function Contact() {
           Complete the form below to connect with our team of experts on implementing digital primary care solutions.
         </Text>
         <div className="flex items-center justify-center gap-20 mx-auto mt-14">
-          <a href="/">
+          <a href="mailto:sjhong.goqba.com">
             <Button apperance="custom" styles="px-16">Get in touch</Button>
           </a>
         </div>
