@@ -144,7 +144,7 @@ function Beery() {
         } else {
             setVisible(true);
             // 파일이 있을 때 채점 페이지로 이동
-            // window.location.href = "/results";
+            window.location.href = "/results";
         }
     };
 
