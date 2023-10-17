@@ -1,5 +1,4 @@
 import FileInputBox from "./FileInputBox/FileInputBox";
-
 export { default as Header } from "./Header/Header";
 export { default as Footer } from "./Footer/Footer";
 export { default as Button } from "./Button/Button";
@@ -18,3 +17,4 @@ export { default as ResultsChartAge } from './ResultsChartAge/ResultsChartAge'
 export { default as Loading } from './Loading/Loading'
 export { default as FileInputBox } from './FileInputBox/FileInputBox'
 export { default as PatientInput } from './PatientInput/PatientInput'
+export { default as Progress } from './Progress/Progress';

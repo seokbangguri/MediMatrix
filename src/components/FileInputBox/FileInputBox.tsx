@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import Swal from "sweetalert2";
 import uploadIcon from '../../assets/upload-icon.svg';
-import { Button, Loading, Text } from "../../components";
+import { Button, Loading, Progress, Text } from "../../components";
 
 type PatientInfo = {
     name: string;
@@ -9,7 +9,7 @@ type PatientInfo = {
     sex: string;
     hospital: string | null;
     therapists: string | null;
-  };
+};
 
 const FileInputBox = ({ patientInfo }: { patientInfo: PatientInfo }) => {
     const [visible, setVisible] = useState(false);
@@ -62,7 +62,7 @@ const FileInputBox = ({ patientInfo }: { patientInfo: PatientInfo }) => {
         // 드래그 앤 드롭한 파일 중에서 허용된 확장자만 선택
         const validFiles = droppedFiles.filter((file) => {
             const fileExtension = file.name.split(".").pop()?.toLowerCase();
-            const allowedExtensions = ["pdf","jpg","jpeg","png"]; // 허용할 확장자 목록
+            const allowedExtensions = ["pdf", "jpg", "jpeg", "png"]; // 허용할 확장자 목록
             const isValidExtension = allowedExtensions.includes(fileExtension || "");
 
             if (!isValidExtension) {
@@ -123,48 +123,49 @@ const FileInputBox = ({ patientInfo }: { patientInfo: PatientInfo }) => {
         }
     };
 
-  return (
-    <div className="flex flex-col justify-center items-center">
-        <Loading context="Beery 채점 중 입니다." hidden={visible} />
-        <Text size="m" styles="text-[#888888] font-bold pb-5">
-            파일 업로드
-        </Text>
-          <div
-              onDrop={handleDrop}
-              onDragOver={handleDragOver}
-              className="flex justify-center items-center w-[500px] bg-[#ebebeb] rounded-sm border border-dotted shadow-xl p-4"
-          >
-              {selectedFiles.length > 0 ? (
-                  <div>
-                      <p>업로드 목록:</p>
-                      <ul>
-                          {selectedFiles.map((file, index) => (
-                              <li key={index}>{file.name}</li>
-                          ))}
-                      </ul>
-                  </div>
-              ) : (
-                  <button className="flex flex-col items-center gap-2" onClick={handleFileButtonClick}>
-                      <img src={uploadIcon} alt="uload file" width={25} />
-                      <p className="text-black text-sm">클릭해서 파일을 추가하거나 마우스로 끌어서 추가할 수 있습니다.</p>
-                      <span className="text-xs">최대 파일 크기 100MB</span>
-                  </button>
-              )}
-              {/* 파일 입력(input) 요소를 숨겨놓고 버튼 클릭 시 파일 선택 창 열리도록 함 */}
-              <input
-                  type="file"
-                  accept=".pdf, .jpg, .jpeg, .png" // 원하는 파일 형식 지정
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  onChange={handleFileChange}
-                  multiple
-              />
-          </div>
-          <a onClick={handleScoreButtonClick}>
-              <Button apperance="primary" styles="mt-10 lg:w-[300px]">채점</Button>
-    </a>
-    </div>
-  );
+    return (
+        <div className="flex flex-col justify-center items-center">
+            <Progress step='2' completed={true} />
+            <Loading context="Beery 채점 중 입니다." hidden={visible} />
+            <Text size="m" styles="text-[#888888] font-bold py-5">
+                파일 업로드
+            </Text>
+            <div
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                className="flex justify-center items-center w-[500px] bg-[#ebebeb] rounded-sm border border-dotted shadow-xl p-4"
+            >
+                {selectedFiles.length > 0 ? (
+                    <div>
+                        <p>업로드 목록:</p>
+                        <ul>
+                            {selectedFiles.map((file, index) => (
+                                <li key={index}>{file.name}</li>
+                            ))}
+                        </ul>
+                    </div>
+                ) : (
+                    <button className="flex flex-col items-center gap-2" onClick={handleFileButtonClick}>
+                        <img src={uploadIcon} alt="uload file" width={25} />
+                        <p className="text-black text-sm">클릭해서 파일을 추가하거나 마우스로 끌어서 추가할 수 있습니다.</p>
+                        <span className="text-xs">최대 파일 크기 100MB</span>
+                    </button>
+                )}
+                {/* 파일 입력(input) 요소를 숨겨놓고 버튼 클릭 시 파일 선택 창 열리도록 함 */}
+                <input
+                    type="file"
+                    accept=".pdf, .jpg, .jpeg, .png" // 원하는 파일 형식 지정
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                    multiple
+                />
+            </div>
+            <a onClick={handleScoreButtonClick}>
+                <Button apperance="primary" styles="mt-10 lg:w-[300px]">채점</Button>
+            </a>
+        </div>
+    );
 };
 
 export default FileInputBox;
