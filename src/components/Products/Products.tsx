@@ -23,7 +23,7 @@ function Products() {
         <Card
           route='/beery'
           source="https://www.timesofautism.com/wp-content/uploads/2017/10/Autism-Spectrum-Disorder-Test.png"
-          name="Sample1"
+          name="Project 1"
           explain={["explain 1-1", "explain 1-2", "explain 1-3", "explain 1-4"]}
 
         >
@@ -32,7 +32,7 @@ function Products() {
         <Card
           route='/beery'
           source="https://healthjade.net/wp-content/uploads/2019/12/sperm-motility.jpg"
-          name="Sample2"
+          name="Project 2"
           explain={["explain 2-1", "explain 2-2", "explain 2-3", "explain 2-4"]}
 
         >
@@ -41,7 +41,7 @@ function Products() {
         <Card
           route='/beery'
           source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxjHRfHwDNzqxzweA6eimkRA0S_wRJ0okTuNxwP50vng&s"
-          name="Sample3"
+          name="Project 3"
           explain={["explain 3-1", "explain 3-2", "explain 3-3", "explain 3-4"]}
 
         >

@@ -104,7 +104,7 @@ function Beery() {
                 <Text size="s" styles=" mb-16">
                     Beery VMI 답안지는 S(환자번호).pdf 형태 또는 .png .jpg .jpeg 등 형태로 파일 이름을 작성해주세요.
                 </Text>
-                <div className="flex flex-col justify-center items-center w-[800px] bg-white rounded-lg drop-shadow-2xl  py-20">
+                <div className="flex flex-col justify-center items-center w-[700px] bg-white rounded-md drop-shadow-2xl  py-14">
                     <Progress step={String(progressStep)} completed={progressBar} />
                         {step === 1 ? (
                             <animated.div style={fadeInOutProps1}>
