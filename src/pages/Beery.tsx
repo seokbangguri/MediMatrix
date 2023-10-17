@@ -67,7 +67,7 @@ function Beery() {
     return (
         <div className="w-screen">
             <Loading context="Beery 채점 중 입니다." hidden={visible} />
-            <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 h-screen">
+            <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 mt-12 h-screen">
                 <Heading tag="h2" className="">
                     AI 기반 Beery VMI 답안 채점도구
                 </Heading>
@@ -79,9 +79,9 @@ function Beery() {
                 </Text>
                 <div className="flex flex-col justify-center items-center w-[800px] bg-white rounded-lg drop-shadow-2xl  py-20">
                     {step == 1 ? (
-                    <PatientInput onNextStep={handleNextStep}  />
-                    ):(
-                    <FileInputBox patientInfo={patientInfo} visible={handleLoading} />
+                        <PatientInput onNextStep={handleNextStep} />
+                    ) : (
+                        <FileInputBox patientInfo={patientInfo} visible={handleLoading} />
                     )}
                 </div>
             </section>
