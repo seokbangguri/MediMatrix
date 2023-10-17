@@ -249,7 +249,7 @@ async function patientE(req, res) {
       });
     } else {
       // 사용자를 찾을 수 없을 경우 적절한 응답을 보냅니다.
-      res.status(404).json({ error: "신규환자 입니다." });
+      res.status(201).json({ message: "신규환자 입니다." });
     }
 
     connection.release();

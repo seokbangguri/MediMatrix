@@ -134,7 +134,7 @@ const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visi
                 // 응답 완료 후 결과페이지로 이동
                 Swal.fire({
                     title: '채점 완료!',
-                    text: '확인을 누르면 결과로 이동합니다.',
+                    text: '확인을 누르면 결과로 이동합니다.'+response,
                     icon: 'success',
                     confirmButtonText: '확인',
                 }).then(() => {
