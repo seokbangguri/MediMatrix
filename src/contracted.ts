@@ -11,7 +11,8 @@ const hospital: HospitalInfo = {
     계약병원2: { beery: false, sperm: false },
     계약병원3: { beery: true, sperm: false },
     asdf: {beery: false, sperm: false },
-    분당차병원: {beery: true, sperm: true}
+    분당차병원: {beery: true, sperm: true},
+    cha: {beery: true, sperm: true},
 };
 
 export default hospital;
