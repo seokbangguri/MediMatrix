@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Heading, Text, Footer, FileInputBox, PatientInput } from "../components";
+import { Heading, Text, Footer, FileInputBox, PatientInput, Loading } from "../components";
 import Swal from "sweetalert2";
 import hospital from '../contracted';
 
@@ -13,6 +13,7 @@ function Beery() {
     };
 
     const [step, setStep] = useState(1);
+    const [visible, setVisible] = useState(false);
     const [patientInfo, setPatientInfo] = useState<PatientInfo>({
         name: '',
         id: '',
@@ -27,6 +28,10 @@ function Beery() {
       setPatientInfo(data);
       setStep(2);
     };
+
+    const handleLoading = (b: boolean) => {
+        setVisible(true);
+    }
 
     // 페이지가 처음 로딩될 때만 실행되는 함수
     useEffect(() => {
@@ -61,6 +66,7 @@ function Beery() {
 
     return (
         <div className="w-screen">
+            <Loading context="Beery 채점 중 입니다." hidden={visible} />
             <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 h-screen">
                 <Heading tag="h2" className="">
                     AI 기반 Beery VMI 답안 채점도구
@@ -75,7 +81,7 @@ function Beery() {
                     {step == 1 ? (
                     <PatientInput onNextStep={handleNextStep}  />
                     ):(
-                    <FileInputBox patientInfo={patientInfo} />
+                    <FileInputBox patientInfo={patientInfo} visible={handleLoading} />
                     )}
                 </div> 
             </section>

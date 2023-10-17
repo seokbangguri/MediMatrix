@@ -229,14 +229,15 @@ async function updatePassword(req, res) {
 async function patientE(req, res) {
   // 사용자 데이터 로드 로직 구현
   try {
-    const { name, id, hospital } = req.body;
+    const { name, id, hospital, sex, therapists } = req.body;
+    console.log(req.body);
     let p;
 
     const connection = await pool.getConnection();
 
     const [patient] = await connection.execute(
-      "SELECT * FROM patients WHERE id = ? AND name = ? AND hospital = ?",
-      [id, name, hospital]
+      "SELECT * FROM patients WHERE id = ? AND name = ? AND hospital = ? AND sex = ? AND therapists = ?",
+      [id, name, hospital, sex, therapists]
     )
 
     if (patient[0] != null) {

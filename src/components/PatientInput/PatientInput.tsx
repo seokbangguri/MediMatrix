@@ -3,7 +3,6 @@ import { Button } from "../../components";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
-const apiUrl = process.env.REACT_APP_API_URL;
 //Interface
 interface PatientExistValues {
     name: string;
@@ -40,7 +39,7 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
     }
 
     // Handle checking
-    const handleSignUp = async (values: PatientExistValues, { setSubmitting }: FormikHelpers<PatientExistValues>) => {
+    const handleNextStep = async (values: PatientExistValues, { setSubmitting }: FormikHelpers<PatientExistValues>) => {
         if(sessionStorage.getItem('hospital') != null && sessionStorage.getItem('name') != null) {
         const { name, id, sex, hospital, therapists } = values;
         // 전송할 데이터
@@ -62,7 +61,7 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
           <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={handleSignUp}
+              onSubmit={handleNextStep}
           >
 
               {({ isSubmitting }) => (

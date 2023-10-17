@@ -2,7 +2,9 @@ import React, { useState, useRef } from "react";
 import Swal from "sweetalert2";
 import uploadIcon from '../../assets/upload-icon.svg';
 import { Button, Loading, Text } from "../../components";
+import axios from "axios";
 
+const apiUrl = process.env.REACT_APP_API_URL;
 type PatientInfo = {
     name: string;
     id: string;
@@ -11,8 +13,9 @@ type PatientInfo = {
     therapists: string | null;
   };
 
-const FileInputBox = ({ patientInfo }: { patientInfo: PatientInfo }) => {
-    const [visible, setVisible] = useState(false);
+  type onVisibleCallback = (b: boolean) => void;
+
+const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visible: onVisibleCallback }) => {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -108,7 +111,7 @@ const FileInputBox = ({ patientInfo }: { patientInfo: PatientInfo }) => {
         }
     };
 
-    const handleScoreButtonClick = () => {
+    const handleScoreButtonClick = async () => {
         if (selectedFiles.length === 0) {
             // 파일이 없을 때 알림 띄우기
             Swal.fire({
@@ -117,15 +120,45 @@ const FileInputBox = ({ patientInfo }: { patientInfo: PatientInfo }) => {
                 icon: "warning",
             });
         } else {
-            setVisible(true);
-            // 파일이 있을 때 채점 페이지로 이동
-            window.location.href = "/results";
+            // 환자 데이터 처리 및 채점 요청
+            try {
+                visible(true);
+                const data = {
+                    patientInfo: patientInfo, // 환자 정보
+                    files: selectedFiles, // 선택된 파일 목록
+                };
+                console.log(data['patientInfo']);
+                console.log(data['files']);
+                const response = await axios.post(apiUrl +'/patientexist', data['patientInfo'])
+                // const response = await axios.post(apiUrl +'/patientE', data['files'])
+                // 응답 완료 후 결과페이지로 이동
+                Swal.fire({
+                    title: '채점 완료!',
+                    text: '확인을 누르면 결과로 이동합니다.',
+                    icon: 'success',
+                    confirmButtonText: '확인',
+                }).then(() => {
+                    window.location.href = "/results";
+                });
+                
+            } catch (error) {
+                visible(false);
+                Swal.fire({
+                  title: '에러!',
+                  text: '확인을 누르면 메인로 이동합니다.',
+                  icon: 'error',
+                  confirmButtonText: '확인',
+                }).then(() => {
+                  window.location.href = "/";
+                });
+                
+            }
+
         }
     };
 
   return (
     <div className="flex flex-col justify-center items-center">
-        <Loading context="Beery 채점 중 입니다." hidden={visible} />
         <Text size="m" styles="text-[#888888] font-bold pb-5">
             파일 업로드
         </Text>
