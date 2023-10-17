@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import image from "../../assets/medimatrix_logo_black.svg";
+import imagetest1 from "../../assets/test1.svg";
 import userIcon from '../../assets/user.svg'
 import Button from "../Button/Button";
 
@@ -38,7 +39,7 @@ const Header = () => {
               }}>
             <img
               className="pt-1"
-              src={image}
+              src={imagetest1}
               width={190}
               height={60}
               alt="logo"

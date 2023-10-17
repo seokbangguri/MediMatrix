@@ -3,6 +3,7 @@ import { Heading, Text, Footer, FileInputBox, PatientInput, Progress, Loading } 
 import Swal from "sweetalert2";
 import hospital from '../contracted';
 import { useSpring, animated } from "react-spring";
+import beery_main_img from "../assets/beery_main.svg"
 
 function Beery() {
     interface PatientInfo {
@@ -102,9 +103,13 @@ function Beery() {
                     채점을 진행하기 위해 환자의 Beery VMI 답안지를 넣어주세요.
                 </Text>
                 <Text size="s" styles=" mb-16">
-                    Beery VMI 답안지는 S(환자번호).pdf 형태 또는 .png .jpg .jpeg 등 형태로 파일 이름을 작성해주세요.
+                    Beery VMI 답안지는 .pdf 형태 또는 .png .jpg .jpeg 등 형태로 파일 이름을 작성해주세요.
                 </Text>
-                <div className="flex flex-col justify-center items-center w-[700px] bg-white rounded-md drop-shadow-2xl  py-14">
+                <div className="flex items-center justify-between w-[1445px] px-5 md:px-10">
+                <div className="w-[600px] flex justify-center">
+                    <img src={beery_main_img} alt="" width={500}/>
+                </div>
+                <div className="flex flex-col justify-center items-center w-[600px] min-h-[500px] bg-white rounded-md drop-shadow-2xl  py-10">
                     <Progress step={String(progressStep)} completed={progressBar} />
                         {step === 1 ? (
                             <animated.div style={fadeInOutProps1}>
@@ -115,6 +120,7 @@ function Beery() {
                                 <FileInputBox patientInfo={patientInfo} visible={handleLoading} />
                             </animated.div>
                         )}
+                </div>
                 </div>
             </section>
             <Footer />

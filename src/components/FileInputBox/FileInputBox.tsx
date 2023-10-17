@@ -22,8 +22,8 @@ const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visi
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
 
-        // 허용되는 총 파일 크기 (100MB)
-        const maxTotalFileSize = 100 * 1024 * 1024; // 100MB를 바이트 단위로 계산
+        // 허용되는 총 파일 크기 (10MB)
+        const maxTotalFileSize = 10 * 1024 * 1024; // 100MB를 바이트 단위로 계산
         let totalFileSize = 0;
 
         // 업로드된 각 파일의 크기를 합산
@@ -35,7 +35,7 @@ const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visi
         if (totalFileSize > maxTotalFileSize) {
             Swal.fire({
                 title: "파일 크기 초과",
-                text: "파일 크기 합계가 100MB를 초과합니다.",
+                text: "파일 크기 합계가 10MB를 초과합니다.",
                 icon: "error",
             });
 
@@ -58,8 +58,8 @@ const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visi
         e.preventDefault();
         const droppedFiles = Array.from(e.dataTransfer.files);
 
-        // 허용되는 총 파일 크기 (100MB)
-        const maxTotalFileSize = 100 * 1024 * 1024; // 100MB를 바이트 단위로 계산
+        // 허용되는 총 파일 크기 (10MB)
+        const maxTotalFileSize = 10 * 1024 * 1024; // 10MB를 바이트 단위로 계산
         let totalFileSize = 0;
 
         // 드래그 앤 드롭한 파일 중에서 허용된 확장자만 선택
@@ -86,7 +86,19 @@ const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visi
         if (totalFileSize > maxTotalFileSize) {
             Swal.fire({
                 title: "파일 크기 초과",
-                text: "파일 크기 합계가 100MB를 초과합니다.",
+                text: "파일 크기 합계가 10MB를 초과합니다.",
+                icon: "error",
+            });
+
+            // 업로드할 수 없도록 파일 목록 초기화
+            setSelectedFiles([]);
+            return;
+        }
+        // 파일 개수가 1개 초과인 경우
+        if (droppedFiles.length > 1) {
+            Swal.fire({
+                title: "파일 개수 초과",
+                text: "파일 1개만 업로드 가능합니다.",
                 icon: "error",
             });
 
@@ -159,13 +171,13 @@ const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visi
 
     return (
         <div className="flex flex-col justify-center items-center">
-            <Text size="m" styles="text-[#888888] font-bold pb-5">
+            <Text size="m" styles="text-[#888888] font-bold pb-5 pt-5">
                 파일 업로드
             </Text>
             <div
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
-                className="flex justify-center items-center w-[500px] bg-[#ebebeb] rounded-sm border border-dotted shadow-xl p-4"
+                className="flex justify-center items-center w-[450px] bg-[#ebebeb] rounded-sm border border-dotted shadow-xl p-4"
             >
                 {selectedFiles.length > 0 ? (
                     <div>
@@ -180,7 +192,7 @@ const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visi
                     <button className="flex flex-col items-center gap-2" onClick={handleFileButtonClick}>
                         <img src={uploadIcon} alt="uload file" width={25} />
                         <p className="text-black text-sm">클릭해서 파일을 추가하거나 마우스로 끌어서 추가할 수 있습니다.</p>
-                        <span className="text-xs">최대 파일 크기 100MB</span>
+                        <span className="text-xs">최대 파일 크기 10MB</span>
                     </button>
                 )}
                 {/* 파일 입력(input) 요소를 숨겨놓고 버튼 클릭 시 파일 선택 창 열리도록 함 */}
@@ -190,7 +202,6 @@ const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visi
                     ref={fileInputRef}
                     style={{ display: "none" }}
                     onChange={handleFileChange}
-                    multiple
                 />
             </div>
             <a onClick={handleScoreButtonClick}>
