@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Heading, Text, Footer, FileInputBox, PatientInput, Progress, Loading } from "../components";
 import Swal from "sweetalert2";
 import hospital from '../contracted';
+import { useSpring, animated } from "react-spring";
 
 function Beery() {
     interface PatientInfo {
@@ -21,6 +22,8 @@ function Beery() {
         hospital: sessionStorage.getItem('hospital'),
         therapists: sessionStorage.getItem('name')
     });
+    const [progressStep, setProgressStep] = useState(step);
+    const [progressBar, setProgressBar] = useState(false);
 
 
     const handleNextStep = (data: PatientInfo) => {
@@ -32,6 +35,30 @@ function Beery() {
     const handleLoading = (b: boolean) => {
         setVisible(true);
     }
+
+
+    const fadeInOutProps1 = useSpring({
+        opacity: step === 1 ? 1 : 0,
+        display: step === 1 ? "block" : "none",
+        config: {
+            duration: 1000, // 애니메이션의 지속 시간을 조절합니다 (1초로 설정되어 있음)
+        }
+    });
+    const fadeInOutProps2 = useSpring({
+        opacity: step === 2 ? 1 : 0,
+        display: step === 2 ? "block" : "none",
+        config: {
+            duration: 1000, // 애니메이션의 지속 시간을 조절합니다 (1초로 설정되어 있음)
+        }
+    });
+    useEffect(() => {
+        setProgressStep(step);
+        if(step === 1){
+            setProgressBar(false);
+        } else {
+            setProgressBar(true);
+        }
+    },[step]);
 
     // 페이지가 처음 로딩될 때만 실행되는 함수
     useEffect(() => {
@@ -78,11 +105,16 @@ function Beery() {
                     Beery VMI 답안지는 S(환자번호).pdf 형태 또는 .png .jpg .jpeg 등 형태로 파일 이름을 작성해주세요.
                 </Text>
                 <div className="flex flex-col justify-center items-center w-[800px] bg-white rounded-lg drop-shadow-2xl  py-20">
-                    {step == 1 ? (
-                        <PatientInput onNextStep={handleNextStep} />
-                    ) : (
-                        <FileInputBox patientInfo={patientInfo} visible={handleLoading} />
-                    )}
+                    <Progress step={String(progressStep)} completed={progressBar} />
+                        {step === 1 ? (
+                            <animated.div style={fadeInOutProps1}>
+                                <PatientInput onNextStep={handleNextStep} />
+                            </animated.div>
+                        ) : (
+                            <animated.div style={fadeInOutProps2}>
+                                <FileInputBox patientInfo={patientInfo} visible={handleLoading} />
+                            </animated.div>
+                        )}
                 </div>
             </section>
             <Footer />
