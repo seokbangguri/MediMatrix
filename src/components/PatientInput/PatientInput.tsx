@@ -68,17 +68,17 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
                         <Progress step='1' completed={false}/>
                         <div className="flex flex-col gap-3 w-full">
                             <div className="w-full gap-6">
-                                <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">이름</label>
+                                <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">이름</label>
                                 <Field type="text" name="name" id="name" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="이름" required />
                                 <ErrorMessage name="name" component="div" className="text-red-700 text-sm" />
                             </div>
                             <div className="w-full gap-6">
-                                <label htmlFor="id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">환자번호</label>
+                                <label htmlFor="id" className="block mb-2 text-sm font-medium text-gray-900">환자번호</label>
                                 <Field type="text" name="id" id="id" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="환자번호" required />
                                 <ErrorMessage name="hospitalName" component="div" className="text-red-700 text-sm" />
                             </div>
                             <div className="w-full gap-6">
-                                <label htmlFor="sex" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">성별</label>
+                                <label htmlFor="sex" className="block mb-2 text-sm font-medium text-gray-900">성별</label>
                                 <Field as="select" name="sex" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required>
                                     <option value="M">남자</option>
                                     <option value="F">여자</option>
