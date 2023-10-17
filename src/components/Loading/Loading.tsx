@@ -6,7 +6,7 @@ interface loadingProps {
 }
 
 const Loading = ({context, hidden}: loadingProps) => {
-    const sectionClasses = `w-screen h-screen bg-zinc-700 fixed bg-opacity-50 z-50 flex justify-center items-center ${hidden ? '' : 'hidden'}`;
+    const sectionClasses = `w-screen h-screen bg-zinc-700 fixed bg-opacity-50 z-50 left-0 top-0 flex justify-center items-center ${hidden ? '' : 'hidden'}`;
 
   return (
     <section className={sectionClasses}>

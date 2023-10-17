@@ -226,10 +226,44 @@ async function updatePassword(req, res) {
   }
 }
 
+async function patientE(req, res) {
+  // 사용자 데이터 로드 로직 구현
+  try {
+    const { name, id, hospital } = req.body;
+    let p;
+
+    const connection = await pool.getConnection();
+
+    const [patient] = await connection.execute(
+      "SELECT * FROM patients WHERE id = ? AND name = ? AND hospital = ?",
+      [id, name, hospital]
+    )
+
+    if (patient[0] != null) {
+      p = patient[0];
+      // 사용자 데이터를 클라이언트로 응답으로 보냅니다.
+      res.status(200).json({
+        patientNo: p.patientNo,
+        hospitalName: p.hospital,
+      });
+    } else {
+      // 사용자를 찾을 수 없을 경우 적절한 응답을 보냅니다.
+      res.status(404).json({ error: "신규환자 입니다." });
+    }
+
+    connection.release();
+
+  } catch (error) {
+    console.error("에러", error);
+    res.status(500).json({ error: "데이터 불러오기 실패" });
+  }
+}
+
 module.exports = {
   signup,
   signin,
   loadUserData,
   updateData,
-  updatePassword
+  updatePassword,
+  patientE
 };

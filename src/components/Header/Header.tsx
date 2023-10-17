@@ -31,7 +31,7 @@ const Header = () => {
         <div className="flex items-center justify-center shrink-0">
           <a href="/"
               onClick={(e) => {
-                if (window.location.pathname == '/') {
+                if (window.location.pathname === '/') {
                   e.preventDefault();
                   window.location.href = '#home';
                 }
@@ -50,7 +50,7 @@ const Header = () => {
             <a
               href="/#home"
               onClick={(e) => {
-                if (window.location.pathname == '/') {
+                if (window.location.pathname === '/') {
                   e.preventDefault();
                   window.location.href = '#home';
                 }
@@ -62,7 +62,7 @@ const Header = () => {
             <a
               href="/#products"
               onClick={(e) => {
-                if (window.location.pathname == '/') {
+                if (window.location.pathname === '/') {
                   e.preventDefault();
                   window.location.href = '#products';
                 }
@@ -74,7 +74,7 @@ const Header = () => {
             <a
               href="/#partners"
               onClick={(e) => {
-                if (window.location.pathname == '/') {
+                if (window.location.pathname === '/') {
                   e.preventDefault();
                   window.location.href = '#partners';
                 }
@@ -86,7 +86,7 @@ const Header = () => {
             <a
               href="/#contact"
               onClick={(e) => {
-                if (window.location.pathname == '/') {
+                if (window.location.pathname === '/') {
                   e.preventDefault();
                   window.location.href = '#contact';
                 }
@@ -129,7 +129,7 @@ const Header = () => {
                 <ul className="list-inside">
                   <li className="py-2 px-4 font-semibold">{user}님</li>
                   <a href="/setting"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer border-t border-slate-400">마이페이지</li></a>
-                  {role == 'therapists' ? 
+                  {role === 'therapists' ? 
                   <a href="/results"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">환자 관리</li></a> : 
                   <a href="/admin"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">치료사 관리</li></a>
                   }

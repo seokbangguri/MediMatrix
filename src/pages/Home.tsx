@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import blobImage from "../assets/home-blob.svg"
 import { Products, Partners, Hero, Contact, Footer } from "../components";
 const Home = () => {
