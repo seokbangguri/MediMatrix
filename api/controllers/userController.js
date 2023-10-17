@@ -229,14 +229,15 @@ async function updatePassword(req, res) {
 async function patientE(req, res) {
   // 사용자 데이터 로드 로직 구현
   try {
-    const { name, id, hospital } = req.body;
+    const { name, id, hospital, sex, therapists } = req.body;
+    console.log(req.body);
     let p;
 
     const connection = await pool.getConnection();
 
     const [patient] = await connection.execute(
-      "SELECT * FROM patients WHERE id = ? AND name = ? AND hospital = ?",
-      [id, name, hospital]
+      "SELECT * FROM patients WHERE patientNo = ? AND name = ? AND hospital = ? AND sex = ? AND therapists = ?",
+      [id, name, hospital, sex, therapists]
     )
 
     if (patient[0] != null) {
@@ -248,7 +249,7 @@ async function patientE(req, res) {
       });
     } else {
       // 사용자를 찾을 수 없을 경우 적절한 응답을 보냅니다.
-      res.status(404).json({ error: "신규환자 입니다." });
+      res.status(201).json({ message: "신규환자 입니다." });
     }
 
     connection.release();

@@ -2,7 +2,9 @@ import React, { useState, useRef } from "react";
 import Swal from "sweetalert2";
 import uploadIcon from '../../assets/upload-icon.svg';
 import { Button, Loading, Progress, Text } from "../../components";
+import axios from "axios";
 
+const apiUrl = process.env.REACT_APP_API_URL;
 type PatientInfo = {
     name: string;
     id: string;
@@ -11,8 +13,9 @@ type PatientInfo = {
     therapists: string | null;
 };
 
-const FileInputBox = ({ patientInfo }: { patientInfo: PatientInfo }) => {
-    const [visible, setVisible] = useState(false);
+  type onVisibleCallback = (b: boolean) => void;
+
+const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visible: onVisibleCallback }) => {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -108,7 +111,7 @@ const FileInputBox = ({ patientInfo }: { patientInfo: PatientInfo }) => {
         }
     };
 
-    const handleScoreButtonClick = () => {
+    const handleScoreButtonClick = async () => {
         if (selectedFiles.length === 0) {
             // 파일이 없을 때 알림 띄우기
             Swal.fire({
@@ -117,55 +120,85 @@ const FileInputBox = ({ patientInfo }: { patientInfo: PatientInfo }) => {
                 icon: "warning",
             });
         } else {
-            setVisible(true);
-            // 파일이 있을 때 채점 페이지로 이동
-            // window.location.href = "/results";
+            // 환자 데이터 처리 및 채점 요청
+            try {
+                visible(true);
+                const data = {
+                    patientInfo: patientInfo, // 환자 정보
+                    files: selectedFiles, // 선택된 파일 목록
+                };
+                console.log(data['patientInfo']);
+                console.log(data['files']);
+                const response = await axios.post(apiUrl +'/patientexist', data['patientInfo'])
+                // const response = await axios.post(apiUrl +'/patientE', data['files'])
+                // 응답 완료 후 결과페이지로 이동
+                Swal.fire({
+                    title: '채점 완료!',
+                    text: '확인을 누르면 결과로 이동합니다.'+response,
+                    icon: 'success',
+                    confirmButtonText: '확인',
+                }).then(() => {
+                    window.location.href = "/results";
+                });
+                
+            } catch (error) {
+                visible(false);
+                Swal.fire({
+                  title: '에러!',
+                  text: '확인을 누르면 메인로 이동합니다.',
+                  icon: 'error',
+                  confirmButtonText: '확인',
+                }).then(() => {
+                  window.location.href = "/";
+                });
+                
+            }
+
         }
     };
 
-    return (
-        <div className="flex flex-col justify-center items-center">
-            <Progress step='2' completed={true} />
-            <Loading context="Beery 채점 중 입니다." hidden={visible} />
-            <Text size="m" styles="text-[#888888] font-bold py-5">
-                파일 업로드
-            </Text>
-            <div
-                onDrop={handleDrop}
-                onDragOver={handleDragOver}
-                className="flex justify-center items-center w-[500px] bg-[#ebebeb] rounded-sm border border-dotted shadow-xl p-4"
-            >
-                {selectedFiles.length > 0 ? (
-                    <div>
-                        <p>업로드 목록:</p>
-                        <ul>
-                            {selectedFiles.map((file, index) => (
-                                <li key={index}>{file.name}</li>
-                            ))}
-                        </ul>
-                    </div>
-                ) : (
-                    <button className="flex flex-col items-center gap-2" onClick={handleFileButtonClick}>
-                        <img src={uploadIcon} alt="uload file" width={25} />
-                        <p className="text-black text-sm">클릭해서 파일을 추가하거나 마우스로 끌어서 추가할 수 있습니다.</p>
-                        <span className="text-xs">최대 파일 크기 100MB</span>
-                    </button>
-                )}
-                {/* 파일 입력(input) 요소를 숨겨놓고 버튼 클릭 시 파일 선택 창 열리도록 함 */}
-                <input
-                    type="file"
-                    accept=".pdf, .jpg, .jpeg, .png" // 원하는 파일 형식 지정
-                    ref={fileInputRef}
-                    style={{ display: "none" }}
-                    onChange={handleFileChange}
-                    multiple
-                />
-            </div>
-            <a onClick={handleScoreButtonClick}>
-                <Button apperance="primary" styles="mt-10 lg:w-[300px]">채점</Button>
-            </a>
-        </div>
-    );
+  return (
+    <div className="flex flex-col justify-center items-center">
+        <Progress step='2' completed={true} />
+        <Text size="m" styles="text-[#888888] font-bold pb-5">
+            파일 업로드
+        </Text>
+          <div
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              className="flex justify-center items-center w-[500px] bg-[#ebebeb] rounded-sm border border-dotted shadow-xl p-4"
+          >
+              {selectedFiles.length > 0 ? (
+                  <div>
+                      <p>업로드 목록:</p>
+                      <ul>
+                          {selectedFiles.map((file, index) => (
+                              <li key={index}>{file.name}</li>
+                          ))}
+                      </ul>
+                  </div>
+              ) : (
+                  <button className="flex flex-col items-center gap-2" onClick={handleFileButtonClick}>
+                      <img src={uploadIcon} alt="uload file" width={25} />
+                      <p className="text-black text-sm">클릭해서 파일을 추가하거나 마우스로 끌어서 추가할 수 있습니다.</p>
+                      <span className="text-xs">최대 파일 크기 100MB</span>
+                  </button>
+              )}
+              {/* 파일 입력(input) 요소를 숨겨놓고 버튼 클릭 시 파일 선택 창 열리도록 함 */}
+              <input
+                  type="file"
+                  accept=".pdf, .jpg, .jpeg, .png" // 원하는 파일 형식 지정
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                  multiple
+              />
+          </div>
+          <a onClick={handleScoreButtonClick}>
+              <Button apperance="primary" styles="mt-10 lg:w-[300px]">채점</Button>
+    </a>
+    </div>
+  );
 };
 
 export default FileInputBox;

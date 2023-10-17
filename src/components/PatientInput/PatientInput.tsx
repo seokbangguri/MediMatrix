@@ -65,7 +65,7 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
             >
                 {({ isSubmitting }) => (
                     <Form className="w-full " >
-                        <Progress step='1' completed={false} />
+                        <Progress step='1' completed={false}/>
                         <div className="flex flex-col gap-3 w-full">
                             <div className="w-full gap-6">
                                 <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">이름</label>
@@ -85,6 +85,7 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
                                 </Field>
                             </div>
                         </div>
+
 
                         <div className="mt-10 mb-6 text-center">
                             <Button apperance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>다음</Button>

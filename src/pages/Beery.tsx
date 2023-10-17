@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Heading, Text, Footer, FileInputBox, PatientInput, Progress } from "../components";
+import { Heading, Text, Footer, FileInputBox, PatientInput, Progress, Loading } from "../components";
 import Swal from "sweetalert2";
 import hospital from '../contracted';
 
@@ -12,7 +12,8 @@ function Beery() {
         therapists: string | null;
     };
 
-    const [step, setStep] = useState<Number>(1);
+    const [step, setStep] = useState(1);
+    const [visible, setVisible] = useState(false);
     const [patientInfo, setPatientInfo] = useState<PatientInfo>({
         name: '',
         id: '',
@@ -27,6 +28,10 @@ function Beery() {
         setPatientInfo(data);
         setStep(2);
     };
+
+    const handleLoading = (b: boolean) => {
+        setVisible(true);
+    }
 
     // 페이지가 처음 로딩될 때만 실행되는 함수
     useEffect(() => {
@@ -61,7 +66,8 @@ function Beery() {
 
     return (
         <div className="w-screen">
-            <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 h-screen mt-14">
+            <Loading context="Beery 채점 중 입니다." hidden={visible} />
+            <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 h-screen">
                 <Heading tag="h2" className="">
                     AI 기반 Beery VMI 답안 채점도구
                 </Heading>
@@ -71,11 +77,11 @@ function Beery() {
                 <Text size="s" styles=" mb-16">
                     Beery VMI 답안지는 S(환자번호).pdf 형태 또는 .png .jpg .jpeg 등 형태로 파일 이름을 작성해주세요.
                 </Text>
-                <div className="flex flex-col justify-center items-center w-[800px] bg-white rounded-lg drop-shadow-2xl py-14">
-                    {step === 1 ? (
-                        <PatientInput onNextStep={handleNextStep} />
-                    ) : (
-                        <FileInputBox patientInfo={patientInfo} />
+                <div className="flex flex-col justify-center items-center w-[800px] bg-white rounded-lg drop-shadow-2xl  py-20">
+                    {step == 1 ? (
+                    <PatientInput onNextStep={handleNextStep}  />
+                    ):(
+                    <FileInputBox patientInfo={patientInfo} visible={handleLoading} />
                     )}
                 </div>
             </section>
