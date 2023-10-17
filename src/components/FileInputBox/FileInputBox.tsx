@@ -160,7 +160,6 @@ const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visi
     return (
         <div className="flex flex-col justify-center items-center">
             <Text size="m" styles="text-[#888888] font-bold pb-5">
-            <Progress step='2' completed={true} />
                 파일 업로드
             </Text>
             <div
