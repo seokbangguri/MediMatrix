@@ -217,9 +217,9 @@ async function loadUserData(req, res) {
 async function updateData(req, res) {
   // 사용자 정보 업데이트 로직 구현
   try {
-    const { email, name, hospitalName, phoneNumber } = req.body;
+    const { email, name, hospitalName, phoneNumber, role } = req.body;
     // 필드 값이 null 또는 undefined인 경우 에러 반환
-    if (name == null || email == null || hospitalName == null || phoneNumber == null ) {
+    if (name == null || email == null || hospitalName == null || phoneNumber == null || role == null ) {
       res.status(400).json({ error: "필수 정보가 누락되었습니다." });
       return;
     }
@@ -238,7 +238,14 @@ async function updateData(req, res) {
 
     if (result.affectedRows === 1) {
       // 업데이트가 성공한 경우
-      res.status(200).json({ message: "사용자 데이터 업데이트 성공" });
+        const userData = {
+          name: name,
+          email: email,
+          hospitalName: hospitalName,
+          role: role
+        }
+      const token = generateToken(userData);
+      res.status(200).json({ message: "사용자 데이터 업데이트 성공", token: token });
     } else {
       // 업데이트가 실패한 경우 (해당 이메일을 가진 사용자를 찾을 수 없음)
       res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
