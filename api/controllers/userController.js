@@ -15,7 +15,6 @@ async function verifyToken(req, res) {
   try {
     const { token } = req.body;
     if(token == null) {
-	    console.log(req.body);
       res.status(400).json({error: "token이 없습니다."});
       return;
     } else {
@@ -213,9 +212,9 @@ async function loadUserData(req, res) {
 async function updateData(req, res) {
   // 사용자 정보 업데이트 로직 구현
   try {
-    const { email, name, hospitalName, phoneNumber, role, pemail } = req.body;
+    const { email, name, hospitalName, phoneNumber } = req.body;
     // 필드 값이 null 또는 undefined인 경우 에러 반환
-    if (name == null || email == null || pemail == null || hospitalName == null || phoneNumber == null || role == null) {
+    if (name == null || email == null || hospitalName == null || phoneNumber == null ) {
       res.status(400).json({ error: "필수 정보가 누락되었습니다." });
       return;
     }
@@ -226,8 +225,8 @@ async function updateData(req, res) {
 
     // 사용자 데이터 업데이트
     const [result] = await connection.execute(
-      `UPDATE ${role} SET name = ?, email = ?, hp = ?, hospital = ? WHERE email = ?`,
-      [name, email, phoneNumber, hospitalName, pemail]
+      `UPDATE ${role} SET name = ?, hp = ?, hospital = ? WHERE email = ?`,
+      [name, phoneNumber, hospitalName, email]
     );
 
     connection.release();
