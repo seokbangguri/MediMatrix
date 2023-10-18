@@ -11,13 +11,19 @@ function generateToken(payload) {
 }
 
 // 토큰 검증
-function verifyToken(token) {
+async function verifyToken(req, res) {
   try {
-    const decoded = jwt.verify(token, jwtSecret);
-    return decoded;
+    const { token } = req.body;
+    if(token == null) {
+      res.status(400).json({error: "token이 없습니다."});
+      return;
+    } else {
+      const decoded = jwt.verify(token, jwtSecret);
+      res.status(200).json({decoded: decoded});
+    }
   } catch (error) {
     // 토큰이 유효하지 않은 경우 에러 처리
-    return null;
+    res.status(400).json({error: "에러가 발생했습니다."});
   }
 }
 
@@ -326,6 +332,7 @@ async function patientE(req, res) {
 }
 
 module.exports = {
+  verifyToken,
   signup,
   signin,
   loadUserData,

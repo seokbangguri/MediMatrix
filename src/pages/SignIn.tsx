@@ -57,13 +57,15 @@ const SignIn = () => {
         sessionStorage.setItem('hospital', response.data.user.hospital);
         sessionStorage.setItem('name', response.data.user.name);
         sessionStorage.setItem('email', response.data.user.email);
+        sessionStorage.setItem('token', response.data.token);
         if(response.data.user.admin === null) {
           sessionStorage.setItem('role', 'therapists');
         }
         else {
           sessionStorage.setItem('role', 'administrators');
         }
-        window.location.href = "/";
+        console.log(response);
+        // window.location.href = "/";
       } else {
         console.error('서버 응답 오류:', response.status);
         Swal.fire({

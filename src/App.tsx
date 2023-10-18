@@ -7,8 +7,15 @@ import SignUp from './pages/SignUp';
 import Results from './pages/Results';
 import Setting from './pages/Setting';
 import Admin from './pages/admin';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
+  useEffect(() => {
+    if(sessionStorage.getItem('token')){
+      const response = axios.post('/verify', sessionStorage.getItem('token'));
+    }
+  },[])
 
   return (
     <div className="App font-roboto flex flex-col justify-center items-center select-none">
