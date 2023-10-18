@@ -15,11 +15,15 @@ async function verifyToken(req, res) {
   try {
     const { token } = req.body;
     if(token == null) {
+	    console.log(req.body);
       res.status(400).json({error: "token이 없습니다."});
       return;
     } else {
       const decoded = jwt.verify(token, jwtSecret);
-      res.status(200).json({decoded: decoded});
+      const {email, name, hospitalName, role, exp, iat} = decoded
+	    console.log({email,name,hospitalName,role,exp,iat});
+      res.status(200).json({decoded: {email, name, hospitalName, role, exp, iat}});
+      //res.status(200).json({decoded: decoded});
     }
   } catch (error) {
     // 토큰이 유효하지 않은 경우 에러 처리
@@ -112,13 +116,16 @@ async function signin(req, res) {
     );
 
     let user = null;
+    let role = '';
 
     if (therapists.length > 0) {
       // therapists 테이블에서 사용자 발견
       user = therapists[0];
+	    role = 'therapists';
     } else if (administrators.length > 0) {
       // administrators 테이블에서 사용자 발견
       user = administrators[0];
+	    role = 'administrators';
     }
 
     if (user) {
@@ -129,9 +136,10 @@ async function signin(req, res) {
         const userData = {
           name: user.name,
           email: user.email,
-          hospitalName: user.hospitalName,
-          role: user.role
+          hospitalName: user.hospital,
+          role: role
         }
+	      console.log(userData);
 
         const token = generateToken(userData);
         // 로그인 성공
