@@ -4,6 +4,8 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Button, Heading } from '../components'
 import { useState, useEffect } from 'react';
+import { verify } from 'crypto';
+import { verifyToken } from '../auth/auth';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 //Interface
@@ -59,7 +61,8 @@ const Setting = () => {
     }
 
     useEffect(() => {
-        if(!sessionStorage.getItem('name')) {
+        verifyToken().then(decodedToken => {
+        if(!decodedToken) {
           Swal.fire({
             title: '잘못된 접근!',
             text: '확인을 누르면 메인로 이동합니다.',
@@ -72,8 +75,8 @@ const Setting = () => {
         const fetchData = async () => {
             try {
                 const data = {
-                    email: sessionStorage.getItem('email'),
-                    role: sessionStorage.getItem('role'),
+                    email: decodedToken.email,
+                    role: decodedToken.role,
                 };
                 const response = await axios.post(apiUrl+'/setting', data);
                 setInitialFormValues(response.data);
@@ -83,6 +86,7 @@ const Setting = () => {
         };
         fetchData();
         }
+        });
     }, []);
 
     // Handle update info
