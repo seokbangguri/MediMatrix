@@ -1,6 +1,6 @@
 import React from "react";
 import image from "../../assets/medimatrix_logo_white.svg";
-import imagetest2 from "../../assets/test2.svg";
+import imagetest1 from "../../assets/test1.svg";
 import footerImage from "../../assets/footer-blob.svg";
 import instagram from "../../assets/instagram.svg";
 import facebook from "../../assets/facebook.svg";
@@ -26,7 +26,7 @@ const Footer = () => {
         <a href="/">
           <img
             className="pt-1"
-            src={imagetest2}
+            src={imagetest1}
             width={220}
             height={60}
             alt="logo"

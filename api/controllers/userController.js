@@ -1,14 +1,36 @@
 const bcrypt = require('bcrypt');
 const pool = require("../dbPool");
+const jwt = require('jsonwebtoken');
+const jwtSecret = process.env.JWT_SECRET;
 const saltRounds = parseInt(process.env.HASH_SALT);
+
+// 토큰 생성
+function generateToken(payload) {
+  // payload는 토큰에 담을 정보 (예: 사용자 정보 등)
+  return jwt.sign(payload, jwtSecret, { expiresIn: '1h' }); // 토큰 만료 시간: 1시간
+}
+
+// 토큰 검증
+function verifyToken(token) {
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+    return decoded;
+  } catch (error) {
+    // 토큰이 유효하지 않은 경우 에러 처리
+    return null;
+  }
+}
 
 async function signup(req, res) {
   // 회원가입 로직 구현
   try {
     const { name, email, password, hospitalName, phoneNumber, role } = req.body;
-
-    // 비밀번호 해싱 비동기 처리
-    const hash = await bcrypt.hash(password, saltRounds);
+    
+    // 필드 값이 null 또는 undefined인 경우 에러 반환
+    if (name == null || email == null || password == null || hospitalName == null || phoneNumber == null || role == null) {
+      res.status(400).json({ error: "필수 정보가 누락되었습니다." });
+      return;
+    }
 
     // MySQL 데이터베이스 연결
     const connection = await pool.getConnection();
@@ -39,8 +61,17 @@ async function signup(req, res) {
 
       connection.release();
 
+      const userData = {
+        name: name,
+        email: email,
+        hospitalName: hospitalName,
+        role: role
+      }
+
+      const token = generateToken(userData);
+
       // 회원가입 성공
-      res.status(201).json({ message: "회원가입 성공" });
+      res.status(201).json({ message: "회원가입 성공", token: token });
     }
   } catch (error) {
     console.error("에러", error);
@@ -52,6 +83,12 @@ async function signin(req, res) {
   // 로그인 로직 구현
   try {
     const { email, password } = req.body;
+    
+    // 필드 값이 null 또는 undefined인 경우 에러 반환
+    if ( email == null || password == null ) {
+      res.status(400).json({ error: "필수 정보가 누락되었습니다." });
+      return;
+    }
 
     // MySQL 데이터베이스 연결
     const connection = await pool.getConnection();
@@ -83,8 +120,16 @@ async function signin(req, res) {
       const passwordMatch = await bcrypt.compare(password, user.password);
 
       if (passwordMatch) {
+        const userData = {
+          name: user.name,
+          email: user.email,
+          hospitalName: user.hospitalName,
+          role: user.role
+        }
+
+        const token = generateToken(userData);
         // 로그인 성공
-        res.status(200).json({ message: "로그인 성공", user: user });
+        res.status(200).json({ message: "로그인 성공", user: user, token: token });
       } else {
         // 비밀번호가 일치하지 않는 경우
         res.status(401).json({ error: "유효하지 않은 이메일 또는 비밀번호입니다." });
@@ -106,6 +151,11 @@ async function loadUserData(req, res) {
   // 사용자 데이터 로드 로직 구현
   try {
     const { email, role } = req.body;
+    // 필드 값이 null 또는 undefined인 경우 에러 반환
+    if ( email == null || role == null ) {
+      res.status(400).json({ error: "필수 정보가 누락되었습니다." });
+      return;
+    }
     let user = null;
 
     const connection = await pool.getConnection();
@@ -150,6 +200,11 @@ async function updateData(req, res) {
   // 사용자 정보 업데이트 로직 구현
   try {
     const { email, name, hospitalName, phoneNumber, role, pemail } = req.body;
+    // 필드 값이 null 또는 undefined인 경우 에러 반환
+    if (name == null || email == null || pemail == null || hospitalName == null || phoneNumber == null || role == null) {
+      res.status(400).json({ error: "필수 정보가 누락되었습니다." });
+      return;
+    }
     console.log(req.body);
 
     // MySQL 데이터베이스 연결
@@ -180,6 +235,11 @@ async function updatePassword(req, res) {
   // 비밀번호 업데이트 로직 구현
   try {
     const { currentPW, newPW, email, role } = req.body;
+    // 필드 값이 null 또는 undefined인 경우 에러 반환
+    if (email == null || currentPW == null || newPW == null || role == null) {
+      res.status(400).json({ error: "필수 정보가 누락되었습니다." });
+      return;
+    }
     let user = null;
 
     const connection = await pool.getConnection();
@@ -230,6 +290,11 @@ async function patientE(req, res) {
   // 사용자 데이터 로드 로직 구현
   try {
     const { name, id, hospital, sex, therapists } = req.body;
+    // 필드 값이 null 또는 undefined인 경우 에러 반환
+    if (name == null || id == null || hospital == null || sex == null || therapists == null) {
+      res.status(400).json({ error: "필수 정보가 누락되었습니다." });
+      return;
+    }
     console.log(req.body);
     let p;
 
