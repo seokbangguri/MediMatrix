@@ -205,7 +205,7 @@ const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visi
                 />
             </div>
             <a onClick={handleScoreButtonClick}>
-                <Button apperance="primary" styles="mt-10 lg:w-[300px]">채점</Button>
+                <Button appearance="primary" styles="mt-10 lg:w-[300px]">채점</Button>
             </a>
         </div>
     );

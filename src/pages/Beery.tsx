@@ -27,31 +27,6 @@ function Beery() {
     const [progressStep, setProgressStep] = useState(step);
     const [progressBar, setProgressBar] = useState(false);
 
-    const handleNextStep = (data: PatientInfo) => {
-        // 1단계에서 입력한 환자 정보 저장하고 2단계로 이동
-        setPatientInfo(data);
-        setStep(2);
-    };
-
-    const handleLoading = (b: boolean) => {
-        setVisible(true);
-    }
-
-    const fadeInOutProps1 = useSpring({
-        opacity: step === 1 ? 1 : 0,
-        display: step === 1 ? "block" : "none",
-        config: {
-            duration: 1000, // 애니메이션의 지속 시간을 조절합니다 (1초로 설정되어 있음)
-        }
-    });
-    const fadeInOutProps2 = useSpring({
-        opacity: step === 2 ? 1 : 0,
-        display: step === 2 ? "block" : "none",
-        config: {
-            duration: 1000, // 애니메이션의 지속 시간을 조절합니다 (1초로 설정되어 있음)
-        }
-    });
-
     // 페이지가 처음 로딩될 때만 실행되는 함수
     useEffect(() => {
         // 여기에 원하는 동작을 추가하세요.
@@ -90,6 +65,31 @@ function Beery() {
             }
         });
     }, []);
+
+    const handleNextStep = (data: PatientInfo) => {
+        // 1단계에서 입력한 환자 정보 저장하고 2단계로 이동
+        setPatientInfo(data);
+        setStep(2);
+    };
+
+    const handleLoading = (b: boolean) => {
+        setVisible(true);
+    }
+
+    const fadeInOutProps1 = useSpring({
+        opacity: step === 1 ? 1 : 0,
+        display: step === 1 ? "block" : "none",
+        config: {
+            duration: 1000, // 애니메이션의 지속 시간을 조절합니다 (1초로 설정되어 있음)
+        }
+    });
+    const fadeInOutProps2 = useSpring({
+        opacity: step === 2 ? 1 : 0,
+        display: step === 2 ? "block" : "none",
+        config: {
+            duration: 1000, // 애니메이션의 지속 시간을 조절합니다 (1초로 설정되어 있음)
+        }
+    });
 
 
     useEffect(() => {

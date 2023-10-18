@@ -189,7 +189,7 @@ const SignUp: React.FC = () => {
 
 
                             <div className="mt-10 mb-6 text-center">
-                                <Button apperance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>회원가입</Button>
+                                <Button appearance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>회원가입</Button>
                             </div>
                             <p className="text-sm font-light text-[#7a7a7a] text-right">
                                 계정이 있으십니까? <a href="/signin" className="font-medium text-blue-600 hover:underline "> 로그인</a>
@@ -200,7 +200,7 @@ const SignUp: React.FC = () => {
 
             </div>
         </div>
-    </div>;;
+    </div>
 };
 
 export default SignUp;

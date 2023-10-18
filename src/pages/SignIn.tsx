@@ -129,7 +129,7 @@ const SignIn = () => {
                 {/* Display validation error if any */}
                 <ErrorMessage name="password" component="div" className="text-red-600 text-sm" />
               </div>
-              <Button apperance="primary" type="button" styles="w-full text-center">로그인</Button>
+              <Button appearance="primary" type="button" styles="w-full text-center">로그인</Button>
               <p className="text-sm font-light text-[#7a7a7a]">
                 계정이 없으십니까? <a href="/signup" className="font-medium text-blue-600 hover:underline ">회원가입</a>
               </p>

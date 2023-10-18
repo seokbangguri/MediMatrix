@@ -263,7 +263,7 @@ const Setting = () => {
                                             <a href='/'>
                                                 <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >취소</Button>
                                             </a>
-                                                <Button apperance="custom" styles="uppercase" >저장</Button>
+                                                <Button appearance="custom" styles="uppercase" >저장</Button>
                                         </div>
                                         <p></p>
                                     </div>
@@ -301,7 +301,7 @@ const Setting = () => {
                                                 <a href="/">
                                                     <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >취소</Button>
                                                 </a>
-                                                    <Button apperance="custom" styles="uppercase" >변경</Button>
+                                                    <Button appearance="custom" styles="uppercase" >변경</Button>
                                             </div>
                                         </div>
 

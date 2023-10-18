@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Progress } from "../../components";
+import { Button } from "../../components";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { verifyToken } from "../../auth/auth";
@@ -11,8 +11,6 @@ interface PatientExistValues {
     name: string;
     sex: string;
     id: string;
-    hospital: string | null;
-    therapists: string | null;
 }
 //Validation
 const validationSchema = Yup.object({
@@ -38,9 +36,7 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
     const initialValues: PatientExistValues = {
         name: '',
         sex: 'M',
-        id: '',
-        hospital: hos,
-        therapists: therapists
+        id: ''
     }
     // 페이지가 처음 로딩될 때만 실행되는 함수
     useEffect(() => {
@@ -66,18 +62,17 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
     // Handle checking
     const handleNext = async (values: PatientExistValues, { setSubmitting }: FormikHelpers<PatientExistValues>) => {
         console.log('g');
-        const { name, id, sex, hospital, therapists } = values;
+        const { name, id, sex } = values;
         // 전송할 데이터
         const userData = {
             name: name,
             id: id,
             sex: sex,
-            hospital: hospital,
+            hospital: hos,
             therapists: therapists
         };
-        console.log(userData);
-        onNextStep(userData);
         setSubmitting(false);
+        onNextStep(userData);
     };
 
     return (
@@ -98,7 +93,7 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
                             <div className="w-full gap-6">
                                 <label htmlFor="id" className="block mb-2 text-sm font-medium text-gray-900">환자번호</label>
                                 <Field type="text" name="id" id="id" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="환자번호" required />
-                                <ErrorMessage name="hospitalName" component="div" className="text-red-700 text-sm" />
+                                <ErrorMessage name="id" component="div" className="text-red-700 text-sm" />
                             </div>
                             <div className="w-full gap-6">
                                 <label htmlFor="sex" className="block mb-2 text-sm font-medium text-gray-900">성별</label>
@@ -111,7 +106,7 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
 
 
                         <div className="mt-10 mb-6 text-center">
-                            <Button apperance="primary" styles="w-full text-center" disabled={isSubmitting}>다음</Button>
+                            <Button appearance="primary" styles="w-full text-center" disabled={isSubmitting}>다음</Button>
                         </div>
                     </Form>
                 )}

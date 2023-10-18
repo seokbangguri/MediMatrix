@@ -107,7 +107,7 @@ const Header = () => {
             <Button styles="text-lg font-semibold rounded-xs text-black border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 uppercase" >로그인</Button>
           </a>
           <a href="/signup">
-            <Button apperance="custom" styles="uppercase" >회원가입</Button>
+            <Button appearance="custom" styles="uppercase" >회원가입</Button>
           </a>
         </div> :
           <div className="relative inline-block text-left">
