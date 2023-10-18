@@ -11,8 +11,8 @@ function Beery() {
         name: string;
         id: string;
         sex: string;
-        hospital: string | null;
-        therapists: string | null;
+        hospital: string;
+        therapists: string;
     };
     const [patientInfo, setPatientInfo] = useState<PatientInfo>({
         name: '',
@@ -42,13 +42,6 @@ function Beery() {
                     }
                 });
             } else {
-                setPatientInfo({
-                    name: '',
-                    id: '',
-                    sex: '',
-                    hospital: decodedToken.hospitalName,
-                    therapists: decodedToken.email
-                });
             const hos = decodedToken.hospitalName;
             const selectedHospital = hospital[hos]; // 병원 이름을 사용하여 hospital 객체에서 해당 병원 정보 가져오기
             if (!selectedHospital || !selectedHospital.beery) {
@@ -69,6 +62,7 @@ function Beery() {
     const handleNextStep = (data: PatientInfo) => {
         // 1단계에서 입력한 환자 정보 저장하고 2단계로 이동
         setPatientInfo(data);
+        console.log(patientInfo);
         setStep(2);
     };
 

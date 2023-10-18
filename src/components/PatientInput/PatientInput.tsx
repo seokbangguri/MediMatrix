@@ -9,13 +9,13 @@ import Swal from "sweetalert2";
 //Interface
 interface PatientExistValues {
     name: string;
-    sex: string;
     id: string;
+    sex: string;
 }
 //Validation
 const validationSchema = Yup.object({
-    name: Yup.string().min(2, 'Minimum 2 characters').required('Required'),
-    hospital: Yup.string().required('Required'),
+    name: Yup.string().min(2, '최소 2자 이상').required('입력 필수!'),
+    hospital: Yup.string().required('입력 필수!'),
     id: Yup.string().required(),
 });
 
@@ -23,15 +23,15 @@ type PatientInfo = {
     name: string;
     id: string;
     sex: string;
-    hospital: string | null;
-    therapists: string | null;
+    hospital: string;
+    therapists: string;
 };
 
 type OnNextStepCallback = (data: PatientInfo) => void;
 
 const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
-    const [hos, setHos] = useState('');
-    const [therapists, setTherapists] = useState('');
+    const [hos, setHos] = useState<string>('');
+    const [therapists, setTherapists] = useState<string>('');
 
     const initialValues: PatientExistValues = {
         name: '',
@@ -42,7 +42,7 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
     useEffect(() => {
         // 여기에 원하는 동작을 추가하세요.
         verifyToken().then(decodedToken => {
-            if(decodedToken === false){
+            if (decodedToken === false) {
                 Swal.fire({
                     title: "로그인 후 이용 가능합니다.",
                     icon: "error",
@@ -56,14 +56,15 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
                 setHos(decodedToken.hospitalName);
                 setTherapists(decodedToken.email);
             }
+            console.log(hos);
+            console.log(therapists);
         });
-    }, []);
+    }, [hos,therapists]);
 
     // Handle checking
     const handleNext = async (values: PatientExistValues, { setSubmitting }: FormikHelpers<PatientExistValues>) => {
-        console.log('g');
         const { name, id, sex } = values;
-        // 전송할 데이터
+        console.log(values);
         const userData = {
             name: name,
             id: id,
@@ -71,8 +72,8 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
             hospital: hos,
             therapists: therapists
         };
-        setSubmitting(false);
         onNextStep(userData);
+        setSubmitting(false);
     };
 
     return (
@@ -106,7 +107,7 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
 
 
                         <div className="mt-10 mb-6 text-center">
-                            <Button appearance="primary" styles="w-full text-center" disabled={isSubmitting}>다음</Button>
+                            <Button onClick={() => {console.log('버튼이 클릭되었습니다.');}} appearance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>다음</Button>
                         </div>
                     </Form>
                 )}
