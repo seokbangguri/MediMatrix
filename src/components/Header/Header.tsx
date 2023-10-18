@@ -8,12 +8,12 @@ import { verifyToken } from "../../auth/auth";
 
 const Header = () => {
   const [userName, setUserName] = useState('');
-  var user = sessionStorage.getItem('name');
-  var role = sessionStorage.getItem('role');
+  const [role, setRole] = useState('');
   useEffect(() => {
     verifyToken().then(decodedToken => {
       if(decodedToken) {
         setUserName(decodedToken.name);
+        setRole(decodedToken.role);
       }
     });
 

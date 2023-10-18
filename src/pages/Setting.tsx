@@ -4,7 +4,6 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Button, Heading } from '../components'
 import { useState, useEffect } from 'react';
-import { verify } from 'crypto';
 import { verifyToken } from '../auth/auth';
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -42,6 +41,7 @@ const passwordValidationSchema = Yup.object({
 
 const Setting = () => {
     const [changePassword, setChangePassword] = useState<boolean>(false)
+    const [role, setRole] = useState('');
     const [initialFormValues, setInitialFormValues] = useState<UpdateInfo>({
         email: '',
         name: '',
@@ -62,6 +62,7 @@ const Setting = () => {
 
     useEffect(() => {
         verifyToken().then(decodedToken => {
+            setRole(decodedToken.role);
         if(!decodedToken) {
           Swal.fire({
             title: '잘못된 접근!',
@@ -78,6 +79,7 @@ const Setting = () => {
                     email: decodedToken.email,
                     role: decodedToken.role,
                 };
+                const token = await verifyToken();
                 const response = await axios.post(apiUrl+'/setting', data);
                 setInitialFormValues(response.data);
             } catch (error) {
@@ -115,16 +117,14 @@ const Setting = () => {
                             name: updatedName,
                             hospitalName: updatedHospitalName,
                             phoneNumber: updatedPhoneNumber,
-                            role: sessionStorage.getItem('role'),
-                            pemail: sessionStorage.getItem('email'),
+                            role: role
                         };
             
                         const response = await axios.post(apiUrl+'/updatedata', updateData);
             
                         if (response.status === 200) {
-                            sessionStorage.setItem('name', updatedName);
-                            sessionStorage.setItem('email', updatedEmail);
                             console.log('회원정보 변경 성공:', response.data);
+                            sessionStorage.setItem('token', response.data.token);
                             Swal.fire({
                                 icon: 'success',
                                 title: '회원정보 변경 완료!',

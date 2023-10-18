@@ -14,19 +14,18 @@ function Beery() {
         hospital: string | null;
         therapists: string | null;
     };
-
-    const [step, setStep] = useState(1);
-    const [visible, setVisible] = useState(false);
     const [patientInfo, setPatientInfo] = useState<PatientInfo>({
         name: '',
         id: '',
         sex: '',
-        hospital: sessionStorage.getItem('hospital'),
-        therapists: sessionStorage.getItem('name')
+        hospital: '',
+        therapists: ''
     });
+
+    const [step, setStep] = useState(1);
+    const [visible, setVisible] = useState(false);
     const [progressStep, setProgressStep] = useState(step);
     const [progressBar, setProgressBar] = useState(false);
-
 
     const handleNextStep = (data: PatientInfo) => {
         // 1단계에서 입력한 환자 정보 저장하고 2단계로 이동
@@ -37,7 +36,6 @@ function Beery() {
     const handleLoading = (b: boolean) => {
         setVisible(true);
     }
-
 
     const fadeInOutProps1 = useSpring({
         opacity: step === 1 ? 1 : 0,
@@ -54,20 +52,10 @@ function Beery() {
         }
     });
 
-    useEffect(() => {
-        setProgressStep(step);
-        if(step === 1){
-            setProgressBar(false);
-        } else {
-            setProgressBar(true);
-        }
-    },[step]);
-
     // 페이지가 처음 로딩될 때만 실행되는 함수
     useEffect(() => {
         // 여기에 원하는 동작을 추가하세요.
         verifyToken().then(decodedToken => {
-            console.log(decodedToken)
             if(decodedToken === false){
                 Swal.fire({
                     title: "로그인 후 이용 가능합니다.",
@@ -79,6 +67,13 @@ function Beery() {
                     }
                 });
             } else {
+                setPatientInfo({
+                    name: '',
+                    id: '',
+                    sex: '',
+                    hospital: decodedToken.hospitalName,
+                    therapists: decodedToken.email
+                });
             const hos = decodedToken.hospitalName;
             const selectedHospital = hospital[hos]; // 병원 이름을 사용하여 hospital 객체에서 해당 병원 정보 가져오기
             if (!selectedHospital || !selectedHospital.beery) {
@@ -95,6 +90,18 @@ function Beery() {
             }
         });
     }, []);
+
+
+    useEffect(() => {
+        console.log(step);
+        setProgressStep(step);
+        if(step === 1){
+            setProgressBar(false);
+        } else {
+            setProgressBar(true);
+        }
+    },[step]);
+
 
     return (
         <div className="w-screen">

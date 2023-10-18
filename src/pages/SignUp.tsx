@@ -6,6 +6,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useState, useEffect } from "react";
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
+import { verifyToken } from '../auth/auth'
 
 const apiUrl = process.env.REACT_APP_API_URL;
 //Interface
@@ -46,7 +47,8 @@ const bgStyle = {
 };
 const SignUp: React.FC = () => {
     useEffect(() => {
-      if(sessionStorage.getItem('name')) {
+      verifyToken().then(decodedToken => {
+      if(decodedToken) {
         Swal.fire({
           title: '이미 로그인되어 있습니다!',
           text: '확인을 누르면 홈페이지로 이동합니다.',
@@ -56,7 +58,7 @@ const SignUp: React.FC = () => {
           window.location.href = "/";
         });
       }
-      
+    });
     },[]);
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);

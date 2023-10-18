@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import { Button, Progress } from "../../components";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { verifyToken } from "../../auth/auth";
+import Swal from "sweetalert2";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+
 //Interface
 interface PatientExistValues {
     name: string;
@@ -29,31 +32,52 @@ type PatientInfo = {
 type OnNextStepCallback = (data: PatientInfo) => void;
 
 const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
+    const [hos, setHos] = useState('');
+    const [therapists, setTherapists] = useState('');
 
     const initialValues: PatientExistValues = {
         name: '',
         sex: 'M',
         id: '',
-        hospital: sessionStorage.getItem('hospital'),
-        therapists: sessionStorage.getItem('name')
+        hospital: hos,
+        therapists: therapists
     }
+    // 페이지가 처음 로딩될 때만 실행되는 함수
+    useEffect(() => {
+        // 여기에 원하는 동작을 추가하세요.
+        verifyToken().then(decodedToken => {
+            if(decodedToken === false){
+                Swal.fire({
+                    title: "로그인 후 이용 가능합니다.",
+                    icon: "error",
+                    confirmButtonText: "확인",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/signin";
+                    }
+                });
+            } else {
+                setHos(decodedToken.hospitalName);
+                setTherapists(decodedToken.email);
+            }
+        });
+    }, []);
 
     // Handle checking
-    const handleSignUp = async (values: PatientExistValues, { setSubmitting }: FormikHelpers<PatientExistValues>) => {
-        if (sessionStorage.getItem('hospital') != null && sessionStorage.getItem('name') != null) {
-            const { name, id, sex, hospital, therapists } = values;
-            // 전송할 데이터
-            const userData = {
-                name: name,
-                id: id,
-                sex: sex,
-                hospital: hospital,
-                therapists: therapists
-            };
-            console.log(userData);
-            onNextStep(userData);
-            setSubmitting(false);
-        }
+    const handleNext = async (values: PatientExistValues, { setSubmitting }: FormikHelpers<PatientExistValues>) => {
+        console.log('g');
+        const { name, id, sex, hospital, therapists } = values;
+        // 전송할 데이터
+        const userData = {
+            name: name,
+            id: id,
+            sex: sex,
+            hospital: hospital,
+            therapists: therapists
+        };
+        console.log(userData);
+        onNextStep(userData);
+        setSubmitting(false);
     };
 
     return (
@@ -61,7 +85,7 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={handleSignUp}
+                onSubmit={handleNext}
             >
                 {({ isSubmitting }) => (
                     <Form className="w-full " >
@@ -87,7 +111,7 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
 
 
                         <div className="mt-10 mb-6 text-center">
-                            <Button apperance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>다음</Button>
+                            <Button apperance="primary" styles="w-full text-center" disabled={isSubmitting}>다음</Button>
                         </div>
                     </Form>
                 )}

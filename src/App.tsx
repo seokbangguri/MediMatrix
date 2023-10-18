@@ -11,11 +11,6 @@ import { useEffect } from 'react';
 import { verifyToken } from './auth/auth'
 
 function App() {
-  useEffect(() => {
-    verifyToken().then(decodedToken => {
-      let token = decodedToken;
-    });
-  },[])
 
   return (
     <div className="App font-roboto flex flex-col justify-center items-center select-none">

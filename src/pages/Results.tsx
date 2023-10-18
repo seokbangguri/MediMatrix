@@ -1,8 +1,29 @@
 import { Heading, PatientCard, ResultsCharts, ResultsChartAge, ResultsTable, ScoringTable, Text, Footer } from '../components'
-
+import { useState, useEffect } from 'react';
+import { verifyToken } from '../auth/auth';
+import Swal from "sweetalert2";
 
 const Results = () => {
-  const userName = sessionStorage.getItem('name');
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+      // 여기에 원하는 동작을 추가하세요.
+      verifyToken().then(decodedToken => {
+          if(decodedToken === false){
+              Swal.fire({
+                  title: "로그인 후 이용 가능합니다.",
+                  icon: "error",
+                  confirmButtonText: "확인",
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      window.location.href = "/signin";
+                  }
+              });
+          } else {
+            setUserName(decodedToken.name);
+          }
+      });
+  }, []);
   
   return (
     <div className='w-screen mt-[140px] '>
