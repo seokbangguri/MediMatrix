@@ -3,14 +3,21 @@ import image from "../../assets/medimatrix_logo_black.svg";
 import imagetest1 from "../../assets/test1.svg";
 import userIcon from '../../assets/user.svg'
 import Button from "../Button/Button";
+import { verifyToken } from "../../auth/auth";
 
 
 const Header = () => {
+  const [userName, setUserName] = useState('');
   var user = sessionStorage.getItem('name');
   var role = sessionStorage.getItem('role');
   useEffect(() => {
+    verifyToken().then(decodedToken => {
+      if(decodedToken) {
+        setUserName(decodedToken.name);
+      }
+    });
 
-  }, [user]);
+  }, []);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -19,10 +26,7 @@ const Header = () => {
   };
 
   function handleSignOut() {
-    // 세션 스토리지에서 데이터 삭제
-    sessionStorage.removeItem('name');
-    sessionStorage.removeItem('email');
-    sessionStorage.removeItem('role');
+    sessionStorage.removeItem('token');
     window.location.href = "/";
   }
 
@@ -98,7 +102,7 @@ const Header = () => {
             </a>
           </div>
         </nav>
-        {!user ? <div className="flex items-center gap-2">
+        {userName === '' ? <div className="flex items-center gap-2">
           <a href="/signin">
             <Button styles="text-lg font-semibold rounded-xs text-black border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 uppercase" >로그인</Button>
           </a>
@@ -128,7 +132,7 @@ const Header = () => {
             {isOpen && (
               <div className="absolute right-0 mt-4 w-40 bg-white drop-shadow-xl rounded-sm  overflow-hidden">
                 <ul className="list-inside">
-                  <li className="py-2 px-4 font-semibold">{user}님</li>
+                  <li className="py-2 px-4 font-semibold">{userName}님</li>
                   <a href="/setting"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer border-t border-slate-400">마이페이지</li></a>
                   {role === 'therapists' ? 
                   <a href="/results"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">환자 관리</li></a> : 

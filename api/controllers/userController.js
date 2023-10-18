@@ -22,11 +22,16 @@ async function verifyToken(req, res) {
       const {email, name, hospitalName, role, exp, iat} = decoded
 	    console.log({email,name,hospitalName,role,exp,iat});
       res.status(200).json({decoded: {email, name, hospitalName, role, exp, iat}});
-      //res.status(200).json({decoded: decoded});
     }
   } catch (error) {
-    // 토큰이 유효하지 않은 경우 에러 처리
-    res.status(400).json({error: "에러가 발생했습니다."});
+    // 토큰이 만료되었거나 유효하지 않은 경우에 대한 에러 처리
+    if (error instanceof jwt.TokenExpiredError) {
+      res.status(401).json({ error: "토큰이 만료되었습니다." });
+    } else if (error instanceof jwt.JsonWebTokenError) {
+      res.status(401).json({ error: "유효하지 않은 토큰입니다." });
+    } else {
+      res.status(400).json({ error: "에러가 발생했습니다." });
+    }
   }
 }
 

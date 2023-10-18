@@ -98,10 +98,6 @@ const SignUp: React.FC = () => {
 
             // 서버 응답 확인
             if (response.status === 201) {
-                sessionStorage.setItem('name',name);
-                sessionStorage.setItem('email', email);
-                sessionStorage.setItem('role', role);
-                sessionStorage.setItem('hospital', hospitalName);
                 sessionStorage.setItem('token', response.data.token);
                 window.location.href = "/"; // 회원가입이 성공하면 홈페이지로 이동
             } else {
