@@ -10,11 +10,22 @@ import Admin from './pages/admin';
 import { useEffect } from 'react';
 import axios from 'axios';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 function App() {
   useEffect(() => {
+    async function verifyToken() {
     if(sessionStorage.getItem('token')){
-      const response = axios.post('/verify', sessionStorage.getItem('token'));
+      try {
+      const data = { token: sessionStorage.getItem('token') };
+      const response = await axios.post(apiUrl+'/verify', data);
+        console.log(response.data);
+      } catch(error) {
+        console.error('토큰 검증 실패:', error);
+      }
     }
+    }
+    verifyToken()
   },[])
 
   return (

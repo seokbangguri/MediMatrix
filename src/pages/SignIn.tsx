@@ -64,8 +64,7 @@ const SignIn = () => {
         else {
           sessionStorage.setItem('role', 'administrators');
         }
-        console.log(response);
-        // window.location.href = "/";
+        window.location.href = "/";
       } else {
         console.error('서버 응답 오류:', response.status);
         Swal.fire({
