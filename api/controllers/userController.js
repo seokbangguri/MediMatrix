@@ -396,5 +396,6 @@ module.exports = {
   loadUserData,
   updateData,
   updatePassword,
-  patientE
+  patientE,
+  patientL
 };

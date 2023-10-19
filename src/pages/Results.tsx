@@ -2,6 +2,9 @@ import { Heading, PatientCard, ResultsCharts, ResultsChartAge, ResultsTable, Sco
 import { useState, useEffect } from 'react';
 import { verifyToken } from '../auth/auth';
 import Swal from "sweetalert2";
+import axios from 'axios';
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const Results = () => {
   const [userName, setUserName] = useState('');
@@ -9,18 +12,31 @@ const Results = () => {
   useEffect(() => {
       // 여기에 원하는 동작을 추가하세요.
       verifyToken().then(decodedToken => {
-          if(decodedToken === false){
-              Swal.fire({
-                  title: "로그인 후 이용 가능합니다.",
-                  icon: "error",
-                  confirmButtonText: "확인",
-              }).then((result) => {
-                  if (result.isConfirmed) {
-                      window.location.href = "/signin";
-                  }
-              });
+          if(!decodedToken){
+            Swal.fire({
+              title: '잘못된 접근!',
+              text: '확인을 누르면 메인로 이동합니다.',
+              icon: 'error',
+              confirmButtonText: '확인',
+            }).then(() => {
+              window.location.href = "/";
+            });
           } else {
             setUserName(decodedToken.name);
+            const fetchData = async () => {
+                try {
+                    const data = {
+                        email: decodedToken.email,
+                        name: decodedToken.name,
+                        hospital: decodedToken.hospitalName
+                    };
+                    const response = await axios.post(apiUrl+'/patientlist', data);
+                    console.log(response);
+                } catch (error) {
+                    console.error('API 요청 에러:', error);
+                }
+            };
+            fetchData();
           }
       });
   }, []);
