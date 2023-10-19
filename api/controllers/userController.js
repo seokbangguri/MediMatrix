@@ -368,7 +368,7 @@ async function patientL(req, res) {
     const connection = await pool.getConnection();
 
     const [patient] = await connection.execute(
-      "SELECT * FROM patients WHERE hospital = ? =AND therapists = ?",
+      "SELECT * FROM patients WHERE hospital = ? AND therapists = ?",
       [hospital, email]
     )
 
