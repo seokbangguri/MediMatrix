@@ -1,6 +1,6 @@
 import { PatientCardProps } from './patientCard.props'
 import data from '../../assets/test-data/data.json'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const PatientCard = ({name, id, score, image, options}: PatientCardProps) => {
 
@@ -14,6 +14,10 @@ const PatientCard = ({name, id, score, image, options}: PatientCardProps) => {
 
   const patients = new Set(data.map((patient) => patient.환자번호));
   const patientsArray = Array.from(patients);
+
+  // useEffect(()=>{
+
+  // },[]);
 
   return (
 
