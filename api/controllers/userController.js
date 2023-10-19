@@ -339,7 +339,7 @@ async function patientE(req, res) {
     } else {
       // 사용자를 찾을 수 없을 경우 적절한 응답을 보냅니다.// 데이터베이스에 회원 정보 추가
       const [result] = await connection.execute(
-        `INSERT INTO patient (patientNo, name, sex, hospital, therapists) VALUES (?,?,?,?,?)`,
+        `INSERT INTO patients (patientNo, name, sex, hospital, therapists) VALUES (?,?,?,?,?)`,
         [id,name,sex,hospital,therapists]
       );
       res.status(201).json({ message: "신규환자 입니다." });
