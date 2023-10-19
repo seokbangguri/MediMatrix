@@ -79,7 +79,6 @@ const Setting = () => {
                     email: decodedToken.email,
                     role: decodedToken.role,
                 };
-                const token = await verifyToken();
                 const response = await axios.post(apiUrl+'/setting', data);
                 setInitialFormValues(response.data);
             } catch (error) {
@@ -214,7 +213,7 @@ const Setting = () => {
     };
 
     return (
-        <div className="flex  px-6 py-2 mt-[150px] mx-auto h-fit" >
+        <div className="flex  px-6 py-2 my-[150px] mx-auto h-fit" >
             <div className="w-[900px] bg-white rounded-sm py-5 px-8 drop-shadow-2xl flex flex-col ">
                 <div className="flex flex-col items-start pb-5 border-b border-[#cecece]">
                     <Heading tag='h2'>마이페이지</Heading>

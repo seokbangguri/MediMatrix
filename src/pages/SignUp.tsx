@@ -171,7 +171,8 @@ const SignUp: React.FC = () => {
                                     </div>
                                     <div className="w-1/2">
                                         <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호 확인</label>
-                                        <div className="relative"><Field type={showPasswordConfirm ? 'text' : 'password'} name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
+                                        <div className="relative">
+                                            <Field type={showPasswordConfirm ? 'text' : 'password'} name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
                                             <button onClick={() => togglePasswordVisibility('confirm')} type='button' className="p-1 text-lg absolute top-2 right-2 ">{showPasswordConfirm ? <PiEyeBold /> : <PiEyeClosedBold />}</button>
                                         </div><ErrorMessage name="confirmPassword" component="div" className="text-red-700 text-sm" />
                                     </div></div>

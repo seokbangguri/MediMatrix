@@ -9,7 +9,6 @@ function generateToken(payload) {
   // payload는 토큰에 담을 정보 (예: 사용자 정보 등)
   return jwt.sign(payload, jwtSecret, { expiresIn: '1h' }); // 토큰 만료 시간: 1시간
 }
-
 // 토큰 검증
 async function verifyToken(req, res) {
   try {
@@ -34,7 +33,7 @@ async function verifyToken(req, res) {
     }
   }
 }
-
+// 회원가입
 async function signup(req, res) {
   // 회원가입 로직 구현
   try {
@@ -92,7 +91,7 @@ async function signup(req, res) {
     res.status(500).json({ error: "회원가입 중 오류가 발생했습니다." });
   }
 }
-
+// 로그인
 async function signin(req, res) {
   // 로그인 로직 구현
   try {
@@ -164,7 +163,7 @@ async function signin(req, res) {
     res.status(500).json({ error: "로그인 중 오류가 발생했습니다." });
   }
 }
-
+// 사용자 정보 조회
 async function loadUserData(req, res) {
   // 사용자 데이터 로드 로직 구현
   try {
@@ -213,7 +212,7 @@ async function loadUserData(req, res) {
     res.status(500).json({ error: "데이터 불러오기 실패" });
   }
 }
-
+// 사용자 정보 업데이트
 async function updateData(req, res) {
   // 사용자 정보 업데이트 로직 구현
   try {
@@ -255,7 +254,7 @@ async function updateData(req, res) {
     res.status(500).json({ error: "데이터 업데이트 중 오류가 발생했습니다." });
   }
 }
-
+// 비밀번호 변경
 async function updatePassword(req, res) {
   // 비밀번호 업데이트 로직 구현
   try {
@@ -310,7 +309,7 @@ async function updatePassword(req, res) {
     res.status(500).json({ error: "데이터 업데이트 중 오류가 발생했습니다." });
   }
 }
-
+// 환자 정보등록
 async function patientE(req, res) {
   // 사용자 데이터 로드 로직 구현
   try {
@@ -338,7 +337,11 @@ async function patientE(req, res) {
         hospitalName: p.hospital,
       });
     } else {
-      // 사용자를 찾을 수 없을 경우 적절한 응답을 보냅니다.
+      // 사용자를 찾을 수 없을 경우 적절한 응답을 보냅니다.// 데이터베이스에 회원 정보 추가
+      const [result] = await connection.execute(
+        `INSERT INTO patient (patientNo, name, sex, hospital, therapists) VALUES (?,?,?,?,?)`,
+        [id,name,sex,hospital,therapists]
+      );
       res.status(201).json({ message: "신규환자 입니다." });
     }
 

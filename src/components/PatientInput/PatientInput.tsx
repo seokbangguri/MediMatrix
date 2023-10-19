@@ -1,10 +1,6 @@
-import { useEffect, useState } from "react";
 import { Button } from "../../components";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-import { verifyToken } from "../../auth/auth";
-import Swal from "sweetalert2";
-
 
 //Interface
 interface PatientExistValues {
@@ -15,65 +11,40 @@ interface PatientExistValues {
 //Validation
 const validationSchema = Yup.object({
     name: Yup.string().min(2, '최소 2자 이상').required('입력 필수!'),
-    hospital: Yup.string().required('입력 필수!'),
-    id: Yup.string().required(),
+    id: Yup.string().required('입력 필수!'),
 });
 
 type PatientInfo = {
     name: string;
     id: string;
     sex: string;
-    hospital: string;
-    therapists: string;
 };
 
 type OnNextStepCallback = (data: PatientInfo) => void;
 
 const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
-    const [hos, setHos] = useState<string>('');
-    const [therapists, setTherapists] = useState<string>('');
 
     const initialValues: PatientExistValues = {
         name: '',
         sex: 'M',
         id: ''
     }
-    // 페이지가 처음 로딩될 때만 실행되는 함수
-    useEffect(() => {
-        // 여기에 원하는 동작을 추가하세요.
-        verifyToken().then(decodedToken => {
-            if (decodedToken === false) {
-                Swal.fire({
-                    title: "로그인 후 이용 가능합니다.",
-                    icon: "error",
-                    confirmButtonText: "확인",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = "/signin";
-                    }
-                });
-            } else {
-                setHos(decodedToken.hospitalName);
-                setTherapists(decodedToken.email);
-            }
-            console.log(hos);
-            console.log(therapists);
-        });
-    }, [hos,therapists]);
 
     // Handle checking
     const handleNext = async (values: PatientExistValues, { setSubmitting }: FormikHelpers<PatientExistValues>) => {
-        const { name, id, sex } = values;
+        try {
         console.log(values);
-        const userData = {
+        const { name, id, sex } = values;
+        const patientData = {
             name: name,
             id: id,
-            sex: sex,
-            hospital: hos,
-            therapists: therapists
+            sex: sex
         };
-        onNextStep(userData);
+        onNextStep(patientData);
         setSubmitting(false);
+        } catch(error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -104,10 +75,8 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
                                 </Field>
                             </div>
                         </div>
-
-
                         <div className="mt-10 mb-6 text-center">
-                            <Button onClick={() => {console.log('버튼이 클릭되었습니다.');}} appearance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>다음</Button>
+                            <Button appearance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>다음</Button>
                         </div>
                     </Form>
                 )}

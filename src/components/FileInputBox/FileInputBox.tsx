@@ -1,21 +1,21 @@
 import React, { useState, useRef } from "react";
 import Swal from "sweetalert2";
 import uploadIcon from '../../assets/upload-icon.svg';
-import { Button, Loading, Progress, Text } from "../../components";
+import { Button, Text } from "../../components";
 import axios from "axios";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-type PatientInfo = {
+type finalData = {
     name: string;
     id: string;
     sex: string;
-    hospital: string | null;
-    therapists: string | null;
+    hospital: string;
+    therapists: string;
 };
 
 type onVisibleCallback = (b: boolean) => void;
 
-const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visible: onVisibleCallback }) => {
+const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: onVisibleCallback }) => {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -136,22 +136,42 @@ const FileInputBox = ({ patientInfo, visible }: { patientInfo: PatientInfo, visi
             try {
                 visible(true);
                 const data = {
-                    patientInfo: patientInfo, // 환자 정보
+                    finalData: finalData, // 환자 정보
                     files: selectedFiles, // 선택된 파일 목록
                 };
-                console.log(data['patientInfo']);
+                console.log(data['finalData']);
                 console.log(data['files']);
-                const response = await axios.post(apiUrl + '/patientexist', data['patientInfo'])
+                const response = await axios.post(apiUrl + '/patientexist', data['finalData'])
+                if(response.status === 200) {
+                    Swal.fire({
+                        title: '채점 완료!',
+                        text: '확인을 누르면 결과로 이동합니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인',
+                    }).then(() => {
+                        window.location.href = "/results";
+                    });
+                } else if(response.status === 201) {
+                    Swal.fire({
+                        title: '채점 완료!(신규환자)',
+                        text: '확인을 누르면 결과로 이동합니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인',
+                    }).then(() => {
+                        window.location.href = "/results";
+                    });
+                } else {
+                    Swal.fire({
+                        title: '에러가 발생했습니다!',
+                        text: response.data.error,
+                        icon: 'error',
+                        confirmButtonText: '확인',
+                    }).then(() => {
+                        window.location.href = "/beery";
+                    });
+                }
                 // const response = await axios.post(apiUrl +'/patientE', data['files'])
                 // 응답 완료 후 결과페이지로 이동
-                Swal.fire({
-                    title: '채점 완료!',
-                    text: '확인을 누르면 결과로 이동합니다.' + response,
-                    icon: 'success',
-                    confirmButtonText: '확인',
-                }).then(() => {
-                    window.location.href = "/results";
-                });
 
             } catch (error) {
                 visible(false);

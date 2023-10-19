@@ -4,7 +4,7 @@ import { ButtonProps } from "./button.props";
 const Button = ({ appearance, styles, children }: ButtonProps) => {
   if (appearance === "primary") {
     return (
-      <button type="submit"
+      <button
         className={`bg-gradient-green text-xl rounded-sm w-[330px] md:w-[390px] lg:w-[430px] py-3 text-white font-semibold cursor-pointer border-2 border-white hover:border-button-green hover:bg-gradient-white hover:text-black transition-colors duration-150 ${styles}`}
       >
         {children}

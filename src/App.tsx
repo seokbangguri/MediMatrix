@@ -7,8 +7,6 @@ import SignUp from './pages/SignUp';
 import Results from './pages/Results';
 import Setting from './pages/Setting';
 import Admin from './pages/admin';
-import { useEffect } from 'react';
-import { verifyToken } from './auth/auth'
 
 function App() {
 

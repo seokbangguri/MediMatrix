@@ -20,6 +20,7 @@ export async function verifyToken() {
         }).then(() => {
           window.location.href = "/signin";
         });
+        return false;
       }
     } else {
       return false;
