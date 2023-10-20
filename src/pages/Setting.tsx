@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Button, Heading } from '../components'
 import { useState, useEffect } from 'react';
+import { verifyToken } from '../auth/auth';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 //Interface
@@ -40,6 +41,7 @@ const passwordValidationSchema = Yup.object({
 
 const Setting = () => {
     const [changePassword, setChangePassword] = useState<boolean>(false)
+    const [role, setRole] = useState('');
     const [initialFormValues, setInitialFormValues] = useState<UpdateInfo>({
         email: '',
         name: '',
@@ -59,7 +61,9 @@ const Setting = () => {
     }
 
     useEffect(() => {
-        if(!sessionStorage.getItem('name')) {
+        verifyToken().then(decodedToken => {
+            setRole(decodedToken.role);
+        if(!decodedToken) {
           Swal.fire({
             title: '잘못된 접근!',
             text: '확인을 누르면 메인로 이동합니다.',
@@ -72,8 +76,8 @@ const Setting = () => {
         const fetchData = async () => {
             try {
                 const data = {
-                    email: sessionStorage.getItem('email'),
-                    role: sessionStorage.getItem('role'),
+                    email: decodedToken.email,
+                    role: decodedToken.role,
                 };
                 const response = await axios.post(apiUrl+'/setting', data);
                 setInitialFormValues(response.data);
@@ -83,6 +87,7 @@ const Setting = () => {
         };
         fetchData();
         }
+        });
     }, []);
 
     // Handle update info
@@ -111,16 +116,14 @@ const Setting = () => {
                             name: updatedName,
                             hospitalName: updatedHospitalName,
                             phoneNumber: updatedPhoneNumber,
-                            role: sessionStorage.getItem('role'),
-                            pemail: sessionStorage.getItem('email'),
+                            role: role
                         };
             
                         const response = await axios.post(apiUrl+'/updatedata', updateData);
             
                         if (response.status === 200) {
-                            sessionStorage.setItem('name', updatedName);
-                            sessionStorage.setItem('email', updatedEmail);
                             console.log('회원정보 변경 성공:', response.data);
+                            sessionStorage.setItem('token', response.data.token);
                             Swal.fire({
                                 icon: 'success',
                                 title: '회원정보 변경 완료!',
@@ -210,7 +213,7 @@ const Setting = () => {
     };
 
     return (
-        <div className="flex  px-6 py-2 mt-[150px] mx-auto h-fit" >
+        <div className="flex  px-6 py-2 my-[150px] mx-auto h-fit" >
             <div className="w-[900px] bg-white rounded-sm py-5 px-8 drop-shadow-2xl flex flex-col ">
                 <div className="flex flex-col items-start pb-5 border-b border-[#cecece]">
                     <Heading tag='h2'>마이페이지</Heading>
@@ -259,7 +262,7 @@ const Setting = () => {
                                             <a href='/'>
                                                 <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >취소</Button>
                                             </a>
-                                                <Button apperance="custom" styles="uppercase" >저장</Button>
+                                                <Button appearance="custom" styles="uppercase" >저장</Button>
                                         </div>
                                         <p></p>
                                     </div>
@@ -297,7 +300,7 @@ const Setting = () => {
                                                 <a href="/">
                                                     <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >취소</Button>
                                                 </a>
-                                                    <Button apperance="custom" styles="uppercase" >변경</Button>
+                                                    <Button appearance="custom" styles="uppercase" >변경</Button>
                                             </div>
                                         </div>
 

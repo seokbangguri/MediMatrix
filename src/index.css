@@ -51,3 +51,8 @@ body {
   border-top: 8px solid #fff;
   animation: spin 2s linear infinite; /* 회전 애니메이션 적용 */
 }
+
+.progress-bar {
+  /* ... 이전 CSS 규칙 ... */
+  transition: width 0.5s ease-in-out; /* 프로그래스 바 너비의 변화에 대한 애니메이션 설정 */
+}

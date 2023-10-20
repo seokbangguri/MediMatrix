@@ -6,6 +6,6 @@ export interface ButtonProps
     HTMLButtonElement
   > {
   children: ReactNode;
-  apperance?: "primary" | "ghost" | "custom";
+  appearance?: "primary" | "ghost" | "custom";
   styles?: string;
 }

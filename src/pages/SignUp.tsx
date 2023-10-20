@@ -6,6 +6,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useState, useEffect } from "react";
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
+import { verifyToken } from '../auth/auth'
 
 const apiUrl = process.env.REACT_APP_API_URL;
 //Interface
@@ -46,7 +47,8 @@ const bgStyle = {
 };
 const SignUp: React.FC = () => {
     useEffect(() => {
-      if(sessionStorage.getItem('name')) {
+      verifyToken().then(decodedToken => {
+      if(decodedToken) {
         Swal.fire({
           title: '이미 로그인되어 있습니다!',
           text: '확인을 누르면 홈페이지로 이동합니다.',
@@ -56,7 +58,7 @@ const SignUp: React.FC = () => {
           window.location.href = "/";
         });
       }
-      
+    });
     },[]);
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
@@ -98,10 +100,7 @@ const SignUp: React.FC = () => {
 
             // 서버 응답 확인
             if (response.status === 201) {
-                sessionStorage.setItem('name',name);
-                sessionStorage.setItem('email', email);
-                sessionStorage.setItem('role', role);
-                sessionStorage.setItem('hospital', hospitalName);
+                sessionStorage.setItem('token', response.data.token);
                 window.location.href = "/"; // 회원가입이 성공하면 홈페이지로 이동
             } else {
                 console.error('서버 응답 오류:', response.status);
@@ -172,7 +171,8 @@ const SignUp: React.FC = () => {
                                     </div>
                                     <div className="w-1/2">
                                         <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호 확인</label>
-                                        <div className="relative"><Field type={showPasswordConfirm ? 'text' : 'password'} name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
+                                        <div className="relative">
+                                            <Field type={showPasswordConfirm ? 'text' : 'password'} name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
                                             <button onClick={() => togglePasswordVisibility('confirm')} type='button' className="p-1 text-lg absolute top-2 right-2 ">{showPasswordConfirm ? <PiEyeBold /> : <PiEyeClosedBold />}</button>
                                         </div><ErrorMessage name="confirmPassword" component="div" className="text-red-700 text-sm" />
                                     </div></div>
@@ -190,7 +190,7 @@ const SignUp: React.FC = () => {
 
 
                             <div className="mt-10 mb-6 text-center">
-                                <Button apperance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>회원가입</Button>
+                                <Button appearance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>회원가입</Button>
                             </div>
                             <p className="text-sm font-light text-[#7a7a7a] text-right">
                                 계정이 있으십니까? <a href="/signin" className="font-medium text-blue-600 hover:underline "> 로그인</a>
@@ -201,7 +201,7 @@ const SignUp: React.FC = () => {
 
             </div>
         </div>
-    </div>;;
+    </div>
 };
 
 export default SignUp;

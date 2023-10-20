@@ -11,7 +11,7 @@ function Contact() {
         </Text>
         <div className="flex items-center justify-center gap-20 mx-auto mt-14">
           <a href="mailto:sjhong.goqba.com">
-            <Button apperance="custom" styles="px-16">Get in touch</Button>
+            <Button appearance="custom" styles="px-16">Get in touch</Button>
           </a>
         </div>
       </div>

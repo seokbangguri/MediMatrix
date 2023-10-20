@@ -14,9 +14,9 @@ const Hero = () => {
             AI-Powered Health Assessment
           </Heading>
           <Text size="m" styles="max-w-[440px] mb-10 mt-4">
-            MediMatrix는 AI 기반 알고리즘을 통해 자동적이고 객관적인 서비스를 제공합니다.
+            (이름)은 AI 기반 알고리즘을 통해 자동적이고 객관적인 서비스를 제공합니다.
           </Text>
-          <a href="#products" className="mb-[180px]"><Button apperance="primary">자세히 알아보기 <span className="ml-2">&rarr;</span></Button></a>
+          <a href="#products" className="mb-[180px]"><Button appearance="primary">자세히 알아보기 <span className="ml-2">&rarr;</span></Button></a>
         </div>
         <div className="-mr-16 w-full"><img src={heroBg} alt="" className="w-full" /></div>
       </div>

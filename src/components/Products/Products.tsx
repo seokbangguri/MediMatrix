@@ -13,7 +13,7 @@ function Products() {
       </Text>
       <div className="flex items-center justify-center w-auto gap-6 mt-16 mb-10 flex-wrap">
         <Card
-          source="http://www.portailenfance.ca/wp/wp-content/uploads/2015/08/Beery-VMI-6.png"
+          source="https://pearsonclinical.in/wp-content/uploads/2020/11/https___pearsonclinical.in_solutions_kaufman-survey-of-early-academic-and-language-skills-k-seals_-41_300x200_acf_cropped_300x200_acf_cropped.png"
           name="Beery VMI"
           explain={["Early Intervention", "Visiul-Motor Skills", "Diagnostic Tool", "School Readiness"]}
           route="/beery"

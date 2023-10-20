@@ -6,6 +6,7 @@ import { Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
 import Swal from "sweetalert2";
 import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi'
 import { useState, useEffect } from 'react';
+import { verifyToken } from '../auth/auth'
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -20,7 +21,8 @@ interface SignInValues {
 //Component
 const SignIn = () => {
   useEffect(() => {
-    if(sessionStorage.getItem('name')) {
+    verifyToken().then(decodedToken => {
+    if(decodedToken) {
       Swal.fire({
         title: '이미 로그인되어 있습니다!',
         text: '확인을 누르면 홈페이지로 이동합니다.',
@@ -30,6 +32,7 @@ const SignIn = () => {
         window.location.href = "/";
       });
     }
+  });
     
   },[]);
 
@@ -54,15 +57,7 @@ const SignIn = () => {
 
       // 서버 응답 확인
       if (response.status === 200) {
-        sessionStorage.setItem('hospital', response.data.user.hospital);
-        sessionStorage.setItem('name', response.data.user.name);
-        sessionStorage.setItem('email', response.data.user.email);
-        if(response.data.user.admin === null) {
-          sessionStorage.setItem('role', 'therapists');
-        }
-        else {
-          sessionStorage.setItem('role', 'administrators');
-        }
+        sessionStorage.setItem('token', response.data.token);
         window.location.href = "/";
       } else {
         console.error('서버 응답 오류:', response.status);
@@ -134,7 +129,7 @@ const SignIn = () => {
                 {/* Display validation error if any */}
                 <ErrorMessage name="password" component="div" className="text-red-600 text-sm" />
               </div>
-              <Button apperance="primary" type="button" styles="w-full text-center">로그인</Button>
+              <Button appearance="primary" type="button" styles="w-full text-center">로그인</Button>
               <p className="text-sm font-light text-[#7a7a7a]">
                 계정이 없으십니까? <a href="/signup" className="font-medium text-blue-600 hover:underline ">회원가입</a>
               </p>
