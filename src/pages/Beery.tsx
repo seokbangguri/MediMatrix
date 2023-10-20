@@ -42,7 +42,7 @@ function Beery() {
             hospital: hos,
             therapists: therapists
         }
-        const assignData = Object.assign({},data,tpData);
+        const assignData = Object.assign({}, data, tpData);
         setFinalData(assignData);
         setStep(2);
     };
