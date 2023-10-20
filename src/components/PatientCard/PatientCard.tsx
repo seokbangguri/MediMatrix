@@ -1,23 +1,32 @@
 import { PatientCardProps } from './patientCard.props'
 import data from '../../assets/test-data/data.json'
 import { useEffect, useState } from 'react';
+import { PiCornersOutLight } from 'react-icons/pi';
 
-const PatientCard = ({name, id, score, image, options}: PatientCardProps) => {
+const PatientCard = ({name, id, score, image, options, patientList }: PatientCardProps) => {
 
-  const [selectedOption, setSelectedOption] = useState<string | undefined>(
-    undefined
-  );
+  const [selectedOption, setSelectedOption] = useState<string | undefined>(undefined);
+  // const patientId = new URLSearchParams(location.search);
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(e.target.value);
   };
 
-  const patients = new Set(data.map((patient) => patient.환자번호));
+  // const patients = new Set(data.map((patient) => patient.환자번호));
+  // const patientsArray = Array.from(patients);
+
+  const patients = new Set(patientList.map((patient) => patient.patientNo));
   const patientsArray = Array.from(patients);
 
-  // useEffect(()=>{
+  useEffect(()=>{
+    console.log(patientList);
+    if(patientList) {
+    }
+  },[patientList]);
 
-  // },[]);
+  // useEffect(()=> {
+  //   console.log(patientId);
+  // },[patientId]);
 
   return (
 
@@ -25,9 +34,9 @@ const PatientCard = ({name, id, score, image, options}: PatientCardProps) => {
         <div className=" border-b border-button-green/20 pb-2">
           <select value={selectedOption} onChange={handleSelectChange} className='w-full border-4 border-button-green/20 rounded-sm mb-2 text-center'>
             <option value={selectedOption}>{selectedOption? "환자번호 : " + selectedOption : "-- 환자번호 --"}</option>
-            {patientsArray.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
+            {patientsArray.map((patient, index) => (
+              <option key={index} value={patient}>
+                {patient}
               </option>
             ))}
           </select>

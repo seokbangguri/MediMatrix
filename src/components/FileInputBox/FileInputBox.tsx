@@ -149,7 +149,7 @@ const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: o
                         icon: 'success',
                         confirmButtonText: '확인',
                     }).then(() => {
-                        window.location.href = "/results";
+                        window.location.href = `/results?patientId=${finalData.id}`;
                     });
                 } else if(response.status === 201) {
                     Swal.fire({
@@ -158,7 +158,7 @@ const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: o
                         icon: 'success',
                         confirmButtonText: '확인',
                     }).then(() => {
-                        window.location.href = "/results";
+                        window.location.href = `/results?patientId=${finalData.id}`;
                     });
                 } else {
                     Swal.fire({
