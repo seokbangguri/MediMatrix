@@ -45,7 +45,6 @@ const Results = () => {
                         hospital: decodedToken.hospitalName
                     };
                     const response = await axios.post(apiUrl+'/patientlist', data);
-                    console.log(response.data.patients);
                     setPatientList(response.data.patients);
                 } catch (error) {
                     console.error('API 요청 에러:', error);

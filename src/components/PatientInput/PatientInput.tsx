@@ -32,8 +32,6 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
 
     // Handle checking
     const handleNext = async (values: PatientExistValues, { setSubmitting }: FormikHelpers<PatientExistValues>) => {
-        try {
-        console.log(values);
         const { name, id, sex } = values;
         const patientData = {
             name: name,
@@ -42,9 +40,6 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
         };
         onNextStep(patientData);
         setSubmitting(false);
-        } catch(error) {
-            console.log(error);
-        }
     };
 
     return (

@@ -1,32 +1,41 @@
 import { PatientCardProps } from './patientCard.props'
-import data from '../../assets/test-data/data.json'
 import { useEffect, useState } from 'react';
-import { PiCornersOutLight } from 'react-icons/pi';
 
 const PatientCard = ({name, id, score, image, options, patientList }: PatientCardProps) => {
 
   const [selectedOption, setSelectedOption] = useState<string | undefined>(undefined);
-  // const patientId = new URLSearchParams(location.search);
+  const currentPatientId = new URLSearchParams(window.location.search).get("patientId");
+  const [patientId, setPatientId] = useState<string | null>(currentPatientId);
+  
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(e.target.value);
+    setPatientId(e.target.value);
   };
-
-  // const patients = new Set(data.map((patient) => patient.환자번호));
-  // const patientsArray = Array.from(patients);
 
   const patients = new Set(patientList.map((patient) => patient.patientNo));
   const patientsArray = Array.from(patients);
 
+  // url파리미터 변경해서 페이지 리로드
   useEffect(()=>{
-    console.log(patientList);
-    if(patientList) {
+    if (selectedOption && selectedOption !== currentPatientId) {
+      window.location.href = `/results?patientId=${selectedOption}`;
     }
-  },[patientList]);
+  },[selectedOption]);
 
-  // useEffect(()=> {
-  //   console.log(patientId);
-  // },[patientId]);
+  useEffect(()=> {
+    if(patientId) {
+      setSelectedOption(patientId);
+    }
+  },[patientId]);
+
+  useEffect(()=> {
+    if(!currentPatientId) {
+      if (patientList.length > 0) {
+        const initialPatientId = patientList[0].patientNo; // 첫 번째 환자의 id를 가져옵니다.
+        window.location.href = `/results?patientId=${initialPatientId}`;
+      }
+    }
+  },[]);
 
   return (
 

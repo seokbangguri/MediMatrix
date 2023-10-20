@@ -139,8 +139,6 @@ const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: o
                     finalData: finalData, // 환자 정보
                     files: selectedFiles, // 선택된 파일 목록
                 };
-                console.log(data['finalData']);
-                console.log(data['files']);
                 const response = await axios.post(apiUrl + '/patientexist', data['finalData'])
                 if(response.status === 200) {
                     Swal.fire({

@@ -37,7 +37,6 @@ function Beery() {
 
     const handleNextStep = (data: PatientInfo) => {
         // 1단계에서 입력한 환자 정보 저장하고 2단계로 이동
-        console.log(data);
         const tpData = {
             hospital: hos,
             therapists: therapists
@@ -74,7 +73,6 @@ function Beery() {
 
 
     useEffect(() => {
-        console.log(finalData);
         setProgressStep(step);
         if (step === 1) {
             setProgressBar(false);
