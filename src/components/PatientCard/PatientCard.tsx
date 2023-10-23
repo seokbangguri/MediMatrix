@@ -14,102 +14,135 @@ interface SelectedPatient {
   user_id: number;
 }
 
-const PatientCard = ({name, id, score, image, options, patientList }: PatientCardProps) => {
+interface SelectedTest {
+  hospital: string;
+  patientNo: string;
+  score: {
+    [key: string]: string;
+  };
+  totalScore: string;
+  month: string;
+  Date: string;
+}
 
-  //선택 환자
-  const [selectedOption, setSelectedOption] = useState<string | undefined>(undefined);
+const PatientCard = ({ patientList, getData }: PatientCardProps) => {
+
+  //select에 뿌릴 환자 목록 배열화
+  const patientsArray = Array.from(new Set(patientList.map((patient) => patient.patientNo)));
   //선택 날짜
   const [selectedDate, setSelectedDate] = useState<string | undefined>(undefined);
+  //선택된 환자의 전체 테스트 데이터
+  const [selectedTotalData, setSelectedTotalD] = useState<SelectedTest[]>();
+  //선택된 날짜의 테스트 데이터
+  const [selectedTestData, setSelectedTD] = useState<SelectedTest>();
+  //선택된 환자 정보
+  const [selectedPatient, setSelectedPatient] = useState<SelectedPatient>();
+  //선택된 환자의 테스트 날짜 배열
+  const [testDates, setTestDates] = useState<any[]>([]);
   //현재 url 파라미터 값
   const currentPatientId = new URLSearchParams(window.location.search).get("patientId");
-  //환자 번호
-  const [patientId, setPatientId] = useState<string | null>(currentPatientId);
-  //선택된 환자 정보
-  const [ selectedPatient, setSelectedPatient ] = useState<SelectedPatient>();
-  //선택된 날짜의 테스트데이터
-  const [ testData, setTestData ] = useState<any[]>([]);
+  //선택 환자
+  const [selectedOption, setSelectedOption] = useState<string>(currentPatientId? currentPatientId : '');
   
   //선택 환자가 변할 시 환자 번호 변경
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPatientId(e.target.value);
+    // setPatientId(e.target.value);
+    setSelectedOption(e.target.value);
   };
   //선택 날짜가 변경시 선택된 날짜 변경
   const handleDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDate(e.target.value);
   };
+  //iso형식의 날짜 yyyy-mm-dd형식으로 변환하는 함수
+  const formatDateString = (inputDateString: string) => {
+    const dateObject = new Date(inputDateString);
+    const year = dateObject.getFullYear();
+    const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObject.getDate()).padStart(2, '0');
+    const formattedDateString = `${year}-${month}-${day}`;
+    return formattedDateString;
+  }
 
-  //select에 뿌릴 환자 목록 배열화
-  const patients = new Set(patientList.map((patient) => patient.patientNo));
-  const patientsArray = Array.from(patients);
+  //환자의 번호와 병원정보로 해당 환자의 데이터를 가져오는 함수
+  const fetchData = async () => {
+    try {
+      const data = {
+        id: selectedPatient?.patientNo,
+        hospital: selectedPatient?.hospital
+      };
+      const response = await axios.post(apiUrl + '/patientdata', data);
+      const formattedData = response.data.testData.map((data: any) => {
+        return {
+          ...data,
+          Date: formatDateString(data.Date)
+        };
+      });
+
+      const dates = new Set(formattedData.map((data: any) => data.Date));
+      setTestDates(Array.from(dates));
+
+      return formattedData;
+    } catch (error) {
+      // console.error('API 요청 에러:', error);
+      Swal.fire({
+        title: '에러!',
+        text: '확인을 누르면 메인로 이동합니다.',
+        icon: 'error',
+        confirmButtonText: '확인',
+      }).then(() => {
+        window.location.href = "/";
+      });
+    }
+  };
+
+  //url 파라미터에 환자번호가 없으면 인덱스[0]의 환자를 선택함
+  useEffect(()=> {
+    if(!currentPatientId) {
+      if (patientList.length > 0) {
+        setSelectedOption(patientList[0].patientNo);
+      }
+    } else {
+      setSelectedPatient(patientList.find(patient => patient.patientNo === selectedOption) as SelectedPatient | undefined);
+    }
+  },[]);
+
+  //선택된 환자가 변하면 해당 환자의 테스트 데이터를 가져옴
+  useEffect(()=> {
+    if(selectedPatient) {
+      fetchData().then(data => {
+        setSelectedTotalD(data);
+      });
+    }
+  },[selectedPatient]);
+
+  useEffect(()=> {
+    if(selectedTotalData) {
+      setSelectedTD(selectedTotalData.find(data => data.Date === selectedDate));
+    } else {
+      
+    }
+  },[selectedDate,selectedTestData]);
 
   // url파리미터 변경해서 페이지 리로드
   useEffect(()=>{
     if (selectedOption && selectedOption !== currentPatientId) {
       window.location.href = `/results?patientId=${selectedOption}`;
     }
-  },[selectedOption]);
+  },[selectedOption, selectedDate]);
 
-  useEffect(()=> {
-    if(patientId) {
-      setSelectedOption(patientId);
+  //선택된 날짜가 없으면 인덱스[0]의 날짜 선택
+  useEffect(()=>{
+    if(selectedDate === undefined) {
+      setSelectedDate(testDates[0]);
     }
-  },[patientId]);
+  },[testDates]);
 
+  //환자,날짜에 맞는 데이터를 부모 컴포넌트로 보냄
   useEffect(()=> {
-    if(selectedDate) {
-
+    if(selectedTestData){
+      getData(selectedTestData);
     }
-  },[selectedDate]);
-
-  useEffect(()=> {
-    if(selectedPatient) {
-      const fetchData = async () => {
-          try {
-              const data = {
-                  id: selectedPatient?.patientNo,
-                  hospital: selectedPatient?.hospital
-              };
-            const response = await axios.post(apiUrl + '/patientdata', data);
-
-            const testDataArray = response.data.testData.map((item: { testData: any; }) => {
-              const testData = item.testData;
-              return Object.keys(testData).map(questionNumber => ({
-                questionNumber,
-                answer: testData[questionNumber]
-              }));
-            });
-
-            console.log(testDataArray);
-              const dates = new Set(response.data.testData.map((data: any) => data.testData.testData));
-              setTestData(Array.from(dates));
-          } catch (error) {
-              console.error('API 요청 에러:', error);
-              Swal.fire({
-                title: '에러!',
-                text: '확인을 누르면 메인로 이동합니다.',
-                icon: 'error',
-                confirmButtonText: '확인',
-              }).then(() => {
-                window.location.href = "/";
-              });
-          } finally {
-
-          }
-      };
-      fetchData();
-    }
-  },[selectedPatient]);
-
-  useEffect(()=> {
-    if(!currentPatientId) {
-      if (patientList.length > 0) {
-        const initialPatientId = patientList[0].patientNo; // 첫 번째 환자의 id를 가져옵니다.
-        window.location.href = `/results?patientId=${initialPatientId}`;
-      }
-    } else {
-      setSelectedPatient(patientList.find(patient => patient.patientNo === patientId) as SelectedPatient | undefined);
-    }
-  },[]);
+  },[selectedTestData]);
 
   return (
 
@@ -125,20 +158,22 @@ const PatientCard = ({name, id, score, image, options, patientList }: PatientCar
           </select>
           <select value={selectedDate} onChange={handleDateChange} className='w-full border-4 border-button-green/20 rounded-sm mb-2 text-center'>
             <option value={selectedDate}>{selectedDate? "날짜 : " + selectedDate : "-- 테스트 날짜 --"}</option>
-            {testData.map((date, index) => (
+            {testDates.map((date, index) => (
               <option key={index} value={date}>
                 {date}
               </option>
             ))}
           </select>
-          <img src={image?.length ? image : 'https://www.seekpng.com/png/detail/110-1100707_person-avatar-placeholder.png'} className='w-full max-h-[150px] rounded-sm bg-cover mb-2' alt='patient'/>
+          {/* <img src={image?.length ? image : 'https://www.seekpng.com/png/detail/110-1100707_person-avatar-placeholder.png'} className='w-full max-h-[150px] rounded-sm bg-cover mb-2' alt='patient'/> */}
           <p className='text-center font-semibold text-lg py-2'>환자 정보</p>
           <div className="flex items-center font-semibold text-black justify-between px-2">성명 <span className=' font-normal text-dark-green'>{selectedPatient?.name || "undefined"}</span></div>
           <div className="flex items-center font-semibold text-black justify-between px-2">번호 <span className=' font-normal text-dark-green'>{selectedPatient?.patientNo || "undefined"}</span></div>
-          <div className="flex items-center font-semibold text-black justify-between px-2">총점 <span className=' font-normal text-dark-green'>{testData}</span></div>
+          <div className="flex items-center font-semibold text-black justify-between px-2">성별 <span className=' font-normal text-dark-green'>{selectedPatient?.sex === "M" ? "Male" : "Female"}</span></div>
+          <div className="flex items-center font-semibold text-black justify-between px-2">개월 <span className=' font-normal text-dark-green'>{selectedTestData?.month}</span></div>
+          <div className="flex items-center font-semibold text-black justify-between px-2">총점 <span className=' font-bold text-dark-green'>{selectedTestData?.totalScore}</span></div>
         </div>
-        <div className="max-h-[500px] overflow-x-hidden overflow-y-scroll !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-[#e3e6e5] ">
             <p className='text-center font-semibold text-lg py-2'>문항별 정답률</p>
+        <div className="max-h-[500px] overflow-x-hidden overflow-y-scroll !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-[#e3e6e5] ">
             <div className="flex items-center font-semibold text-black justify-between px-2">7번 <span className=' font-normal text-dark-green'>45.4%</span></div>
             <div className="flex items-center font-semibold text-black justify-between px-2">8번 <span className=' font-normal text-dark-green'>45.4%</span></div>
             <div className="flex items-center font-semibold text-black justify-between px-2">9번 <span className=' font-normal text-dark-green'>45.4%</span></div>

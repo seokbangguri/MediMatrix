@@ -10,7 +10,6 @@ export async function verifyToken() {
       const response = await axios.post(apiUrl+'/verify', data);
         return response.data.decoded;
       } catch(error) {
-        console.error('토큰 검증 실패:', error);
         sessionStorage.removeItem('token');
         Swal.fire({
           title: '다시 로그인!',
