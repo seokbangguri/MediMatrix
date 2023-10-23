@@ -103,18 +103,16 @@ const SignUp: React.FC = () => {
                 sessionStorage.setItem('token', response.data.token);
                 window.location.href = "/"; // 회원가입이 성공하면 홈페이지로 이동
             } else {
-                console.error('서버 응답 오류:', response.status);
+                console.error('서버 응답 오류:');
                 Swal.fire({
                   title: "회원가입 에러",
-                  text: response.statusText,
                   icon: "error",
                 });
             }
         } catch (error: any) {
-            console.error('회원가입 에러:', error);
+            console.error('회원가입 에러:');
             Swal.fire({
               title: "회원가입 에러",
-              text: error.response.data.error,
               icon: "error",
             });
         }
