@@ -20,14 +20,14 @@ function Beery() {
         id: string;
         sex: string;
     };
-    interface finalData {
+    interface finalDataInterface {
         name: string;
         id: string;
         sex: string;
         hospital: string;
         therapists: string;
     };
-    const [finalData, setFinalData] = useState<finalData>({
+    const [finalData, setFinalData] = useState<finalDataInterface>({
         name: '',
         id: '',
         sex: '',

@@ -1,11 +1,31 @@
+import { useEffect, useState } from "react";
 import { Heading } from "../components";
 import { HiOutlineUserRemove } from 'react-icons/hi'
 import { RiShareBoxFill } from 'react-icons/ri'
 import Swal from "sweetalert2";
+import axios from "axios";
 
 //Component
 const Admin = () => {
+    const [therapists, setTherapists] = useState([]);
+    const [hospitalName, setHospitalName] = useState('분당차병원');
 
+    useEffect(() => {
+        fetchTherapistData(); // Fetch data when the component mounts
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const apiUrl = process.env.REACT_APP_API_USERS;
+
+    const fetchTherapistData = () => {
+        axios.get(`${apiUrl}/getAllTherapist/${hospitalName}`)
+            .then((response) => {
+                setTherapists(response.data.data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
     return <div className="flex flex-col w-full px-6 py-8 md:h-screen mt-[150px] max-w-[1445px]">
         <Heading tag="h2">관리자 페이지</Heading>
         <div className="w-full self-start mt-16">
@@ -21,13 +41,13 @@ const Admin = () => {
                     <span className="font-bold text-[20px] w-[100px] text-center">Delete</span>
                 </div>
                 <div className="">
-                <ListItem name='Kim' id='kim@gmail.com' type='23' score='01028872323'/>
-                <ListItem name='Min' id='min@gmail.com' type='23' score='01028872323'/>
-                <ListItem name='Wang' id='kim@gmail.com' type='28' score='01028872323'/>
-                <ListItem name='Wang' id='kim@gmail.com' type='28' score='01028872323'/>
-                <ListItem name='Wang' id='kim@gmail.com' type='28' score='01028872323'/>
-                <ListItem name='Wang' id='kim@gmail.com' type='28' score='01028872323'/>
-                <ListItem name='Wang' id='kim@gmail.com' type='28' score='01028872323'/>
+                    <ListItem name='Kim' id='kim@gmail.com' type='23' score='01028872323' />
+                    <ListItem name='Min' id='min@gmail.com' type='23' score='01028872323' />
+                    <ListItem name='Wang' id='kim@gmail.com' type='28' score='01028872323' />
+                    <ListItem name='Wang' id='kim@gmail.com' type='28' score='01028872323' />
+                    <ListItem name='Wang' id='kim@gmail.com' type='28' score='01028872323' />
+                    <ListItem name='Wang' id='kim@gmail.com' type='28' score='01028872323' />
+                    <ListItem name='Wang' id='kim@gmail.com' type='28' score='01028872323' />
                 </div>
             </div>
         </div>
@@ -46,7 +66,7 @@ interface patientsProps {
     type?: string,
 }
 
-export const Patients = ({name, id, score, type}: patientsProps) => {
+export const Patients = ({ name, id, score, type }: patientsProps) => {
 
     return (
         <div className="w-full self-start mt-16">
@@ -62,9 +82,9 @@ export const Patients = ({name, id, score, type}: patientsProps) => {
                     <span className="font-bold text-[20px] w-[100px] text-center">Remove</span>
                 </div>
                 <div className="">
-                    <ListItem name={name} id={id} type={type} score={score}/>
-                    <ListItem name={name} id={id} type={type} score={score}/>
-                    <ListItem name={name} id={id} type={type} score={score}/>
+                    <ListItem name={name} id={id} type={type} score={score} />
+                    <ListItem name={name} id={id} type={type} score={score} />
+                    <ListItem name={name} id={id} type={type} score={score} />
                 </div>
             </div>
         </div>
