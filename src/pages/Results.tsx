@@ -4,7 +4,7 @@ import { verifyToken } from '../auth/auth';
 import Swal from "sweetalert2";
 import axios from 'axios';
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_PATIENTS;
 
 interface PatientData {
   user_id: number;
@@ -67,7 +67,7 @@ const Results = () => {
                     const response = await axios.post(apiUrl+'/patientlist', data);
                     setPatientList(response.data.patients);
                 } catch (error) {
-                    console.error('API 요청 에러:', error);
+                    console.error('API 요청 에러:');
                     Swal.fire({
                       title: '에러!',
                       text: '확인을 누르면 메인로 이동합니다.',

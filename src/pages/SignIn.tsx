@@ -8,7 +8,7 @@ import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi'
 import { useState, useEffect } from 'react';
 import { verifyToken } from '../auth/auth'
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_USERS;
 
 const validationSchema = Yup.object({
   email: Yup.string().email("유효한 이메일을 입력하세요").required("이메일은 필수 항목입니다"),

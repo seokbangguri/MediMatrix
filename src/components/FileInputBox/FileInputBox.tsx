@@ -4,7 +4,7 @@ import uploadIcon from '../../assets/upload-icon.svg';
 import { Button, Text } from "../../components";
 import axios from "axios";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_PATIENTS;
 type finalData = {
     name: string;
     id: string;

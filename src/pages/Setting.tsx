@@ -6,7 +6,7 @@ import { Button, Heading } from '../components'
 import { useState, useEffect } from 'react';
 import { verifyToken } from '../auth/auth';
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_USERS;
 //Interface
 interface UpdateInfo {
     email: string;
@@ -119,10 +119,9 @@ const Setting = () => {
                             role: role
                         };
             
-                        const response = await axios.post(apiUrl+'/updatedata', updateData);
+                        const response = await axios.post(apiUrl+'/updateUserData', updateData);
             
                         if (response.status === 200) {
-                            console.log('회원정보 변경 성공:', response.data);
                             sessionStorage.setItem('token', response.data.token);
                             Swal.fire({
                                 icon: 'success',
@@ -176,7 +175,7 @@ const Setting = () => {
             };
 
             // Axios를 사용하여 서버로 POST 요청 보내기
-            const response = await axios.post(apiUrl+'/updatepw', userData);
+            const response = await axios.post(apiUrl+'/updatePassword', userData);
 
             // 서버 응답 확인
             if (response.status === 200) {

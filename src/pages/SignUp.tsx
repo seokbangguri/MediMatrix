@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 import { verifyToken } from '../auth/auth'
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_USERS;
 //Interface
 interface SignUpValues {
     email: string;

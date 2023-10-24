@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_PATIENTS;
 
 interface SelectedPatient {
   hospital: string;
@@ -83,7 +83,6 @@ const PatientCard = ({ patientList, getData }: PatientCardProps) => {
 
       return formattedData;
     } catch (error) {
-      // console.error('API 요청 에러:', error);
       Swal.fire({
         title: '에러!',
         text: '확인을 누르면 메인로 이동합니다.',
