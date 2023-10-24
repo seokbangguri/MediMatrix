@@ -58,18 +58,16 @@ const SignIn = () => {
         sessionStorage.setItem('token', response.data.token);
         window.location.href = "/";
       } else {
-        console.error('서버 응답 오류:', response.status);
+        console.error('서버 응답 오류:');
         Swal.fire({
           title: "로그인 에러",
-          text: response.statusText,
           icon: "error",
         });
       }
     } catch (error: any) {
-      console.error('로그인 에러:', error);
+      console.error('로그인 에러:');
       Swal.fire({
         title: "로그인 에러",
-        text: error.response.data.error,
         icon: "error",
       });
     } finally {

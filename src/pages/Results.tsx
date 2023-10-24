@@ -15,6 +15,18 @@ interface PatientData {
   // 다른 속성들을 필요에 따라 추가할 수 있습니다.
 }
 
+interface SelectedTest {
+  hospital: string;
+  patientNo: string;
+  score: {
+    [key: string]: string;
+  };
+  totalScore: string;
+  month: string;
+  Date: string;
+}
+
+
 // 위의 데이터 구조를 나타내는 배열의 타입 정의
 type PatientList = PatientData[];
 
@@ -22,6 +34,14 @@ const Results = () => {
   const [userName, setUserName] = useState('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [patientList, setPatientList] = useState<PatientList>([]);
+  //전달받은 선택된 날짜의 테스트 데이터
+  const [selectedTestData, setSelectedTD] = useState<SelectedTest>();
+
+  const handleGetData = (data: SelectedTest) => {
+    if(data) {
+      setSelectedTD(data);
+    }
+  };
 
   useEffect(() => {
       // 여기에 원하는 동작을 추가하세요.
@@ -56,14 +76,16 @@ const Results = () => {
                     }).then(() => {
                       window.location.href = "/";
                     });
-                } finally {
-                  setIsLoading(false);
-                }
+                } 
             };
             fetchData();
           }
       });
   }, []);
+
+  window.onload = function() {
+    setIsLoading(false);
+  };
 
   if (isLoading) {
     return <Loading context='로딩중 입니다.' hidden={isLoading} />;
@@ -74,8 +96,8 @@ const Results = () => {
         <Heading tag='h2'>{userName}님의 환자 목록</Heading>
         <Text size='s' styles='mt-3 text-[#888] text-center'>좌측 환자 번호를 선택하시면 해당 번호의 결과를 확인하실 수 있습니다.</Text>
         <div className='my-16 flex gap-5 max-w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
-          <PatientCard patientList={patientList} name="재현" id='1244' score='12' options={['test1','test2']}/>
-          <ResultsTable image='https://placehold.co/600x400' score='1' />
+          <PatientCard patientList={patientList} getData={handleGetData}/>
+          <ResultsTable patientData={selectedTestData} />
         </div>
         <ResultsCharts/>
         <div className='flex flex-col md:flex-row justify-between my-10 max-w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>

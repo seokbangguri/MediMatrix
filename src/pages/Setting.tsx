@@ -82,7 +82,7 @@ const Setting = () => {
                 const response = await axios.post(apiUrl+'/setting', data);
                 setInitialFormValues(response.data);
             } catch (error) {
-                console.error('API 요청 에러:', error);
+                console.error('API 요청 에러:');
             }
         };
         fetchData();
@@ -139,7 +139,7 @@ const Setting = () => {
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            console.error('서버 응답 오류:', response.status);
+                            console.error('서버 응답 오류:');
                         }
                     } catch (error) {
                         Swal.fire({
@@ -148,7 +148,7 @@ const Setting = () => {
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        console.error('정보 수정 에러:', error);
+                        console.error('정보 수정 에러:');
                     }
                     setSubmitting(false);
 
@@ -174,14 +174,12 @@ const Setting = () => {
                 email: sessionStorage.getItem('email'),
                 role: sessionStorage.getItem('role'),
             };
-            console.log(userData);
 
             // Axios를 사용하여 서버로 POST 요청 보내기
             const response = await axios.post(apiUrl+'/updatepw', userData);
 
             // 서버 응답 확인
             if (response.status === 200) {
-                console.log('비밀번호 변경 성공:', response.data);
                 Swal.fire({
                     icon: 'success',
                     title: '비밀번호 변경 완료!',
@@ -197,7 +195,7 @@ const Setting = () => {
                     showConfirmButton: false,
                     timer: 1500
                 })
-                console.error('서버 응답 오류:', response.status);
+                console.error('서버 응답 오류:');
             }
         } catch (error) {
             Swal.fire({
@@ -206,8 +204,7 @@ const Setting = () => {
                 showConfirmButton: false,
                 timer: 1500
             })
-            console.error('비밀번호 변경 에러:', error);
-            // 오류 처리 (예: 에러 메시지 표시)
+            console.error('비밀번호 변경 에러:');
         }
         setSubmitting(false);
     };
