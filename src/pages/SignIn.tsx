@@ -35,8 +35,6 @@ const SignIn = () => {
   });
     
   },[]);
-
-  const [signInError, setSignInError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
