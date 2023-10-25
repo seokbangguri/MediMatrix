@@ -5,9 +5,10 @@ import hospital from '../contracted';
 import { useSpring, animated } from "react-spring";
 import beery_main_img from "../assets/beery_main.svg"
 import { verifyToken } from "../auth/auth";
+import { PatientInfoInterface, finalDataInterface } from "../interface/pagesProps";
+
 
 function Beery() {
-
     const [step, setStep] = useState(1);
     const [visible, setVisible] = useState(false);
     const [progressStep, setProgressStep] = useState(step);
@@ -15,18 +16,7 @@ function Beery() {
     const [hos, setHos] = useState<string>('');
     const [therapists, setTherapists] = useState<string>('');
 
-    interface PatientInfo {
-        name: string;
-        id: string;
-        sex: string;
-    };
-    interface finalDataInterface {
-        name: string;
-        id: string;
-        sex: string;
-        hospital: string;
-        therapists: string;
-    };
+
     const [finalData, setFinalData] = useState<finalDataInterface>({
         name: '',
         id: '',
@@ -35,7 +25,7 @@ function Beery() {
         therapists: '',
     });
 
-    const handleNextStep = (data: PatientInfo) => {
+    const handleNextStep = (data: PatientInfoInterface) => {
         // 1단계에서 입력한 환자 정보 저장하고 2단계로 이동
         const tpData = {
             hospital: hos,
