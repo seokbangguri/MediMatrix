@@ -1,5 +1,7 @@
 import React from "react";
 import { Text, Card, Heading } from "../../components";
+import BeeryImage from "../../assets/Beery.png"
+import HoduImage from "../../assets/hodu.png"
 
 function Products() {
 
@@ -11,29 +13,26 @@ function Products() {
       <Text size="m" styles="max-w-[480px] text-center m-auto">
         기존에 평가를 수기로 작업하고 총점을<br />산출하는 프로세스를 개선하는 AI 서비스입니다.
       </Text>
-      <div className="flex items-center justify-center w-auto gap-6 mt-16 mb-10 flex-wrap">
+      <div className="flex items-center justify-center w-auto gap-14 mt-16 mb-10 flex-wrap">
         <Card
-          source="https://pearsonclinical.in/wp-content/uploads/2020/11/https___pearsonclinical.in_solutions_kaufman-survey-of-early-academic-and-language-skills-k-seals_-41_300x200_acf_cropped_300x200_acf_cropped.png"
+          source={BeeryImage}
           name="Beery VMI"
-          explain={["Early Intervention", "Visiul-Motor Skills", "Diagnostic Tool", "School Readiness"]}
           route="/beery"
         >
-          Beery VMI evaluates visual-motor integration skills, assessing how well a person can coordinate their visual perception with fine motor abilities.
+          (이름)은 Beery VMI-6답안지를 AI모델이 자동으로 채점해 결과를 알려주는 솔루션입니다.
         </Card>
         <Card
           route='/beery'
-          source="https://www.timesofautism.com/wp-content/uploads/2017/10/Autism-Spectrum-Disorder-Test.png"
-          name="Project 1"
-          explain={["explain 1-1", "explain 1-2", "explain 1-3", "explain 1-4"]}
+          source={HoduImage}
+          name="Hodu"
 
         >
-          Monitoring rehabilitation training through cognitive tests Customized mild cognitive impairment rehabilitation content.
+          Hodu는 인지검사를 통한 재활훈련 모니터링 및 맞춤형 경도인지장애 재활 콘텐츠입니다.
         </Card>
         <Card
           route='/beery'
           source="https://healthjade.net/wp-content/uploads/2019/12/sperm-motility.jpg"
           name="Project 2"
-          explain={["explain 2-1", "explain 2-2", "explain 2-3", "explain 2-4"]}
 
         >
           Early dementia prediction AI service that provides customized rehabilitation curation for dementia delay.
@@ -42,7 +41,6 @@ function Products() {
           route='/beery'
           source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxjHRfHwDNzqxzweA6eimkRA0S_wRJ0okTuNxwP50vng&s"
           name="Project 3"
-          explain={["explain 3-1", "explain 3-2", "explain 3-3", "explain 3-4"]}
 
         >
           A stroke aftereffects rehabilitation (DTx) program through interaction with XR-based 3D objects.
