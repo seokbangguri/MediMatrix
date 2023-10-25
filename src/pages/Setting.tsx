@@ -5,19 +5,10 @@ import axios from 'axios';
 import { Button, Heading } from '../components'
 import { useState, useEffect } from 'react';
 import { verifyToken } from '../auth/auth';
+import { UpdateInfoInterface, UpdatePasswordInterface } from '../interface/pagesProps';
 
 const apiUrl = process.env.REACT_APP_API_USERS;
-//Interface
-interface UpdateInfo {
-    email: string;
-    name: string;
-    hospitalName: string;
-    phoneNumber?: string;
-}
-interface UpdatePassword {
-    password: string;
-    confirmPassword: string;
-}
+
 const getCharacterValidationError = (str: string) => {
     return `Your password must have at least 1 ${str} character`;
 };
@@ -42,20 +33,20 @@ const passwordValidationSchema = Yup.object({
 const Setting = () => {
     const [changePassword, setChangePassword] = useState<boolean>(false)
     const [role, setRole] = useState('');
-    const [initialFormValues, setInitialFormValues] = useState<UpdateInfo>({
+    const [initialFormValues, setInitialFormValues] = useState<UpdateInfoInterface>({
         email: '',
         name: '',
         hospitalName: '',
         phoneNumber: '',
     });
     //initial value
-    const infoInitialValues: UpdateInfo = {
+    const infoInitialValues: UpdateInfoInterface = {
         email: initialFormValues.email,
         name: initialFormValues.name,
         hospitalName: initialFormValues.hospitalName,
         phoneNumber: initialFormValues.phoneNumber,
     }
-    const passwordInitialValues: UpdatePassword = {
+    const passwordInitialValues: UpdatePasswordInterface = {
         password: '',
         confirmPassword: '',
     }
@@ -116,7 +107,7 @@ const Setting = () => {
                 cancelButtonColor: '#d33',
                 confirmButtonText: '수정',
                 cancelButtonText: '취소'
-              }).then(async (result) => {
+            }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
                         const updateData = {
@@ -126,9 +117,9 @@ const Setting = () => {
                             phoneNumber: updatedPhoneNumber,
                             role: role
                         };
-            
-                        const response = await axios.post(apiUrl+'/updateUserData', updateData);
-            
+
+                        const response = await axios.post(apiUrl + '/updateUserData', updateData);
+
                         if (response.status === 200) {
                             sessionStorage.setItem('token', response.data.token);
                             Swal.fire({
@@ -160,7 +151,7 @@ const Setting = () => {
                     setSubmitting(false);
 
                 }
-              }) 
+            })
         } else {
             Swal.fire({
                 icon: 'warning',
@@ -183,7 +174,7 @@ const Setting = () => {
             };
 
             // Axios를 사용하여 서버로 POST 요청 보내기
-            const response = await axios.post(apiUrl+'/updatePassword', userData);
+            const response = await axios.post(apiUrl + '/updatePassword', userData);
 
             // 서버 응답 확인
             if (response.status === 200) {
@@ -193,7 +184,7 @@ const Setting = () => {
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                  window.location.reload();
+                    window.location.reload();
                 });
             } else {
                 Swal.fire({
@@ -266,7 +257,7 @@ const Setting = () => {
                                             <a href='/'>
                                                 <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >취소</Button>
                                             </a>
-                                                <Button appearance="custom" styles="uppercase" >저장</Button>
+                                            <Button appearance="custom" styles="uppercase" >저장</Button>
                                         </div>
                                         <p></p>
                                     </div>
@@ -304,7 +295,7 @@ const Setting = () => {
                                                 <a href="/">
                                                     <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >취소</Button>
                                                 </a>
-                                                    <Button appearance="custom" styles="uppercase" >변경</Button>
+                                                <Button appearance="custom" styles="uppercase" >변경</Button>
                                             </div>
                                         </div>
 

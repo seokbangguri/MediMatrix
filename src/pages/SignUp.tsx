@@ -7,18 +7,10 @@ import Swal from 'sweetalert2';
 import { useState, useEffect } from "react";
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 import { verifyToken } from '../auth/auth'
+import { SignUpValuesInterface } from "../interface/pagesProps";
 
 const apiUrl = process.env.REACT_APP_API_USERS;
-//Interface
-interface SignUpValues {
-    email: string;
-    name: string;
-    password: string;
-    confirmPassword: string;
-    hospitalName: string;
-    phoneNumber?: string;
-    role: string;
-}
+
 const getCharacterValidationError = (str: string) => {
     return `Your password must have at least 1 ${str} character`;
 };
@@ -47,19 +39,19 @@ const bgStyle = {
 };
 const SignUp: React.FC = () => {
     useEffect(() => {
-      verifyToken().then(decodedToken => {
-      if(decodedToken) {
-        Swal.fire({
-          title: '이미 로그인되어 있습니다!',
-          text: '확인을 누르면 홈페이지로 이동합니다.',
-          icon: 'info',
-          confirmButtonText: '확인',
-        }).then(() => {
-          window.location.href = "/";
+        verifyToken().then(decodedToken => {
+            if (decodedToken) {
+                Swal.fire({
+                    title: '이미 로그인되어 있습니다!',
+                    text: '확인을 누르면 홈페이지로 이동합니다.',
+                    icon: 'info',
+                    confirmButtonText: '확인',
+                }).then(() => {
+                    window.location.href = "/";
+                });
+            }
         });
-      }
-    });
-    },[]);
+    }, []);
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
     const togglePasswordVisibility = (type: 'password' | 'confirm') => {
@@ -71,7 +63,7 @@ const SignUp: React.FC = () => {
     };
 
     //initial value
-    const initialValues: SignUpValues = {
+    const initialValues: SignUpValuesInterface = {
         email: '',
         name: '',
         password: '',
@@ -82,7 +74,7 @@ const SignUp: React.FC = () => {
     }
 
     // Handle signup
-    const handleSignUp = async (values: SignUpValues, { setSubmitting }: FormikHelpers<SignUpValues>) => {
+    const handleSignUp = async (values: SignUpValuesInterface, { setSubmitting }: FormikHelpers<SignUpValuesInterface>) => {
         const { email, password, hospitalName, phoneNumber, name, role } = values;
         try {
             // 전송할 데이터
@@ -96,7 +88,7 @@ const SignUp: React.FC = () => {
             };
 
             // Axios를 사용하여 서버로 POST 요청 보내기
-            const response = await axios.post(apiUrl+'/signup', userData);
+            const response = await axios.post(apiUrl + '/signup', userData);
 
             // 서버 응답 확인
             if (response.status === 201) {
@@ -105,15 +97,15 @@ const SignUp: React.FC = () => {
             } else {
                 console.error('서버 응답 오류:');
                 Swal.fire({
-                  title: "회원가입 에러",
-                  icon: "error",
+                    title: "회원가입 에러",
+                    icon: "error",
                 });
             }
         } catch (error: any) {
             console.error('회원가입 에러:');
             Swal.fire({
-              title: "회원가입 에러",
-              icon: "error",
+                title: "회원가입 에러",
+                icon: "error",
             });
         }
         setSubmitting(false);
