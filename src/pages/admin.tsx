@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Heading } from "../components";
+import { Heading, Searchbar } from "../components";
 import { HiOutlineUserRemove } from 'react-icons/hi'
 import { RiShareBoxFill } from 'react-icons/ri'
 import Swal from "sweetalert2";
@@ -29,7 +29,10 @@ const Admin = () => {
     return <div className="flex flex-col w-full px-6 py-8 md:h-screen mt-[150px] max-w-[1445px]">
         <Heading tag="h2">관리자 페이지</Heading>
         <div className="w-full self-start mt-16">
-            <Heading tag="h3" className="tex-left">Therapists</Heading>
+            <div className="flex justify-between items-center w-full">
+                <Heading tag="h3" className="tex-left">Therapists</Heading>
+                <Searchbar />
+            </div>
             <div className="w-full bg-white rounded-sm drop-shadow-2xl p-4 mt-8">
                 <div className="w-full flex justify-between gap-2 border-b border-[#cecece] py-4">
                     <span className="font-bold text-[20px] w-[30px]">#</span>
