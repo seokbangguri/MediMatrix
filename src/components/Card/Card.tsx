@@ -1,25 +1,18 @@
 import React from "react";
 import { CardProps } from "./card.props";
-import Button from "../Button/Button";
 
-const Card = ({ name, source, children, explain, route }: CardProps): JSX.Element => {
-  
+const Card = ({ name, source, children, route }: CardProps): JSX.Element => {
+
   return (
-    <div className="w-72 min-h-[450px] bg-white rounded-md p-6 shadow-2xl m-auto hover:scale-105 duration-200">
-      <img src={source} className="w-60 h-28 rounded-sm block object-contain" alt={name} />
-      <p className="text-xl font-semibold mt-3">{name}</p>
-      <p className="text-sm mt-2 text-[#353535] min-h-[80px]">{children}</p>
-      <ul className="mt-3 list-inside">
-        {explain.map((item, index) => (
-          <li className="text-sm list-disc ml-3" key={index}>{item}</li>
-        ))}
-      </ul>
-      <div className="w-36 h-9 m-auto mt-5 bg-white flex justify-center items-center">
-          <Button appearance="ghost" styles=" py-[2px] text-[12px] rounded-xs">
-            <a href={route} className="text-[14px]">{name}</a>
-          </Button>
+    <a href={route} className="text-[14px]">
+      <div className="w-72 min-h-[450px] bg-white rounded-md shadow-2xl m-auto hover:scale-105 duration-200 flex flex-col justify-between">
+        <img src={source} className=" w-full rounded-t-md block object-cover bg-slate-500" alt={name} />
+        <div className="mx-6 mb-6">
+          <p className="text-xl font-semibold mt-3">{name}</p>
+          <p className="text-sm mt-2 text-[#353535] min-h-[80px]">{children}</p>
+        </div>
       </div>
-    </div>
+    </a>
   );
 };
 

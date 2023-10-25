@@ -62,7 +62,7 @@ const Setting = () => {
 
     useEffect(() => {
         verifyToken().then(decodedToken => {
-            setRole(decodedToken.role);
+        setRole(decodedToken.role);
         if(!decodedToken) {
           Swal.fire({
             title: '잘못된 접근!',
@@ -83,6 +83,14 @@ const Setting = () => {
                 setInitialFormValues(response.data);
             } catch (error) {
                 console.error('API 요청 에러:');
+                Swal.fire({
+                  title: '에러!',
+                  text: '확인을 누르면 메인로 이동합니다.',
+                  icon: 'error',
+                  confirmButtonText: '확인',
+                }).then(() => {
+                  window.location.href = "/";
+                });
             }
         };
         fetchData();
