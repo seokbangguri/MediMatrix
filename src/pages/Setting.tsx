@@ -218,10 +218,10 @@ const Setting = () => {
                     <div className="w-2/6 py-5 px-2 border-r border-[#cecece]">
                         <h6 className='pb-2 text-md text-semibold'>회원정보</h6>
                         <div className=" flex flex-col gap-5 pb-5 border-b border-[#cecece] ">
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-900 dark:text-white py-2.5">이름</label>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-900 dark:text-white py-2.5">이메일(수정불가)</label>
-                            <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-900 dark:text-white py-2.5">전화번호</label>
-                            <label htmlFor="hospitalName" className="block text-sm font-medium text-gray-900 dark:text-white py-2.5">병원 이름</label>
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-900 py-2.5">이름</label>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-900 py-2.5">이메일(수정불가)</label>
+                            <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-900 py-2.5">전화번호</label>
+                            <label htmlFor="hospitalName" className="block text-sm font-medium text-gray-900 py-2.5">병원 이름</label>
                         </div>
                         <button onClick={() => setChangePassword(!changePassword)} className='pt-5 underline text-blue-400'>비밀번호 변경</button>
                     </div>

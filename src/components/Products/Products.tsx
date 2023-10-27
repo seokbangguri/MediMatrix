@@ -40,8 +40,16 @@ function Products() {
         </Card>
         <Card
           route='/beery'
-          source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxjHRfHwDNzqxzweA6eimkRA0S_wRJ0okTuNxwP50vng&s"
+          source="https://placehold.co/600x580?text=Project+3"
           name="Project 3"
+
+        >
+          Early dementia prediction AI service that provides customized rehabilitation curation for dementia delay.
+        </Card>
+        <Card
+          route='/beery'
+          source="https://placehold.co/600x580?text=Project+4"
+          name="Project 4"
 
         >
           A stroke aftereffects rehabilitation (DTx) program through interaction with XR-based 3D objects.

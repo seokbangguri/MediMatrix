@@ -1,4 +1,3 @@
-import React from 'react'
 import { u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20, u21, u22, u23, u24, u25, u26, u27, u28, u29, u30, } from '../../assets';
 import Heading from '../Heading/Heading';
 import { SelectedTest } from '../ResultsTable/resultsTable.props';
@@ -8,27 +7,27 @@ const imageArray = [u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19
 const ResultsTable = ({ patientData }: { patientData?: SelectedTest }) => {
     const imageRange = Array.from({ length: 27 }, (_, index) => index + 4);
 
-    if(!patientData) {
+    if (!patientData) {
         return (
             <div className='flex justify-center items-center min-w-[1050px] max-w-[1445px] h-[807px]  bg-white py-3 px-2 rounded-md overflow-x-hidden overflow-y-scroll !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-[#e3e6e5]'>
                 <Heading tag='h2' >데이터가 없습니다.</Heading>
             </div>
         )
     } else {
-    return (
-        <div className='w-full h-[807px]  bg-white py-3 px-2 rounded-md overflow-x-hidden overflow-y-scroll !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-[#e3e6e5]'>
-            <div className="flex flex-wrap justify-center gap-4">
-                {imageRange.map((imageNumber, index) => (
-                    <TableCard
-                        index={index + 4}
-                        key={imageNumber}
-                        image={imageArray[index]} // 이미지 import 배열을 사용하여 이미지를 지정합니다.
-                        score={patientData.score[imageNumber] || 'N/A'}
-                    />
-                ))}
+        return (
+            <div className='w-full h-[807px]  bg-white py-3 px-2 rounded-md overflow-x-hidden overflow-y-scroll !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-[#e3e6e5]'>
+                <div className="flex flex-wrap justify-center gap-4">
+                    {imageRange.map((imageNumber, index) => (
+                        <TableCard
+                            index={index + 4}
+                            key={imageNumber}
+                            image={imageArray[index]} // 이미지 import 배열을 사용하여 이미지를 지정합니다.
+                            score={patientData.score[imageNumber] || 'N/A'}
+                        />
+                    ))}
+                </div>
             </div>
-        </div>
-    )
+        )
     }
 }
 
