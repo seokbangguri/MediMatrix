@@ -1,20 +1,9 @@
 import React from 'react'
 import { u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20, u21, u22, u23, u24, u25, u26, u27, u28, u29, u30, } from '../../assets';
 import Heading from '../Heading/Heading';
+import { SelectedTest } from '../ResultsTable/resultsTable.props';
 
 const imageArray = [u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20, u21, u22, u23, u24, u25, u26, u27, u28, u29, u30,]
-
-interface SelectedTest {
-    hospital: string;
-    patientNo: string;
-    score: {
-      [key: string]: string;
-    };
-    totalScore: string;
-    month: string;
-    Date: string;
-  }
-  
 
 const ResultsTable = ({ patientData }: { patientData?: SelectedTest }) => {
     const imageRange = Array.from({ length: 27 }, (_, index) => index + 4);

@@ -6,7 +6,7 @@ interface PatientData {
     hospital: string;
     // 다른 속성들을 필요에 따라 추가할 수 있습니다.
 }
-interface SelectedTest {
+export interface SelectedTest {
     hospital: string;
     patientNo: string;
     score: {
@@ -15,8 +15,16 @@ interface SelectedTest {
     totalScore: string;
     month: string;
     Date: string;
-  }
-  
+}
+
+export interface SelectedPatient {
+    hospital: string;
+    name: string;
+    patientNo: string;
+    sex: string;
+    therapists: string;
+    user_id: number;
+} 
 
 type GetDataCallback = (data: SelectedTest) => void;
 

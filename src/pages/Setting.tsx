@@ -54,7 +54,29 @@ const Setting = () => {
     useEffect(() => {
         verifyToken().then(decodedToken => {
         setRole(decodedToken.role);
-        if(!decodedToken) {
+        if(decodedToken) {
+            const fetchData = async () => {
+                try {
+                    const data = {
+                        email: decodedToken.email,
+                        role: decodedToken.role,
+                    };
+                    const response = await axios.post(apiUrl+'/setting', data);
+                    setInitialFormValues(response.data);
+                } catch (error) {
+                    console.error('API 요청 에러:');
+                    Swal.fire({
+                      title: '에러!',
+                      text: '확인을 누르면 메인로 이동합니다.',
+                      icon: 'error',
+                      confirmButtonText: '확인',
+                    }).then(() => {
+                      window.location.href = "/";
+                    });
+                }
+            };
+            fetchData();
+        } else {
           Swal.fire({
             title: '잘못된 접근!',
             text: '확인을 누르면 메인로 이동합니다.',
@@ -63,28 +85,6 @@ const Setting = () => {
           }).then(() => {
             window.location.href = "/";
           });
-        } else {
-        const fetchData = async () => {
-            try {
-                const data = {
-                    email: decodedToken.email,
-                    role: decodedToken.role,
-                };
-                const response = await axios.post(apiUrl+'/setting', data);
-                setInitialFormValues(response.data);
-            } catch (error) {
-                console.error('API 요청 에러:');
-                Swal.fire({
-                  title: '에러!',
-                  text: '확인을 누르면 메인로 이동합니다.',
-                  icon: 'error',
-                  confirmButtonText: '확인',
-                }).then(() => {
-                  window.location.href = "/";
-                });
-            }
-        };
-        fetchData();
         }
         });
     }, []);

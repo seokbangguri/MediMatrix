@@ -23,16 +23,7 @@ const Results = () => {
   useEffect(() => {
     // 여기에 원하는 동작을 추가하세요.
     verifyToken().then(decodedToken => {
-      if (!decodedToken) {
-        Swal.fire({
-          title: '잘못된 접근!',
-          text: '확인을 누르면 메인로 이동합니다.',
-          icon: 'error',
-          confirmButtonText: '확인',
-        }).then(() => {
-          window.location.href = "/";
-        });
-      } else {
+      if (decodedToken) {
         setUserName(decodedToken.name);
         const fetchData = async () => {
           try {
@@ -56,6 +47,15 @@ const Results = () => {
           }
         };
         fetchData();
+      } else {
+        Swal.fire({
+          title: '잘못된 접근!',
+          text: '확인을 누르면 메인로 이동합니다.',
+          icon: 'error',
+          confirmButtonText: '확인',
+        }).then(() => {
+          window.location.href = "/";
+        });
       }
     });
   }, []);

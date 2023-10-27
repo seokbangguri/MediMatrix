@@ -15,5 +15,6 @@ export { default as ResultsCharts } from './ResultsChart/ResultsCharts'
 export { default as ResultsChartAge } from './ResultsChartAge/ResultsChartAge'
 export { default as Loading } from './Loading/Loading'
 export { default as FileInputBox } from './FileInputBox/FileInputBox'
+export { default as FileInputBoxSperm } from './FileInputBox/FileInputBoxSperm'
 export { default as PatientInput } from './PatientInput/PatientInput'
 export { default as Progress } from './Progress/Progress';
