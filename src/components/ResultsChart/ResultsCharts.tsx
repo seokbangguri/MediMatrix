@@ -10,7 +10,7 @@ const ResultsCharts = () => {
         <ResponsiveBar
         data={data}
         keys={[
-            'age',
+            'Average score',
         ]}
         indexBy="country"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
@@ -75,7 +75,7 @@ const ResultsCharts = () => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'Age',
+            legend: 'Average score',
             legendPosition: 'middle',
             legendOffset: -40
         }}
@@ -130,142 +130,142 @@ export default ResultsCharts
 const data = [
   {
     "country": "4번",
-    "age": 93,
+    "Average score": 93,
     "hot dogColor": "hsl(152, 70%, 50%)",
   },
   {
     "country": "5번",
-    "age": 80,
+    "Average score": 80,
     "hot dogColor": "hsl(152, 70%, 50%)",
   },
   {
     "country": "6번",
-    "age": 80,
+    "Average score": 80,
     "hot dogColor": "hsl(154, 70%, 50%)",
   },
   {
     "country": "7번",
-    "age": 95,
+    "Average score": 95,
     "hot dogColor": "hsl(154, 70%, 50%)",
   },
   {
     "country": "8번",
-    "age": 90,
+    "Average score": 90,
     "hot dogColor": "hsl(154, 70%, 50%)",
 
   },
   {
     "country": "9번",
-    "age": 95,
+    "Average score": 95,
     "hot dogColor": "hsl(154, 70%, 50%)",
   },
   {
     "country": "10번",
-    "age": 56,
+    "Average score": 56,
     "hot dogColor": "hsl(149, 70%, 50%)",
   },
   {
     "country": "11번",
-    "age": 54,
+    "Average score": 54,
     "hot dogColor": "hsl(154, 70%, 50%)",
   },
   {
     "country": "12번",
-    "age": 56,
+    "Average score": 56,
     "hot dogColor": "hsl(152, 70%, 50%)",
   },
   {
     "country": "13번",
-    "age": 37,
+    "Average score": 37,
     "hot dogColor": "hsl(193, 70%, 50%)",
   },
   {
     "country": "14번",
-    "age": 37,
+    "Average score": 37,
     "hot dogColor": "hsl(154, 70%, 50%)",
   },
   {
     "country": "15번",
-    "age": 35,
+    "Average score": 35,
     "hot dogColor": "hsl(191, 70%, 50%)",
 
   },
   {
     "country": "16번",
-    "age": 32,
+    "Average score": 32,
     "hot dogColor": "hsl(4, 70%, 50%)",
   },
   {
     "country": "17번",
-    "age": 30,
+    "Average score": 30,
     "hot dogColor": "hsl(149, 70%, 50%)",
   },
   {
     "country": "18번",
-    "age": 12,
+    "Average score": 12,
     "hot dogColor": "hsl(340, 70%, 50%)",
   },
   {
     "country": "19번",
-    "age": 12,
+    "Average score": 12,
     "hot dogColor": "hsl(340, 70%, 50%)",
   },
   {
     "country": "20번",
-    "age": 12,
+    "Average score": 12,
     "hot dogColor": "hsl(340, 70%, 50%)",
   },
   {
     "country": "21번",
-    "age": 12,
+    "Average score": 12,
     "hot dogColor": "hsl(340, 70%, 50%)",
   },
   {
     "country": "22번",
-    "age": 8,
+    "Average score": 8,
     "hot dogColor": "hsl(340, 70%, 50%)",
   },
   {
     "country": "23번",
-    "age": 7,
+    "Average score": 7,
     "hot dogColor": "hsl(340, 70%, 50%)",
   },
   {
     "country": "24번",
-    "age": 6,
+    "Average score": 6,
     "hot dogColor": "hsl(340, 70%, 50%)",
   },
   {
     "country": "25번",
-    "age": 4,
+    "Average score": 4,
     "hot dogColor": "hsl(340, 70%, 50%)",
   },
   {
     "country": "26번",
-    "age": 2,
+    "Average score": 2,
     "hot dogColor": "hsl(340, 70%, 50%)",
   },
   {
     "country": "27번",
-    "age": 2,
+    "Average score": 2,
     "hot dogColor": "hsl(340, 70%, 50%)",
   }
   ,
   {
     "country": "28번",
-    "age": 0,
+    "Average score": 0,
     "hot dogColor": "hsl(340, 70%, 50%)",
   }
   ,
   {
     "country": "29번",
-    "age": 0,
+    "Average score": 0,
     "hot dogColor": "hsl(340, 70%, 50%)",
   }
   ,
   {
     "country": "30번",
-    "age": 0,
+    "Average score": 0,
     "hot dogColor": "hsl(340, 70%, 50%)",
   }
 ]

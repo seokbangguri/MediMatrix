@@ -2,6 +2,7 @@ import React from "react";
 import { Text, Card, Heading } from "../../components";
 import BeeryImage from "../../assets/Beery.png"
 import HoduImage from "../../assets/hodu.png"
+import SpermImage from "../../assets/sperm.png"
 
 function Products() {
 
@@ -20,6 +21,14 @@ function Products() {
           route="/beery"
         >
           (이름)은 Beery VMI-6답안지를 AI모델이 자동으로 채점해 결과를 알려주는 솔루션입니다.
+        </Card>
+        <Card
+          route='/sperm'
+          source={SpermImage}
+          name="Sperm"
+
+        >
+          Sperm은 AI모델이 정자의 움직임을 분석해 등급을 매겨 수치로 알려주는 솔루션입니다.
         </Card>
         <Card
           route='/beery'

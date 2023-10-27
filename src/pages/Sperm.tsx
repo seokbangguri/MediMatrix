@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { Heading, Text, Footer, FileInputBox, PatientInput, Progress, Loading } from "../components";
+import { Heading, Text, Footer, FileInputBoxSperm, PatientInput, Progress, Loading } from "../components";
 import Swal from "sweetalert2";
 import hospital from '../contracted';
 import { useSpring, animated } from "react-spring";
-import beery_main_img from "../assets/beery_main.svg"
+import sperm_main_img from "../assets/sperm_main.svg"
 import { verifyToken } from "../auth/auth";
 import { PatientInfoInterface, finalDataInterface } from "../interface/pagesProps";
 
 
-function Beery() {
+function Sperm() {
     const [step, setStep] = useState(1);
     const [visible, setVisible] = useState(false);
     const [progressStep, setProgressStep] = useState(step);
@@ -110,17 +110,17 @@ function Beery() {
             <Loading context="Beery 채점 중 입니다." hidden={visible} />
             <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 mt-12 h-screen">
                 <Heading tag="h2" className="">
-                    AI 기반 Beery VMI 답안 채점도구
+                    AI 기반 정자 움직임 분석도구
                 </Heading>
                 <Text size="m" styles="max-w-[700px] text-center pt-5">
-                    채점을 진행하기 위해 환자의 Beery VMI 답안지를 넣어주세요.
+                    채점을 진행하기 위해 정자 영상 파일을 넣어주세요.
                 </Text>
                 <Text size="s" styles=" mb-16">
-                    Beery VMI 답안지는 .pdf 형태 또는 .png .jpg .jpeg 등 형태로 파일 이름을 작성해주세요.
+                    영상파일은 .mp4, .avi, .mov, .mkv 등 동영상 파일 형태로 업로드 해주세요.
                 </Text>
                 <div className="flex items-center justify-between w-[1445px] px-5 md:px-10">
                     <div className="w-[600px] flex justify-center">
-                        <img src={beery_main_img} alt="" width={500} />
+                        <img src={sperm_main_img} alt="" width={500} />
                     </div>
                     <animated.div className="flex flex-col justify-center items-center w-[600px] min-h-[500px] bg-white rounded-md drop-shadow-2xl  py-10" style={smoothTrasform}>
                         <Progress step={String(progressStep)} completed={progressBar} />
@@ -130,7 +130,7 @@ function Beery() {
                             </animated.div>
                         ) : (
                             <animated.div style={fadeInOutProps2}>
-                                <FileInputBox finalData={finalData} visible={handleLoading} />
+                                <FileInputBoxSperm finalData={finalData} visible={handleLoading} />
                             </animated.div>
                         )}
                     </animated.div>
@@ -141,4 +141,4 @@ function Beery() {
     );
 }
 
-export default Beery;
+export default Sperm;
