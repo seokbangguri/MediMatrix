@@ -1,6 +1,16 @@
-import React from 'react'
+import { ChangeEvent } from 'react'
 
-const Searchbar = () => {
+interface SearchBarProps {
+    handleSearch: (query: string) => void;
+}
+
+const Searchbar = ({ handleSearch }: SearchBarProps) => {
+
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const query = event.target.value;
+        handleSearch(query);
+    };
+
     return (
         <div className='w-[400px]'>
             <div className="relative flex items-center w-full h-12 rounded-lg drop-shadow-xl px-2 bg-white overflow-hidden">
@@ -14,7 +24,8 @@ const Searchbar = () => {
                     className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
                     type="text"
                     id="search"
-                    placeholder="Search something.." />
+                    placeholder="Search something.."
+                    onChange={handleInputChange} />
             </div>
         </div>
     )

@@ -17,4 +17,4 @@ export { default as Loading } from './Loading/Loading'
 export { default as FileInputBox } from './FileInputBox/FileInputBox'
 export { default as PatientInput } from './PatientInput/PatientInput'
 export { default as Progress } from './Progress/Progress';
-export { default as Searchbar } from './Searchbar/Searchbar';
+export { default as Searchbar } from './AdminComponents/Searchbar/Searchbar';
