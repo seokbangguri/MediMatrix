@@ -4,7 +4,7 @@ import uploadIcon from '../../assets/upload-icon.svg';
 import { Button, Text } from "..";
 import axios from "axios";
 
-const apiUrl = process.env.REACT_APP_API_PATIENTS;
+const apiUrl = process.env.REACT_APP_API_SPERMS;
 type finalData = {
     name: string;
     id: string;
@@ -19,15 +19,11 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    useEffect(()=>{
-        console.log(selectedFiles[0]);
-    },[selectedFiles]);
-
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
 
         // 허용되는 총 파일 크기 (10MB)
-        const maxTotalFileSize = 10 * 1024 * 1024; // 100MB를 바이트 단위로 계산
+        const maxTotalFileSize = 100 * 1024 * 1024; // 100MB를 바이트 단위로 계산
         let totalFileSize = 0;
 
         // 업로드된 각 파일의 크기를 합산
@@ -39,7 +35,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
         if (totalFileSize > maxTotalFileSize) {
             Swal.fire({
                 title: "파일 크기 초과",
-                text: "파일 크기 합계가 10MB를 초과합니다.",
+                text: "파일 크기 합계가 100MB를 초과합니다.",
                 icon: "error",
             });
 
@@ -62,19 +58,19 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
         const droppedFiles = Array.from(e.dataTransfer.files);
 
         // 허용되는 총 파일 크기 (10MB)
-        const maxTotalFileSize = 10 * 1024 * 1024; // 10MB를 바이트 단위로 계산
+        const maxTotalFileSize = 100 * 1024 * 1024; // 10MB를 바이트 단위로 계산
         let totalFileSize = 0;
 
         // 드래그 앤 드롭한 파일 중에서 허용된 확장자만 선택
         const validFiles = droppedFiles.filter((file) => {
             const fileExtension = file.name.split(".").pop()?.toLowerCase();
-            const allowedExtensions = ['mp4', 'avi', 'mov', 'mkv']; // 허용할 확장자 목록
+            const allowedExtensions = ['mp4', 'csv']; // 허용할 확장자 목록
             const isValidExtension = allowedExtensions.includes(fileExtension || "");
 
             if (!isValidExtension) {
                 Swal.fire({
                     title: "유효하지 않은 파일 형식",
-                    text: "동영상 파일만 허용됩니다.",
+                    text: "동영상 파일과 csv만 허용됩니다.",
                     icon: "error",
                 });
             }
@@ -98,17 +94,17 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
             return;
         }
         // 파일 개수가 1개 초과인 경우
-        if (droppedFiles.length > 1) {
-            Swal.fire({
-                title: "파일 개수 초과",
-                text: "파일 1개만 업로드 가능합니다.",
-                icon: "error",
-            });
+        // if (droppedFiles.length > 1) {
+        //     Swal.fire({
+        //         title: "파일 개수 초과",
+        //         text: "파일 1개만 업로드 가능합니다.",
+        //         icon: "error",
+        //     });
 
-            // 업로드할 수 없도록 파일 목록 초기화
-            setSelectedFiles([]);
-            return;
-        }
+        //     // 업로드할 수 없도록 파일 목록 초기화
+        //     setSelectedFiles([]);
+        //     return;
+        // }
 
         // 선택된 파일 목록 업데이트
         setSelectedFiles(validFiles);
@@ -160,36 +156,36 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
     };
 
     const handleScoreButtonClick = async () => {
-        if (selectedFiles.length === 0) {
-            // 파일이 없을 때 알림 띄우기
+        const mp4Files = selectedFiles.filter(file => file.name.endsWith('.mp4'));
+        const csvFiles = selectedFiles.filter(file => file.name.endsWith('.csv'));
+    
+        if (mp4Files.length !== 5 || csvFiles.length !== 1) {
             Swal.fire({
-                title: "파일 업로드 필요",
-                text: "파일을 업로드해야 채점이 가능합니다.",
-                icon: "warning",
+                title: "파일 개수 또는 형식 오류",
+                text: "mp4 파일은 5개, csv 파일은 1개를 업로드해야 합니다.",
+                icon: "error",
             });
         } else {
-            // 환자 데이터 처리 및 채점 요청
             try {
                 visible(true);
                 const data = new FormData();
-                data.append("file", selectedFiles[0])
-                const response = await axios.post('http://localhost:3001/test', data);
-                console.log(response.status);
-                handlePostData(finalData);
-                // 응답 완료 후 결과페이지로 이동
+                mp4Files.forEach((file, index) => {
+                    data.append('files', file);
+                });
+                const response = await axios.post(apiUrl+'/spermVideos', data);
+                console.log(response.data);
             } catch (error) {
+                console.log(error);
                 visible(false);
                 Swal.fire({
                     title: '에러!',
-                    text: '확인을 누르면 메인로 이동합니다.',
+                    text: '확인을 누르면 메인으로 이동합니다.',
                     icon: 'error',
                     confirmButtonText: '확인',
                 }).then(() => {
                     window.location.href = "/";
                 });
-
             }
-
         }
     };
 
@@ -199,9 +195,10 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                 파일 업로드
             </Text>
             <div
+                onClick={handleFileButtonClick}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
-                className="flex justify-center items-center w-[450px] bg-[#ebebeb] rounded-sm border border-dotted shadow-xl p-4"
+                className="flex justify-center items-center w-[450px] min-h-[200px] bg-[#ebebeb] rounded-sm border border-dotted shadow-xl p-4 cursor-pointer"
             >
                 {selectedFiles.length > 0 ? (
                     <div>
@@ -213,19 +210,20 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                         </ul>
                     </div>
                 ) : (
-                    <button className="flex flex-col items-center gap-2" onClick={handleFileButtonClick}>
+                    <button className="flex flex-col items-center gap-2">
                         <img src={uploadIcon} alt="uload file" width={25} />
                         <p className="text-black text-sm">클릭해서 파일을 추가하거나 마우스로 끌어서 추가할 수 있습니다.</p>
-                        <span className="text-xs">최대 파일 크기 10MB</span>
+                        <span className="text-xs">최대 파일 크기 100MB</span>
                     </button>
                 )}
                 {/* 파일 입력(input) 요소를 숨겨놓고 버튼 클릭 시 파일 선택 창 열리도록 함 */}
                 <input
                     type="file"
-                    accept='.mp4, .avi, .mov, .mkv' // 원하는 파일 형식 지정
+                    accept='.mp4, .csv' // 원하는 파일 형식 지정
                     ref={fileInputRef}
                     style={{ display: "none" }}
                     onChange={handleFileChange}
+                    multiple
                 />
             </div>
             <a onClick={handleScoreButtonClick}>
