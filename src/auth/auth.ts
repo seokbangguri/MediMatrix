@@ -12,6 +12,7 @@ export async function verifyToken() {
   //   phoneNumber: "010-1111-1111",
   // }
   // return decodedToken
+  
   if (sessionStorage.getItem('token')) {
     try {
       const data = { token: sessionStorage.getItem('token') };

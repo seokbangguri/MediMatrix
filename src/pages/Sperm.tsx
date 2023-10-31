@@ -9,7 +9,7 @@ import { PatientInfoInterface, finalDataInterface } from "../interface/pagesProp
 
 
 function Sperm() {
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(2);
     const [visible, setVisible] = useState(false);
     const [progressStep, setProgressStep] = useState(step);
     const [progressBar, setProgressBar] = useState(false);
@@ -107,7 +107,7 @@ function Sperm() {
 
     return (
         <div className="w-screen">
-            <Loading context="Beery 채점 중 입니다." hidden={visible} />
+            <Loading context="정자 동영상 분석 중..." hidden={visible} />
             <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 mt-12 h-screen">
                 <Heading tag="h2" className="">
                     AI 기반 정자 움직임 분석도구
@@ -116,14 +116,14 @@ function Sperm() {
                     채점을 진행하기 위해 정자 영상 파일을 넣어주세요.
                 </Text>
                 <Text size="s" styles=" mb-16">
-                    영상파일은 .mp4, .avi, .mov, .mkv 등 동영상 파일 형태로 업로드 해주세요.
+                    영상파일은 .mp4 동영상 파일 형태로 5개, .csv 파일 1개 업로드 해주세요.
                 </Text>
                 <div className="flex items-center justify-between w-[1445px] px-5 md:px-10">
                     <div className="w-[600px] flex justify-center">
                         <img src={sperm_main_img} alt="" width={500} />
                     </div>
                     <animated.div className="flex flex-col justify-center items-center w-[600px] min-h-[500px] bg-white rounded-md drop-shadow-2xl  py-10" style={smoothTrasform}>
-                        <Progress step={String(progressStep)} completed={progressBar} />
+                        {/* <Progress step={String(progressStep)} completed={progressBar} /> */}
                         {step === 1 ? (
                             <animated.div style={fadeInOutProps1}>
                                 <PatientInput onNextStep={handleNextStep} />

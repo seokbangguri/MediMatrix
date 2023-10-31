@@ -46,14 +46,6 @@ function Products() {
         >
           Early dementia prediction AI service that provides customized rehabilitation curation for dementia delay.
         </Card>
-        <Card
-          route='/beery'
-          source="https://placehold.co/600x580?text=Project+4"
-          name="Project 4"
-
-        >
-          A stroke aftereffects rehabilitation (DTx) program through interaction with XR-based 3D objects.
-        </Card>
       </div>
       <div id="partners" className="absolute inset-x-0 bottom-28"></div>
     </section>
