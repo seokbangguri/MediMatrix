@@ -4,15 +4,14 @@ import Swal from "sweetalert2";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export async function verifyToken() {
-  const decodedToken = {
-    email: "email",
-    name: "test",
-    role: "therapists",
-    hospitalName: "분당차병원",
-    phoneNumber: "010-1111-1111",
-  }
-  return decodedToken
-  /*
+  // const decodedToken = {
+  //   email: "email",
+  //   name: "test",
+  //   role: "therapists",
+  //   hospitalName: "분당차병원",
+  //   phoneNumber: "010-1111-1111",
+  // }
+  // return decodedToken
   if (sessionStorage.getItem('token')) {
     try {
       const data = { token: sessionStorage.getItem('token') };
@@ -35,5 +34,4 @@ export async function verifyToken() {
   } else {
     return false;
   }
-  */
 }
