@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp';
 import Results from './pages/Results';
 import Setting from './pages/Setting';
 import Admin from './pages/admin';
+import ResultsSperm from './pages/ResultsSperm';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/results" element={<Results />} />
+          <Route path="/resultsSperm" element={<ResultsSperm />} />
           <Route path="/setting" element={<Setting />} />
           <Route path="/admin" element={<Admin />} />
           {/* 기타 경로와 페이지 설정 */}

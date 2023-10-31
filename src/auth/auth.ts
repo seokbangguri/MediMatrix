@@ -35,5 +35,4 @@ export async function verifyToken() {
   } else {
     return false;
   }
-  
 }
