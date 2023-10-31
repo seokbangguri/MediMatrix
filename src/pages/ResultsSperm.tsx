@@ -6,7 +6,7 @@ import axios from 'axios';
 import { PatientListType, SelectedTestInterface } from '../interface/pagesProps';
 import { dataReal } from '../assets/testData.js';
 import { ResponsivePie } from '@nivo/pie';
-import useSpermStore from '../state';
+// import useSpermStore from '../state';
 
 
 
