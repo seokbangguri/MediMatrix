@@ -78,8 +78,8 @@ const ResultsSperm = () => {
   return (
     <div className='w-screen mt-[140px] '>
       <div className="flex flex-col items-center lg:px-10 mb-16">
-        <Heading tag='h2'>{userName}님의 환자 목록</Heading>
-        <Text size='s' styles='mt-3 text-[#888] text-center'>좌측 환자 번호를 선택하시면 해당 번호의 결과를 확인하실 수 있습니다.</Text>
+        <Heading tag='h2'>정자 분석 결과</Heading>
+        {/* <Text size='s' styles='mt-3 text-[#888] text-center'>좌측 환자 번호를 선택하시면 해당 번호의 결과를 확인하실 수 있습니다.</Text> */}
         <div className='mb-10 mt-16 flex flex-col gap-5 w-[1000px] md:w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
           <Heading tag='h3'>분석결과</Heading>
           <hr />
@@ -252,14 +252,14 @@ const ResultsSperm = () => {
                 <div className='flex flex-wrap gap-6 justify-between' key={index}>
                   {Object.keys(item.relativePosition).map((key, subIndex) => (
                     <div key={subIndex} className="relative mb-5 pt-1">
-                      <div className="mb-4 flex h-8 overflow-hidden rounded bg-slate-100 text-xs w-[300px]">
-                        <div style={{ width: `${item.relativePosition[key]}%` }} className="bg-green-500">
-                          <span className="pl-2 pt-2 text-white">0.{item.relativePosition[key]}%</span>
+                      <div className="mb-4 flex h-8 rounded bg-slate-100 text-xs w-[300px] overflow-visible">
+                        <div style={{ width: `${item.relativePosition[key]}%` }} className="bg-green-500 flex items-center justify-end rounded">
+                          <span className="pr-1 text-balck-500 font-bold">0.{item.relativePosition[key]}%</span>
                         </div>
                       </div>
                       <div className="mb-2 flex items-center justify-between text-xs">
                         <div className="text-gray-600 font-semibold">{key}</div>
-                        <div className="text-gray-600">100%</div>
+                        <div className="text-gray-600">0.100%</div>
                       </div>
                     </div>
                   ))}
