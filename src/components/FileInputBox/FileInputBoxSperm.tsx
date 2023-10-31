@@ -173,7 +173,18 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                     data.append('files', file);
                 });
                 const response = await axios.post(apiUrl+'/spermVideos', data);
-                console.log(response.data);
+                if(response.status === 200){
+                    visible(false);
+                    Swal.fire({
+                        title: '분석 완료!',
+                        text: '확인을 누르면 결과로 이동합니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인',
+                    }).then(() => {
+                        window.location.href = "/resultsSperm";
+                    });
+                    console.log(response);
+                }
             } catch (error) {
                 console.log(error);
                 visible(false);

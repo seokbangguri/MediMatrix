@@ -86,9 +86,8 @@ const ResultsSperm = () => {
           <Text size='l' styles='text-[#888]'>염색체 이상 분석결과</Text>
           <div className="">
             <Text size='m' styles='text-[#888]'>염색체 이상 가능성은 80% 확률로 염색체 이상 가능성 높습니다</Text>
-            <Text size='s' styles='text-[#888]'>염색체 이상 가능성은 80% 확률로 염색체 이상 가능성 높습니다</Text>
             <div className="flex justify-between gap-2 w-full mt-5"><div className="text-center h-[400px] w-[400px]">
-              <span className="font-bold text-center">염색체 이상 가능성</span>
+              <span className="font-bold text-center">내 연령대에 대한 염색체 이상 가능성 비율</span>
               <ResponsivePie
                 data={data}
                 margin={{ top: 20, right: 80, bottom: 80, left: 80 }}
@@ -150,7 +149,7 @@ const ResultsSperm = () => {
 
             </div>
               <div className="text-center h-[400px] w-[400px]">
-                <span className="font-bold text-center">염색체 이상 가능성</span>
+                <span className="font-bold text-center">전체 연령대에 대한 염색체 이상 가능성 비율</span>
                 <ResponsivePie
                   data={data2}
                   margin={{ top: 20, right: 80, bottom: 80, left: 80 }}
@@ -210,13 +209,13 @@ const ResultsSperm = () => {
                 />
               </div>
               <div className='h-full ml-8 w-[400px]'>
-                <Text size='l' styles='text-[#888] mb-2'>염색체 이상 분석결과</Text>
+                {/* <Text size='l' styles='text-[#888] mb-2'>염색체 이상 분석결과</Text> */}
                 <ul className="flex flex-col list-disc">
                   <li className='py-2 border-b'>
-                    <Text size='s' styles='text-[#888]'>염색체 이상 가능성은 80% 확률로 염색체 이상 가능성 높습니다</Text>
+                    <Text size='s' styles='text-[#888]'>진단한 사람들 중 내 염색체 이상의 비율을 나타낸 지표입니다.</Text>
                   </li>
                   <li className='py-2 border-b'>
-                    <Text size='s' styles='text-[#888]'>염색체 이상 가능성은 80% 확률로 염색체 이상 가능성 높습니다</Text>
+                    <Text size='s' styles='text-[#888]'>내 연령대와 전체에 대한 염색체 이상 가능성을 보여줍니다.</Text>
                   </li>
                 </ul>
 
@@ -236,7 +235,7 @@ const ResultsSperm = () => {
                 <div className="flex flex-col gap-4 px-5 py-4 text-lg">
                   <p className="font-semibold capitalize">평균 속도: <span className='ml-4 font-light lowercase'>{item.speed}&micro;m/s</span></p>
                   <p className="font-semibold capitalize">평균 거리: <span className='ml-4 font-light lowercase'>{item.distance}&micro;m</span></p>
-                  <p className="font-semibold capitalize">전체 갯수: <span className='ml-4 font-light lowercase'>{item.count}개</span></p>
+                  <p className="font-semibold capitalize">전체 개수: <span className='ml-4 font-light lowercase'>{item.count}개</span></p>
                 </div>
               </div>
             })}
@@ -285,7 +284,7 @@ export const spermAnalysis = [
     "count": "220"
   },
   {
-    "name": "aClass",
+    "name": "a Class",
     "speed": "0.021",
     "distance": "21.987",
     "count": "60"
@@ -293,7 +292,7 @@ export const spermAnalysis = [
   },
   {
 
-    "name": "bClass",
+    "name": "b Class",
     "speed": "0.034",
     "distance": "23.987",
     "count": "120"
@@ -301,7 +300,7 @@ export const spermAnalysis = [
   },
   {
 
-    "name": "cClass",
+    "name": "c Class",
     "speed": "0.021",
     "distance": "18.987",
     "count": "30"
@@ -309,7 +308,7 @@ export const spermAnalysis = [
   },
   {
 
-    "name": "dClass",
+    "name": "d Class",
     "speed": "0.011",
     "distance": "10.987",
     "count": "10"
@@ -348,13 +347,13 @@ export const data = [
 ]
 export const data2 = [
   {
-    "id": "low",
+    "id": "낮음",
     "label": "낮음",
     "value": dataReal[1].chromosomeAll?.low,
     "color": "hsl(130, 70%, 50%)"
   },
   {
-    "id": "high",
+    "id": "높음",
     "label": "높음",
     "value": dataReal[1].chromosomeAll?.high,
     "color": "hsl(182, 70%, 50%)"
