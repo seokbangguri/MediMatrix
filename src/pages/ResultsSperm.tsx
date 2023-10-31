@@ -6,6 +6,7 @@ import axios from 'axios';
 import { PatientListType, SelectedTestInterface } from '../interface/pagesProps';
 import { dataReal } from '../assets/testData.js';
 import { ResponsivePie } from '@nivo/pie';
+import useSpermStore from '../state';
 
 
 
@@ -17,6 +18,9 @@ const ResultsSperm = () => {
   const [patientList, setPatientList] = useState<PatientListType>([]);
   //전달받은 선택된 날짜의 테스트 데이터
   const [selectedTestData, setSelectedTD] = useState<SelectedTestInterface>();
+  // Zustand store managament
+  // const spermData = useSpermStore((state: { data: any; }) => state.data);
+  // const addData = useSpermStore((state) => state.addData);
 
 
   const handleGetData = (data: SelectedTestInterface) => {
@@ -225,7 +229,7 @@ const ResultsSperm = () => {
           <hr />
           <div className="flex flex-center justify-between gap-4">
             {spermAnalysis.map((item, i) => {
-              return <div className="w-[230px] drop-shadow-sm flex flex-col gap-2 text-white rounded-lg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] bg-slate-700">
+              return <div key={i} className="w-[230px] drop-shadow-sm flex flex-col gap-2 text-white rounded-lg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] bg-slate-700">
                 <div className="py-4 font-bold text-xl text-center border-b">
                   <span className='capitalize'>{item.name}</span>
                 </div>
