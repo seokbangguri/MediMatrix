@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import image from "../../assets/medimatrix_logo_black.svg";
+import { useState, useEffect } from "react";
 import imagetest1 from "../../assets/test1.svg";
 import userIcon from '../../assets/user.svg'
 import Button from "../Button/Button";
@@ -11,7 +10,7 @@ const Header = () => {
   const [role, setRole] = useState('');
   useEffect(() => {
     verifyToken().then(decodedToken => {
-      if(decodedToken) {
+      if (decodedToken) {
         setUserName(decodedToken.name);
         setRole(decodedToken.role);
       }
@@ -35,12 +34,12 @@ const Header = () => {
       <div className="lg:max-w-[1445px] flex items-center justify-between py-5 px-5 md:px-10 mx-auto">
         <div className="flex items-center justify-center shrink-0">
           <a href="/"
-              onClick={(e) => {
-                if (window.location.pathname === '/') {
-                  e.preventDefault();
-                  window.location.href = '#home';
-                }
-              }}>
+            onClick={(e) => {
+              if (window.location.pathname === '/') {
+                e.preventDefault();
+                window.location.href = '#home';
+              }
+            }}>
             <img
               className="pt-1"
               src={imagetest1}
@@ -59,7 +58,7 @@ const Header = () => {
                   e.preventDefault();
                   window.location.href = '#home';
                 }
-                }}
+              }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-75  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Home
@@ -134,9 +133,9 @@ const Header = () => {
                 <ul className="list-inside">
                   <li className="py-2 px-4 font-semibold">{userName}님</li>
                   <a href="/setting"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer border-t border-slate-400">마이페이지</li></a>
-                  {role === 'therapists' ? 
-                  <a href="/results"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">환자 관리</li></a> : 
-                  <a href="/admin"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">치료사 관리</li></a>
+                  {role === 'therapists' ?
+                    <a href="/results"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">환자 관리</li></a> :
+                    <a href="/admin"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">치료사 관리</li></a>
                   }
                   <li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer" onClick={handleSignOut}>로그아웃</li>
                 </ul>
