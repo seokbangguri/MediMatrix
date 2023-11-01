@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import uploadIcon from '../../assets/upload-icon.svg';
 import { Button, Text } from "..";
 import axios from "axios";
+import useSpermStore from '../../state';
 
 const apiUrl = process.env.REACT_APP_API_SPERMS;
 type finalData = {
@@ -18,6 +19,10 @@ type onVisibleCallback = (b: boolean) => void;
 const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visible: onVisibleCallback }) => {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Zustand store managament
+    const spermData = useSpermStore((state: { data: any; }) => state.data);
+    const addData = useSpermStore((state) => state.addData);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
@@ -175,15 +180,19 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                 const response = await axios.post(apiUrl+'/spermVideos', data);
                 if(response.status === 200){
                     visible(false);
-                    Swal.fire({
-                        title: '분석 완료!',
-                        text: '확인을 누르면 결과로 이동합니다.',
-                        icon: 'success',
-                        confirmButtonText: '확인',
-                    }).then(() => {
-                        window.location.href = "/resultsSperm";
-                    });
-                    console.log(response);
+                    const result = JSON.parse(JSON.stringify(response.data));
+                    addData(result);
+                    if (spermData) {
+                        console.log(spermData);
+                        Swal.fire({
+                            title: '분석 완료!',
+                            text: '확인을 누르면 결과로 이동합니다.',
+                            icon: 'success',
+                            confirmButtonText: '확인',
+                        }).then(() => {
+                            window.location.href = "/resultsSperm";
+                        });
+                    }
                 }
             } catch (error) {
                 console.log(error);
