@@ -6,14 +6,16 @@ import axios from 'axios';
 import { PatientListType, SelectedTestInterface } from '../interface/pagesProps';
 import { dataReal } from '../assets/testData.js';
 import { ResponsivePie } from '@nivo/pie';
+import { useAppContext } from '../state';
 
 
 
 const apiUrl = process.env.REACT_APP_API_PATIENTS;
 
 const ResultsSperm = () => {
+  const { state, dispatch } = useAppContext();
   const [userName, setUserName] = useState('');
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [patientList, setPatientList] = useState<PatientListType>([]);
   //전달받은 선택된 날짜의 테스트 데이터
   const [selectedTestData, setSelectedTD] = useState<SelectedTestInterface>();
