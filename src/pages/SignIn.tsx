@@ -8,6 +8,7 @@ import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi'
 import { useState, useEffect } from 'react';
 import { verifyToken } from '../auth/auth'
 import { SignInValuesInterface } from "../interface/pagesProps";
+import { Link, useNavigate } from "react-router-dom";
 
 const apiUrl = process.env.REACT_APP_API_USERS;
 
@@ -19,6 +20,7 @@ const validationSchema = Yup.object({
 
 //Component
 const SignIn = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     verifyToken().then(decodedToken => {
       if (decodedToken) {
@@ -28,7 +30,7 @@ const SignIn = () => {
           icon: 'info',
           confirmButtonText: '확인',
         }).then(() => {
-          window.location.href = "/";
+          navigate("/");
         });
       }
     });
@@ -55,7 +57,7 @@ const SignIn = () => {
       // 서버 응답 확인
       if (response.status === 200) {
         sessionStorage.setItem('token', response.data.token);
-        window.location.href = "/";
+        window.location.href = '/';
       } else {
         console.error('서버 응답 오류:');
         Swal.fire({
@@ -126,7 +128,7 @@ const SignIn = () => {
               </div>
               <Button appearance="primary" type="button" styles="w-full text-center">로그인</Button>
               <p className="text-sm font-light text-[#7a7a7a]">
-                계정이 없으십니까? <a href="/signup" className="font-medium text-blue-600 hover:underline ">회원가입</a>
+                계정이 없으십니까? <Link to="/signup" className="font-medium text-blue-600 hover:underline ">회원가입</Link>
               </p>
             </form>
           )}

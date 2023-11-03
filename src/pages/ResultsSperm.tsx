@@ -6,19 +6,21 @@ import axios from 'axios';
 import { PatientListType, SelectedTestInterface } from '../interface/pagesProps';
 import { dataReal } from '../assets/testData.js';
 import { ResponsivePie } from '@nivo/pie';
-import useSpermStore from '../state';
+import { useAppContext } from '../state';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const apiUrl = process.env.REACT_APP_API_PATIENTS;
 
 const ResultsSperm = () => {
+  const navigate = useNavigate()
+  const { state, dispatch } = useAppContext();
   const [userName, setUserName] = useState('');
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [patientList, setPatientList] = useState<PatientListType>([]);
   //전달받은 선택된 날짜의 테스트 데이터
   const [selectedTestData, setSelectedTD] = useState<SelectedTestInterface>();
-  const spermData = useSpermStore((state: { data: any[]; }) => state.data);
 
 
   const handleGetData = (data: SelectedTestInterface) => {
@@ -26,7 +28,6 @@ const ResultsSperm = () => {
       setSelectedTD(data);
     }
   };
-    console.log(spermData);
 
   useEffect(() => {
     // 여기에 원하는 동작을 추가하세요.
@@ -50,7 +51,7 @@ const ResultsSperm = () => {
               icon: 'error',
               confirmButtonText: '확인',
             }).then(() => {
-              window.location.href = "/";
+              navigate("/");
             });
           }
         };
@@ -62,7 +63,7 @@ const ResultsSperm = () => {
           icon: 'error',
           confirmButtonText: '확인',
         }).then(() => {
-          window.location.href = "/";
+          navigate("/");
         });
       }
     });

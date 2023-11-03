@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
-import image from "../../assets/medimatrix_logo_black.svg";
+import { useState, useEffect } from "react";
 import imagetest1 from "../../assets/test1.svg";
 import userIcon from '../../assets/user.svg'
 import Button from "../Button/Button";
 import { verifyToken } from "../../auth/auth";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const Header = () => {
+  const navigate = useNavigate()
   const [userName, setUserName] = useState('');
   const [role, setRole] = useState('');
   useEffect(() => {
     verifyToken().then(decodedToken => {
-      if(decodedToken) {
+      if (decodedToken) {
         setUserName(decodedToken.name);
         setRole(decodedToken.role);
       }
@@ -27,20 +28,20 @@ const Header = () => {
 
   function handleSignOut() {
     sessionStorage.removeItem('token');
-    window.location.href = "/";
+    window.location.href = '/';
   }
 
   return (
     <header className="fixed top-0 z-30 w-screen bg-white mx-auto drop-shadow-xl">
-      <div className="lg:max-w-[1445px] flex items-center justify-between py-5 px-5 md:px-10 mx-auto">
+      <div className="lg:max-w-[1445px] flex items-center justify-between py-5 px-3 md:px-5 mx-auto">
         <div className="flex items-center justify-center shrink-0">
-          <a href="/"
-              onClick={(e) => {
-                if (window.location.pathname === '/') {
-                  e.preventDefault();
-                  window.location.href = '#home';
-                }
-              }}>
+          <Link to="/"
+            onClick={(e) => {
+              if (window.location.pathname === '/') {
+                e.preventDefault();
+                window.location.href = '#home';
+              }
+            }}>
             <img
               className="pt-1"
               src={imagetest1}
@@ -48,9 +49,9 @@ const Header = () => {
               height={60}
               alt="logo"
             />
-          </a>
+          </Link>
         </div>
-        <nav className="flex items-center ">
+        <nav className="hidden md:flex items-center ">
           <div className="flex items-center gap-4 md:gap-6 lg:gap-9">
             <a
               href="/#home"
@@ -59,7 +60,7 @@ const Header = () => {
                   e.preventDefault();
                   window.location.href = '#home';
                 }
-                }}
+              }}
               className="text-lg font-semibold text-black tracking-wider hover:opacity-75  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Home
@@ -76,8 +77,7 @@ const Header = () => {
             >
               Products
             </a>
-            <a
-              href="/#partners"
+            <Link to="/#partners"
               onClick={(e) => {
                 if (window.location.pathname === '/') {
                   e.preventDefault();
@@ -87,7 +87,7 @@ const Header = () => {
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Partners
-            </a>
+            </Link>
             <a
               href="/#contact"
               onClick={(e) => {
@@ -103,12 +103,12 @@ const Header = () => {
           </div>
         </nav>
         {userName === '' ? <div className="flex items-center gap-2">
-          <a href="/signin">
+          <Link to="/signin">
             <Button styles="text-lg font-semibold rounded-xs text-black border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 uppercase" >로그인</Button>
-          </a>
-          <a href="/signup">
+          </Link>
+          <Link to="/signup">
             <Button appearance="custom" styles="uppercase" >회원가입</Button>
-          </a>
+          </Link>
         </div> :
           <div className="relative inline-block text-left">
             <button
@@ -134,9 +134,9 @@ const Header = () => {
                 <ul className="list-inside">
                   <li className="py-2 px-4 font-semibold">{userName}님</li>
                   <a href="/setting"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer border-t border-slate-400">마이페이지</li></a>
-                  {role === 'therapists' ? 
-                  <a href="/results"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">환자 관리</li></a> : 
-                  <a href="/admin"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">치료사 관리</li></a>
+                  {role === 'therapists' ?
+                    <a href="/results"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">환자 관리</li></a> :
+                    <a href="/admin"><li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer">치료사 관리</li></a>
                   }
                   <li className="p-2 px-4 hover:bg-neutral-200 cursor-pointer" onClick={handleSignOut}>로그아웃</li>
                 </ul>

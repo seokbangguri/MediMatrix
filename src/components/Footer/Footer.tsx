@@ -5,6 +5,7 @@ import facebook from "../../assets/facebook.svg";
 import twitter from "../../assets/twitter.svg";
 import youtube from "../../assets/youtube.svg";
 import Text from "../Text/Text";
+import { Link } from "react-router-dom";
 
 
 const Footer = () => {
@@ -21,7 +22,7 @@ const Footer = () => {
     <footer style={backgroundStyle} className="w-screen flex flex-col md:flex-row  justify-center">
       <div className="w-full lg:max-w-[1445px] flex flex-col md:flex-row  justify-between items-center gap-10 pb-10 pt-32 px-5 lg:px-10">
         <div className="flex flex-col justify-between h-full">
-          <a href="/">
+          <Link to="/">
             <img
               className="pt-1"
               src={imagetest1}
@@ -29,7 +30,7 @@ const Footer = () => {
               height={60}
               alt="logo"
             />
-          </a>
+          </Link>
 
           <Text size="s" styles="text-white">&copy; 2023 MediMatrix | Security | Privacy | Terms</Text>
         </div>
@@ -63,12 +64,11 @@ const Footer = () => {
 export default Footer;
 
 export const NavLinks = ({ address, text }: { address: String, text: String }) => (
-  <a
-    href={`${address}`}
+  <Link to={`${address}`} reloadDocument
     className="text-md font-semibold tracking-wider hover:opacity-75 hover:scale-105 duration-150"
   >
     {text}
-  </a>
+  </Link>
 )
 
 export const MediaLinks = ({ address, text, iconImage }: { address: string, text: string, iconImage: string }) => (

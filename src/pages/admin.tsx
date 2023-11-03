@@ -17,7 +17,7 @@ const Admin = () => {
     }
 
     //Filter function for therapists
-    const filteredTherapists = therapists.filter((item) =>
+    let filteredTherapists = therapists.filter((item) =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
@@ -56,16 +56,19 @@ const Admin = () => {
 
     const apiUrl = process.env.REACT_APP_API_USERS;
 
-    const deleteTherapist = (id: string | number) => {
-        const updatedTherapists = therapists.filter((therapist) => therapist.id !== id);
-        setTherapists(updatedTherapists);
-    }
-    const deletePatients = (id: string | number) => {
-        const updatedTherapists = therapists.filter((therapist) => therapist.id !== id);
-        setTherapists(updatedTherapists);
+    const deleteTherapist = (id: string) => {
+        const updatedTherapists = filteredTherapists.filter((therapist) => therapist.id !== id);
+        setTherapists(updatedTherapists)
     }
 
-    const fetchTherapistData = () => {
+    const deletePatients = (id: string) => {
+        const updatedPatients = patients.filter((patient) => patient.id !== id);
+        console.log(updatedPatients)
+        setFilteredPatients(updatedPatients)
+    }
+    useEffect(() => { }, [therapists, filteredPatients])
+
+    useEffect(() => {
         axios.get(`${apiUrl}/getAllTherapist/${hospitalName}`)
             .then((response) => {
                 setTherapists(response.data.data);
@@ -73,7 +76,8 @@ const Admin = () => {
             .catch((error) => {
                 console.error('Error:', error);
             });
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return <>
         <div className="flex flex-col w-full px-6 py-8 min-h-screen my-[150px] max-w-[1445px]">
@@ -95,7 +99,7 @@ const Admin = () => {
                     </div>
                     <div className="">
                         {filteredTherapists.map((item, i) => (
-                            <ListItem key={item.id} name={item.name} email={item.email} data={item.data} phone={item.phone} id={i} deleteTherapist={deleteTherapist} />
+                            <ListItem key={item.id} name={item.name} email={item.email} data={item.data} phone={item.phone} id={i} handleDelete={deleteTherapist} />
                         ))}
                     </div>
                 </div>
@@ -117,15 +121,11 @@ const Admin = () => {
                     </div>
                     <div className="">
                         {filteredPatients.map((item, i) => (
-                            <ListItem key={item.id} name={item.name} email={item.patient_id} data={item.test} phone={item.gender} id={i} deleteTherapist={deletePatients} />
+                            <ListItem key={item.id} name={item.name} email={item.patient_id} data={item.test} phone={item.gender} id={i} handleDelete={deletePatients} />
                         ))}
-                        {/* <ListItem name={name} id={id} type={type} score={score} />
-                    <ListItem name={name} id={id} type={type} score={score} />
-                    <ListItem name={name} id={id} type={type} score={score} /> */}
                     </div>
                 </div>
             </div>
-            {/* <Patients name='Usmon' id='1' score="45" type="Berry VMI" /> */}
         </div>
     </>
 };

@@ -6,6 +6,7 @@ import { Button, Heading } from '../components'
 import { useState, useEffect } from 'react';
 import { verifyToken } from '../auth/auth';
 import { UpdateInfoInterface, UpdatePasswordInterface } from '../interface/pagesProps';
+import { Link, useNavigate } from 'react-router-dom';
 
 const apiUrl = process.env.REACT_APP_API_USERS;
 
@@ -31,6 +32,7 @@ const passwordValidationSchema = Yup.object({
 })
 
 const Setting = () => {
+    const navigate = useNavigate();
     const [changePassword, setChangePassword] = useState<boolean>(false)
     const [role, setRole] = useState('');
     const [initialFormValues, setInitialFormValues] = useState<UpdateInfoInterface>({
@@ -53,39 +55,39 @@ const Setting = () => {
 
     useEffect(() => {
         verifyToken().then(decodedToken => {
-        setRole(decodedToken.role);
-        if(decodedToken) {
-            const fetchData = async () => {
-                try {
-                    const data = {
-                        email: decodedToken.email,
-                        role: decodedToken.role,
-                    };
-                    const response = await axios.post(apiUrl+'/setting', data);
-                    setInitialFormValues(response.data);
-                } catch (error) {
-                    console.error('API 요청 에러:');
-                    Swal.fire({
-                      title: '에러!',
-                      text: '확인을 누르면 메인로 이동합니다.',
-                      icon: 'error',
-                      confirmButtonText: '확인',
-                    }).then(() => {
-                      window.location.href = "/";
-                    });
-                }
-            };
-            fetchData();
-        } else {
-          Swal.fire({
-            title: '잘못된 접근!',
-            text: '확인을 누르면 메인로 이동합니다.',
-            icon: 'error',
-            confirmButtonText: '확인',
-          }).then(() => {
-            window.location.href = "/";
-          });
-        }
+            setRole(decodedToken.role);
+            if (decodedToken) {
+                const fetchData = async () => {
+                    try {
+                        const data = {
+                            email: decodedToken.email,
+                            role: decodedToken.role,
+                        };
+                        const response = await axios.post(apiUrl + '/setting', data);
+                        setInitialFormValues(response.data);
+                    } catch (error) {
+                        console.error('API 요청 에러:');
+                        Swal.fire({
+                            title: '에러!',
+                            text: '확인을 누르면 메인로 이동합니다.',
+                            icon: 'error',
+                            confirmButtonText: '확인',
+                        }).then(() => {
+                            navigate('/');
+                        });
+                    }
+                };
+                fetchData();
+            } else {
+                Swal.fire({
+                    title: '잘못된 접근!',
+                    text: '확인을 누르면 메인로 이동합니다.',
+                    icon: 'error',
+                    confirmButtonText: '확인',
+                }).then(() => {
+                    navigate('/');
+                });
+            }
         });
     }, []);
 
@@ -254,9 +256,9 @@ const Setting = () => {
                                             <ErrorMessage name="hospitalName" component="div" className="text-red-700 text-sm" />
                                         </div>
                                         <div className="flex items-center justify-center gap-8">
-                                            <a href='/'>
+                                            <Link to='/'>
                                                 <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >취소</Button>
-                                            </a>
+                                            </Link>
                                             <Button appearance="custom" styles="uppercase" >저장</Button>
                                         </div>
                                         <p></p>
@@ -292,9 +294,9 @@ const Setting = () => {
                                                 </div>
                                             </div>
                                             <div className="flex items-center justify-center gap-8">
-                                                <a href="/">
+                                                <Link to="/">
                                                     <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >취소</Button>
-                                                </a>
+                                                </Link>
                                                 <Button appearance="custom" styles="uppercase" >변경</Button>
                                             </div>
                                         </div>

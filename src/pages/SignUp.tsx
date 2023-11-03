@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 import { verifyToken } from '../auth/auth'
 import { SignUpValuesInterface } from "../interface/pagesProps";
+import { Link, useNavigate } from "react-router-dom";
 
 const apiUrl = process.env.REACT_APP_API_USERS;
 
@@ -38,6 +39,7 @@ const bgStyle = {
     height: '100vh',
 };
 const SignUp: React.FC = () => {
+    const navigate = useNavigate();
     useEffect(() => {
         verifyToken().then(decodedToken => {
             if (decodedToken) {
@@ -47,7 +49,7 @@ const SignUp: React.FC = () => {
                     icon: 'info',
                     confirmButtonText: '확인',
                 }).then(() => {
-                    window.location.href = "/";
+                    navigate('/');
                 });
             }
         });
@@ -93,7 +95,7 @@ const SignUp: React.FC = () => {
             // 서버 응답 확인
             if (response.status === 201) {
                 sessionStorage.setItem('token', response.data.token);
-                window.location.href = "/"; // 회원가입이 성공하면 홈페이지로 이동
+                navigate('/'); // 회원가입이 성공하면 홈페이지로 이동
             } else {
                 console.error('서버 응답 오류:');
                 Swal.fire({
@@ -183,7 +185,7 @@ const SignUp: React.FC = () => {
                                 <Button appearance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>회원가입</Button>
                             </div>
                             <p className="text-sm font-light text-[#7a7a7a] text-right">
-                                계정이 있으십니까? <a href="/signin" className="font-medium text-blue-600 hover:underline "> 로그인</a>
+                                계정이 있으십니까? <Link to="/signin" className="font-medium text-blue-600 hover:underline "> 로그인</Link>
                             </p>
                         </Form>
                     )}

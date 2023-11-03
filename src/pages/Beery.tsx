@@ -6,6 +6,7 @@ import { useSpring, animated } from "react-spring";
 import beery_main_img from "../assets/beery_main.svg"
 import { verifyToken } from "../auth/auth";
 import { PatientInfoInterface, finalDataInterface } from "../interface/pagesProps";
+import { useNavigate } from "react-router-dom";
 
 
 function Beery() {
@@ -15,6 +16,7 @@ function Beery() {
     const [progressBar, setProgressBar] = useState(false);
     const [hos, setHos] = useState<string>('');
     const [therapists, setTherapists] = useState<string>('');
+    const navigate = useNavigate();
 
 
     const [finalData, setFinalData] = useState<finalDataInterface>({
@@ -86,7 +88,7 @@ function Beery() {
                         confirmButtonText: "확인",
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = "/";
+                            navigate('/');
                         }
                     });
                 }
@@ -97,11 +99,12 @@ function Beery() {
                     confirmButtonText: "확인",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = "/signin";
+                        navigate("/signin");
                     }
                 });
             }
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hos, therapists]);
 
 

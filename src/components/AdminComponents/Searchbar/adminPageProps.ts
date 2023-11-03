@@ -4,5 +4,5 @@ export interface patientsProps {
     email: string,
     phone?: string,
     data?: string,
-    deleteTherapist: (id: string | number) => any;
+    handleDelete: (id: string) => any;
 }

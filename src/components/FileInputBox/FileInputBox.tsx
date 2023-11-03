@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import uploadIcon from '../../assets/upload-icon.svg';
 import { Button, Text } from "../../components";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const apiUrl = process.env.REACT_APP_API_PATIENTS;
 type finalData = {
@@ -16,6 +17,7 @@ type finalData = {
 type onVisibleCallback = (b: boolean) => void;
 
 const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: onVisibleCallback }) => {
+    const navigate = useNavigate()
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -140,23 +142,23 @@ const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: o
                     files: selectedFiles, // 선택된 파일 목록
                 };
                 const response = await axios.post(apiUrl + '/patientexist', data['finalData'])
-                if(response.status === 200) {
+                if (response.status === 200) {
                     Swal.fire({
                         title: '채점 완료!',
                         text: '확인을 누르면 결과로 이동합니다.',
                         icon: 'success',
                         confirmButtonText: '확인',
                     }).then(() => {
-                        window.location.href = `/results?patientId=${finalData.id}`;
+                        navigate(`/results?patientId=${finalData.id}`);
                     });
-                } else if(response.status === 201) {
+                } else if (response.status === 201) {
                     Swal.fire({
                         title: '채점 완료!(신규환자)',
                         text: '확인을 누르면 결과로 이동합니다.',
                         icon: 'success',
                         confirmButtonText: '확인',
                     }).then(() => {
-                        window.location.href = `/results?patientId=${finalData.id}`;
+                        navigate(`/results?patientId=${finalData.id}`);
                     });
                 } else {
                     Swal.fire({
@@ -165,7 +167,7 @@ const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: o
                         icon: 'error',
                         confirmButtonText: '확인',
                     }).then(() => {
-                        window.location.href = "/beery";
+                        navigate("/beery");
                     });
                 }
                 // const response = await axios.post(apiUrl +'/patientE', data['files'])
@@ -179,7 +181,7 @@ const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: o
                     icon: 'error',
                     confirmButtonText: '확인',
                 }).then(() => {
-                    window.location.href = "/";
+                    navigate("/");
                 });
 
             }
