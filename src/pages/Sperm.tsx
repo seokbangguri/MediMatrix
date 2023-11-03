@@ -6,9 +6,11 @@ import { useSpring, animated } from "react-spring";
 import sperm_main_img from "../assets/sperm_main.svg"
 import { verifyToken } from "../auth/auth";
 import { PatientInfoInterface, finalDataInterface } from "../interface/pagesProps";
+import { useNavigate } from "react-router-dom";
 
 
 function Sperm() {
+    const navigate = useNavigate();
     const [step, setStep] = useState(2);
     const [visible, setVisible] = useState(false);
     const [progressStep, setProgressStep] = useState(step);
@@ -86,7 +88,7 @@ function Sperm() {
                         confirmButtonText: "확인",
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = "/";
+                            navigate('/')
                         }
                     });
                 }
@@ -97,7 +99,7 @@ function Sperm() {
                     confirmButtonText: "확인",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = "/signin";
+                        navigate("/signin");
                     }
                 });
             }
@@ -110,14 +112,39 @@ function Sperm() {
             <Loading context="정자 동영상 분석 중..." hidden={visible} />
             <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 mt-12 h-screen">
                 <Heading tag="h2" className="">
-                    AI 기반 정자 움직임 분석도구
+                    AI 기반의 남성 난임 진단 지원 시스템
                 </Heading>
-                <Text size="m" styles="max-w-[700px] text-center pt-5">
-                    채점을 진행하기 위해 정자 영상 파일을 넣어주세요.
+                <Text size="m" styles="max-w-[700px] text-center pt-4">
+                    이용 방법
                 </Text>
-                <Text size="s" styles=" mb-16">
-                    영상파일은 .mp4 동영상 파일 형태로 5개, .csv 파일 1개 업로드 해주세요.
-                </Text>
+                <ul className="list-decimal mb-6">
+                    <li>
+                        <Text size="s" styles="mb-1">
+                            csv파일 (1개) 와 mp4파일 (5개) 준비해주세요.
+                        </Text>
+                    </li>
+                    <li>
+                        <Text size="s" styles="mb-1">
+                            정자 동영상 파일의 이름을 '환자번호_01.mp4*와 같은 형식으로 변경해주세요.
+                        </Text>
+                    </li>
+                    <li>
+                        <Text size="s" styles="mb-1">
+                            환자의 나이가 포함된 환자의 정보 파일을 '환자번호.csv'와 같은 형식으로 변경해주세요.
+                        </Text>
+                    </li>
+                    <li>
+                        <Text size="s" styles="mb-1">
+                            총 6개의 파일이 준비가 완료되었다면, 하단 영역에 드래그하여 올려주세요.
+                        </Text>
+                    </li>
+                    <li>
+                        <Text size="s" styles="mb-1">
+                            업로드 준비가 된 파일들을 최종 확인하시고, 분석시작 버튼을 눌러주세요
+                        </Text>
+                    </li>
+                </ul>
+
                 <div className="flex items-center justify-between w-[1445px] px-5 md:px-10">
                     <div className="w-[600px] flex justify-center">
                         <img src={sperm_main_img} alt="" width={500} />
