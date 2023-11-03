@@ -4,10 +4,12 @@ import { verifyToken } from '../auth/auth';
 import Swal from "sweetalert2";
 import axios from 'axios';
 import { PatientListType, SelectedTestInterface } from '../interface/pagesProps';
+import { useNavigate } from 'react-router-dom';
 
 const apiUrl = process.env.REACT_APP_API_PATIENTS;
 
 const Results = () => {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [patientList, setPatientList] = useState<PatientListType>([]);
@@ -42,7 +44,7 @@ const Results = () => {
               icon: 'error',
               confirmButtonText: '확인',
             }).then(() => {
-              window.location.href = "/";
+              navigate("/");
             });
           }
         };
@@ -54,7 +56,7 @@ const Results = () => {
           icon: 'error',
           confirmButtonText: '확인',
         }).then(() => {
-          window.location.href = "/";
+          navigate("/");
         });
       }
     });

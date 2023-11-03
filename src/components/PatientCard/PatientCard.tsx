@@ -2,10 +2,12 @@ import { PatientCardProps, SelectedPatient, SelectedTest } from './patientCard.p
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
+import { useNavigate } from 'react-router-dom';
 
 const apiUrl = process.env.REACT_APP_API_PATIENTS;
 
 const PatientCard = ({ patientList, getData }: PatientCardProps) => {
+  const navigate = useNavigate()
 
   //select에 뿌릴 환자 목록 배열화
   const patientsArray = Array.from(new Set(patientList.map((patient) => patient.patientNo)));
@@ -69,7 +71,7 @@ const PatientCard = ({ patientList, getData }: PatientCardProps) => {
         icon: 'error',
         confirmButtonText: '확인',
       }).then(() => {
-        window.location.href = "/";
+        navigate("/");
       });
     }
   };
@@ -105,7 +107,7 @@ const PatientCard = ({ patientList, getData }: PatientCardProps) => {
   // url파리미터 변경해서 페이지 리로드
   useEffect(() => {
     if (selectedOption && selectedOption !== currentPatientId) {
-      window.location.href = `/results?patientId=${selectedOption}`;
+      navigate(`/results?patientId=${selectedOption}`);
     }
   }, [selectedOption, selectedDate]);
 

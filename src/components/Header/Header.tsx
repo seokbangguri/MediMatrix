@@ -3,9 +3,11 @@ import imagetest1 from "../../assets/test1.svg";
 import userIcon from '../../assets/user.svg'
 import Button from "../Button/Button";
 import { verifyToken } from "../../auth/auth";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const Header = () => {
+  const navigate = useNavigate()
   const [userName, setUserName] = useState('');
   const [role, setRole] = useState('');
   useEffect(() => {
@@ -26,14 +28,14 @@ const Header = () => {
 
   function handleSignOut() {
     sessionStorage.removeItem('token');
-    window.location.href = "/";
+    window.location.href = '/';
   }
 
   return (
     <header className="fixed top-0 z-30 w-screen bg-white mx-auto drop-shadow-xl">
-      <div className="lg:max-w-[1445px] flex items-center justify-between py-5 px-5 md:px-10 mx-auto">
+      <div className="lg:max-w-[1445px] flex items-center justify-between py-5 px-3 md:px-5 mx-auto">
         <div className="flex items-center justify-center shrink-0">
-          <a href="/"
+          <Link to="/"
             onClick={(e) => {
               if (window.location.pathname === '/') {
                 e.preventDefault();
@@ -47,9 +49,9 @@ const Header = () => {
               height={60}
               alt="logo"
             />
-          </a>
+          </Link>
         </div>
-        <nav className="flex items-center ">
+        <nav className="hidden md:flex items-center ">
           <div className="flex items-center gap-4 md:gap-6 lg:gap-9">
             <a
               href="/#home"
@@ -75,8 +77,7 @@ const Header = () => {
             >
               Products
             </a>
-            <a
-              href="/#partners"
+            <Link to="/#partners"
               onClick={(e) => {
                 if (window.location.pathname === '/') {
                   e.preventDefault();
@@ -86,7 +87,7 @@ const Header = () => {
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Partners
-            </a>
+            </Link>
             <a
               href="/#contact"
               onClick={(e) => {
@@ -102,12 +103,12 @@ const Header = () => {
           </div>
         </nav>
         {userName === '' ? <div className="flex items-center gap-2">
-          <a href="/signin">
+          <Link to="/signin">
             <Button styles="text-lg font-semibold rounded-xs text-black border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 uppercase" >로그인</Button>
-          </a>
-          <a href="/signup">
+          </Link>
+          <Link to="/signup">
             <Button appearance="custom" styles="uppercase" >회원가입</Button>
-          </a>
+          </Link>
         </div> :
           <div className="relative inline-block text-left">
             <button

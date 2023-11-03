@@ -7,12 +7,14 @@ import { PatientListType, SelectedTestInterface } from '../interface/pagesProps'
 import { dataReal } from '../assets/testData.js';
 import { ResponsivePie } from '@nivo/pie';
 import { useAppContext } from '../state';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const apiUrl = process.env.REACT_APP_API_PATIENTS;
 
 const ResultsSperm = () => {
+  const navigate = useNavigate()
   const { state, dispatch } = useAppContext();
   const [userName, setUserName] = useState('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -49,7 +51,7 @@ const ResultsSperm = () => {
               icon: 'error',
               confirmButtonText: '확인',
             }).then(() => {
-              window.location.href = "/";
+              navigate("/");
             });
           }
         };
@@ -61,7 +63,7 @@ const ResultsSperm = () => {
           icon: 'error',
           confirmButtonText: '확인',
         }).then(() => {
-          window.location.href = "/";
+          navigate("/");
         });
       }
     });

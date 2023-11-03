@@ -139,7 +139,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                 icon: 'success',
                 confirmButtonText: '확인',
             }).then(() => {
-                window.location.href = `/results?patientId=${finalData.id}`;
+                navigate(`/results?patientId=${finalData.id}`);
             });
         } else if (response.status === 201) {
             visible(false);
@@ -149,7 +149,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                 icon: 'success',
                 confirmButtonText: '확인',
             }).then(() => {
-                window.location.href = `/results?patientId=${finalData.id}`;
+                navigate(`/results?patientId=${finalData.id}`);
             });
         } else {
             visible(false);
@@ -159,7 +159,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                 icon: 'error',
                 confirmButtonText: '확인',
             }).then(() => {
-                window.location.href = "/sperm";
+                navigate("/sperm");
             });
         }
     };
@@ -205,7 +205,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                     icon: 'error',
                     confirmButtonText: '확인',
                 }).then(() => {
-                    window.location.href = "/";
+                    navigate("/");
                 });
             }
         }
@@ -249,7 +249,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                 />
             </div>
             <div onClick={handleScoreButtonClick}>
-                <Button appearance="primary" styles="mt-10 lg:w-[300px]">채점</Button>
+                <Button appearance="primary" styles="mt-10 lg:w-[300px]">AI 분석시작</Button>
             </div>
         </div>
     );
