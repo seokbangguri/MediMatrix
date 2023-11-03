@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import uploadIcon from '../../assets/upload-icon.svg';
 import { Button, Text } from "..";
 import axios from "axios";
-import { useAppContext } from "../../state/index";
+import { useAppContext } from "../../state";
 import { useNavigate } from 'react-router-dom';
 
 const apiUrl = process.env.REACT_APP_API_SPERMS;
@@ -182,7 +182,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                 mp4Files.forEach((file, index) => {
                     data.append('files', file);
                 });
-                csvFiles.forEach((file)=> {
+                csvFiles.forEach((file) => {
                     data.append('files', file);
                 });
                 const response = await axios.post(apiUrl + '/spermVideos', data);
@@ -198,7 +198,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                     }).then(() => {
                         navigate("/resultsSperm");
                     });
-                } else if(response.status === 500) {
+                } else if (response.status === 500) {
                     Swal.fire({
                         title: '저장 실패!',
                         icon: 'error',
@@ -206,7 +206,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                     }).then(() => {
                         window.location.reload();
                     });
-                } else if(response.status === 400) {
+                } else if (response.status === 400) {
                     Swal.fire({
                         title: '에러!',
                         icon: 'error',
