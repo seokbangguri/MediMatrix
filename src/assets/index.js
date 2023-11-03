@@ -101,3 +101,10 @@ export {default as uw27} from "./beery-user-wrongs/27.png"
 export {default as uw28} from "./beery-user-wrongs/28.png"
 export {default as uw29} from "./beery-user-wrongs/29.png"
 export {default as uw30} from "./beery-user-wrongs/30.png"
+
+// sperm images
+export {default as aclass} from "./sperm/a_sample.jpg"
+export {default as bclass} from "./sperm/b_sample.jpg"
+export {default as cclass} from "./sperm/c_sample.jpg"
+export {default as dclass} from "./sperm/d_sample.jpg"
+export {default as pgt} from "./sperm/introduce_pgt.jpg"

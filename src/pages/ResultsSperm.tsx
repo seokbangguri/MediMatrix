@@ -6,6 +6,7 @@ import axios from 'axios';
 import { PatientListType, SelectedTestInterface } from '../interface/pagesProps';
 import { dataReal } from '../assets/testData.js';
 import { ResponsivePie } from '@nivo/pie';
+import useSpermStore from '../state';
 
 
 
@@ -17,6 +18,7 @@ const ResultsSperm = () => {
   const [patientList, setPatientList] = useState<PatientListType>([]);
   //전달받은 선택된 날짜의 테스트 데이터
   const [selectedTestData, setSelectedTD] = useState<SelectedTestInterface>();
+  const spermData = useSpermStore((state: { data: any[]; }) => state.data);
 
 
   const handleGetData = (data: SelectedTestInterface) => {
@@ -24,6 +26,7 @@ const ResultsSperm = () => {
       setSelectedTD(data);
     }
   };
+    console.log(spermData);
 
   useEffect(() => {
     // 여기에 원하는 동작을 추가하세요.

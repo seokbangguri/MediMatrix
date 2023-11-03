@@ -19,3 +19,4 @@ export { default as FileInputBoxSperm } from './FileInputBox/FileInputBoxSperm'
 export { default as PatientInput } from './PatientInput/PatientInput'
 export { default as Progress } from './Progress/Progress';
 export { default as Searchbar } from './AdminComponents/Searchbar/Searchbar';
+export { default as SpermModal } from './SpermModal/SpermModal'

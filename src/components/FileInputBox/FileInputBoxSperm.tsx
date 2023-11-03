@@ -19,9 +19,10 @@ type onVisibleCallback = (b: boolean) => void;
 const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visible: onVisibleCallback }) => {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [test, setTest] = useState<any[]>([]);
 
     // Zustand store managament
-    const spermData = useSpermStore((state: { data: any; }) => state.data);
+    const spermData = useSpermStore((state: { data: any[]; }) => state.data);
     const addData = useSpermStore((state) => state.addData);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -177,14 +178,17 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                 mp4Files.forEach((file, index) => {
                     data.append('files', file);
                 });
+                csvFiles.forEach((file)=> {
+                    data.append('files', file);
+                });
                 const response = await axios.post(apiUrl+'/spermVideos', data);
                 if(response.status === 200){
                     visible(false);
-                    const result = JSON.parse(JSON.stringify(response.data));
-                    addData(result);
+                    const result = JSON.stringify(response.data);
+                    addData([result]);
+                    // if (spermData.length !== 0) {
                     if (spermData) {
-                        console.log(spermData);
-                        Swal.fire({
+                    Swal.fire({
                             title: '분석 완료!',
                             text: '확인을 누르면 결과로 이동합니다.',
                             icon: 'success',
@@ -193,6 +197,22 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                             window.location.href = "/resultsSperm";
                         });
                     }
+                } else if(response.status === 500) {
+                    Swal.fire({
+                        title: '저장 실패!',
+                        icon: 'error',
+                        confirmButtonText: '확인',
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                } else if(response.status === 400) {
+                    Swal.fire({
+                        title: '에러!',
+                        icon: 'error',
+                        confirmButtonText: '확인',
+                    }).then(() => {
+                        window.location.reload();
+                    });
                 }
             } catch (error) {
                 console.log(error);
@@ -208,6 +228,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
             }
         }
     };
+    console.log(spermData);
 
     return (
         <div className="flex flex-col justify-center items-center">

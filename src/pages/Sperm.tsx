@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Heading, Text, Footer, FileInputBoxSperm, PatientInput, Progress, Loading } from "../components";
+import { Heading, Text, Footer, FileInputBoxSperm, PatientInput, Progress, Loading, SpermModal } from "../components";
 import Swal from "sweetalert2";
 import hospital from '../contracted';
 import { useSpring, animated } from "react-spring";
@@ -10,12 +10,11 @@ import { PatientInfoInterface, finalDataInterface } from "../interface/pagesProp
 
 function Sperm() {
     const [step, setStep] = useState(2);
-    const [visible, setVisible] = useState(false);
+    const [visibleLoading, setVisibleLoading] = useState(false);
     const [progressStep, setProgressStep] = useState(step);
     const [progressBar, setProgressBar] = useState(false);
     const [hos, setHos] = useState<string>('');
     const [therapists, setTherapists] = useState<string>('');
-
 
     const [finalData, setFinalData] = useState<finalDataInterface>({
         name: '',
@@ -37,7 +36,7 @@ function Sperm() {
     };
 
     const handleLoading = (b: boolean) => {
-        setVisible(b);
+        setVisibleLoading(b);
     }
 
     const fadeInOutProps1 = useSpring({
@@ -60,7 +59,6 @@ function Sperm() {
             duration: 300,
         }
     });
-
 
     useEffect(() => {
         setProgressStep(step);
@@ -107,7 +105,8 @@ function Sperm() {
 
     return (
         <div className="w-screen">
-            <Loading context="정자 동영상 분석 중..." hidden={visible} />
+            <SpermModal />
+            <Loading context="정자 동영상 분석 중..." hidden={visibleLoading} />
             <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 mt-12 h-screen">
                 <Heading tag="h2" className="">
                     AI 기반 정자 움직임 분석도구
@@ -120,7 +119,7 @@ function Sperm() {
                 </Text>
                 <div className="flex items-center justify-between w-[1445px] px-5 md:px-10">
                     <div className="w-[600px] flex justify-center">
-                        <img src={sperm_main_img} alt="" width={500} />
+                        <img src={sperm_main_img} alt="sperm_main_image" width={500} />
                     </div>
                     <animated.div className="flex flex-col justify-center items-center w-[600px] min-h-[500px] bg-white rounded-md drop-shadow-2xl  py-10" style={smoothTrasform}>
                         {/* <Progress step={String(progressStep)} completed={progressBar} /> */}
