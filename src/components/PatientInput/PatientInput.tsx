@@ -50,7 +50,7 @@ const PatientInput = ({ onNextStep }: { onNextStep: OnNextStepCallback }) => {
                 onSubmit={handleNext}
             >
                 {({ isSubmitting }) => (
-                    <Form className="w-full " >
+                    <Form className="w-full" >
                         <div className="flex flex-col gap-3 w-full">
                             <div className="w-full gap-6">
                                 <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">이름</label>
