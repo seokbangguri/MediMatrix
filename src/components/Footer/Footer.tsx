@@ -21,7 +21,7 @@ const Footer = () => {
   return (
     <footer style={backgroundStyle} className="w-screen flex flex-col md:flex-row  justify-center">
       <div className="w-full lg:max-w-[1445px] flex flex-col md:flex-row  justify-between items-center gap-10 pb-10 pt-32 px-5 lg:px-10">
-        <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-col justify-between gap-4 h-full">
           <Link to="/">
             <img
               className="pt-1"
@@ -38,22 +38,22 @@ const Footer = () => {
           <div className="flex flex-col text-white gap-2 md:gap-4 lg:gap-5">
             <NavLinks address={'/'} text='Home' />
             <NavLinks address={'#products'} text='Products' />
-            <NavLinks address={'#'} text='About Us' />
-            <NavLinks address={'#'} text='News' />
+            <NavLinks address={'/aboutus'} text='About Us' />
+            <NavLinks address={'/news'} text='News' />
             <NavLinks address={'#contact'} text='Contact' />
           </div>
           <div className="flex flex-col text-white gap-2 md:gap-4 lg:gap-5">
-            <NavLinks address={'#'} text='Customers' />
-            <NavLinks address={'#'} text='Services' />
-            <NavLinks address={'#'} text='Media' />
+            <NavLinks address={'/customer'} text='Customers' />
+            <NavLinks address={'/services'} text='Services' />
+            <NavLinks address={'/media'} text='Media' />
             <NavLinks address={'#partners'} text='Partners' />
           </div>
         </div>
         <div className="flex flex-col justify-center text-white gap-2 md:gap-4 lg:gap-5">
-          <MediaLinks address={'#'} text='Youtube' iconImage={youtube} />
-          <MediaLinks address={'#'} text='Facebook' iconImage={facebook} />
-          <MediaLinks address={'#'} text='Twitter' iconImage={twitter} />
-          <MediaLinks address={'#'} text='Instagram' iconImage={instagram} />
+          <MediaLinks address={'youtube'} text='Youtube' iconImage={youtube} />
+          <MediaLinks address={'/facebook'} text='Facebook' iconImage={facebook} />
+          <MediaLinks address={'/twitter'} text='Twitter' iconImage={twitter} />
+          <MediaLinks address={'/instagram'} text='Instagram' iconImage={instagram} />
         </div>
 
       </div>

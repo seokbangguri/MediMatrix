@@ -111,7 +111,7 @@ function Beery() {
     return (
         <div className="w-screen">
             <Loading context="Beery 채점 중 입니다." hidden={visible} />
-            <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 mt-12 h-screen">
+            <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 mt-12 min-h-screen">
                 <Heading tag="h2" className="">
                     AI 기반 Beery VMI 답안 채점도구
                 </Heading>
@@ -121,11 +121,11 @@ function Beery() {
                 <Text size="s" styles=" mb-16">
                     Beery VMI 답안지는 .pdf 형태 또는 .png .jpg .jpeg 등 형태로 파일 이름을 작성해주세요.
                 </Text>
-                <div className="flex items-center justify-between w-[1445px] px-5 md:px-10">
-                    <div className="w-[600px] flex justify-center">
+                <div className="flex flex-col md:flex-row items-center justify-between w-[1445px] px-5 md:px-10">
+                    <div className="max-w-[600px] flex justify-center">
                         <img src={beery_main_img} alt="" width={500} />
                     </div>
-                    <animated.div className="flex flex-col justify-center items-center w-[600px] min-h-[500px] bg-white rounded-md drop-shadow-2xl  py-10" style={smoothTrasform}>
+                    <animated.div className="flex flex-col justify-center w-[500px] md:w-[600px] min-h-[500px] bg-white rounded-md drop-shadow-2xl  p-10" style={smoothTrasform}>
                         <Progress step={String(progressStep)} completed={progressBar} />
                         {step === 1 ? (
                             <animated.div style={fadeInOutProps1}>

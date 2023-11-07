@@ -7,7 +7,7 @@ const Progress = ({ step, completed }: { step: String, completed: Boolean }) => 
         setWidth(completed ? "100%" : "50%");
     }, [completed]);
     return (
-        <div className='flex flex-col w-[430px] mb-4'>
+        <div className='flex flex-col w-full mb-4'>
             <p className="text-lg font-semibold">환자 등록을 완료해주세요.</p>
             <div className="text-sm text-right mb-2">
                 <span className='text-blue-500'>Step {step} of </span>
