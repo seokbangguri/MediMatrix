@@ -10,9 +10,9 @@ const Loading = ({ context, hidden }: loadingProps) => {
 
   return (
     <div className={sectionClasses}>
-      <div className="flex-col flex justify-center items-center bg-zinc-900 bg-opacity-80 p-14 rounded-full">
+      <div className="flex-col flex justify-center items-center bg-zinc-900 bg-opacity-80 p-14 rounded-full w-96 h-96">
         <div id="loadbar" className="loader border-8 border-white border-opacity-30 rounded-full h-32 w-32 animate-spin"></div>
-        <div className="py-10 text-white font-bold text-3xl text-center">{context}<br />잠시만 기다려주세요.</div>
+        <div className="py-10 text-white font-bold text-3xl text-center break-keep">{context}</div>
       </div>
     </div>
   );

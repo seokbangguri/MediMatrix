@@ -1,13 +1,18 @@
 import "../../../src/index.css";
 import { aclass, bclass, cclass, dclass, pgt } from "../../assets";
 import { Button } from "../../components"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SpermModal = () => {
   const [visibleModal, setVisibleModal] = useState(sessionStorage.getItem('modal')? false : true);
   const sectionClasses = `fixed w-screen h-screen bg-zinc-700 bg-opacity-90 z-50 flex items-center ${visibleModal ? '' : 'hidden'}`;
 
   const handleModalButton = () => {
+    setVisibleModal(false);
+  };
+
+  const handleModalSession = () => {
+    sessionStorage.setItem('modal', "hidden");
     setVisibleModal(false);
   };
 
@@ -78,12 +83,11 @@ const SpermModal = () => {
           </div>
           <hr />
         </div>
-        <div className=" w-96 flex justify-between items-center mb-10">
+        <div className=" w-full mb-10 flex flex-col items-center">
           <span onClick={handleModalButton}>
             <Button appearance="custom" styles="" >확인</Button>
           </span>
-          <div>
-            <input type="checkbox" name="sessionModal" id="sessionModal" />
+          <div className="pt-5 hover:text-green-800 hover:cursor-pointer" onClick={handleModalSession}>
             <span>오늘 다시 보지않음.</span>
           </div>
         </div>
