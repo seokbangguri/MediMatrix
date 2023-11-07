@@ -7,7 +7,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Results from './pages/Results';
 import Setting from './pages/Setting';
-import Admin from './pages/admin';
+import Admin from './pages/Admin';
 import ResultsSperm from './pages/ResultsSperm';
 import PageNotFound from './pages/PageNotFound';
 

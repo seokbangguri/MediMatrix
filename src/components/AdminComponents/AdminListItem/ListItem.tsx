@@ -33,7 +33,11 @@ export const ListItem = (props: patientsProps) => {
             <span className="text-base w-[150px]">{props.email}</span>
             <span className="text-base w-[150px]">{props.phone}</span>
             <span className="text-base w-[150px] text-center">{props.data}</span>
-            <span className="text-[20px] w-[150px] flex items-start justify-center"><button type="button"><RiShareBoxFill className="w-[50px]" /></button></span>
+            {props.isTherapist ?
+                <span className="text-[20px] w-[150px] flex items-start justify-center" onClick={() => props.handleFilter(props.name)}>
+                    <button type="button"><RiShareBoxFill className="w-[50px]" /></button>
+                </span> :
+                <span className="text-base w-[150px] flex items-start justify-center">{props?.score}</span>}
             <span className="text-[20px] w-[100px] flex items-start justify-center text-red-600"><button type="button" onClick={showAlert}><HiOutlineUserRemove className="w-[50px]" /></button></span>
         </div>
     )
