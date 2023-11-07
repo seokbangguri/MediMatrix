@@ -52,7 +52,8 @@ const Header = () => {
           </Link>
         </div>
         <nav className="hidden md:flex items-center ">
-          <div className="flex items-center gap-4 md:gap-6 lg:gap-9">
+          {/* 헤더 home products contack 숨김 */}
+          {/* <div className="flex items-center gap-4 md:gap-6 lg:gap-9">
             <a
               href="/#home"
               onClick={(e) => {
@@ -100,7 +101,7 @@ const Header = () => {
             >
               Contact
             </a>
-          </div>
+          </div> */}
         </nav>
         {userName === '' ? <div className="flex items-center gap-2">
           <Link to="/signin">

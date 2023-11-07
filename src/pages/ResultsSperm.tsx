@@ -22,6 +22,7 @@ const ResultsSperm = () => {
   //전달받은 선택된 날짜의 테스트 데이터
   const [selectedTestData, setSelectedTD] = useState<SelectedTestInterface>();
 
+  console.log(state.data);
 
   const handleGetData = (data: SelectedTestInterface) => {
     if (data) {

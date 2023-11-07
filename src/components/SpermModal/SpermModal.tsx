@@ -4,7 +4,7 @@ import { Button } from "../../components"
 import { useState } from "react";
 
 const SpermModal = () => {
-  const [visibleModal, setVisibleModal] = useState(true);
+  const [visibleModal, setVisibleModal] = useState(sessionStorage.getItem('modal')? false : true);
   const sectionClasses = `fixed w-screen h-screen bg-zinc-700 bg-opacity-90 z-50 flex items-center ${visibleModal ? '' : 'hidden'}`;
 
   const handleModalButton = () => {
@@ -72,17 +72,21 @@ const SpermModal = () => {
             <span className="font-semibold text-xl">참고문헌</span>
             <p className="text-lg py-5">
               Dahdouh, Elias M. "Preimplantation genetic testing for aneuploidy: a review of the evidence." Obstetrics & Gynecology 137.3 (2021): 528-534.<br /><br />
-
               Gleicher, Norbert, Pasquale Patrizio, and Ali Brivanlou. "Preimplantation genetic testing for aneuploidy–a castle built on sand." Trends in molecular medicine 27.8 (2021): 731-742.<br /><br />
-
               Marin, Diego, Jia Xu, and Nathan R. Treff. "Preimplantation genetic testing for aneuploidy: a review of published blastocyst reanalysis concordance data." Prenatal Diagnosis 41.5 (2021): 545-553.<br /><br />
             </p>
           </div>
           <hr />
         </div>
-        <span onClick={handleModalButton}>
-          <Button appearance="custom" styles="mb-10" >확인</Button>
-        </span>
+        <div className=" w-96 flex justify-between items-center mb-10">
+          <span onClick={handleModalButton}>
+            <Button appearance="custom" styles="" >확인</Button>
+          </span>
+          <div>
+            <input type="checkbox" name="sessionModal" id="sessionModal" />
+            <span>오늘 다시 보지않음.</span>
+          </div>
+        </div>
       </div>
     </div>
   );
