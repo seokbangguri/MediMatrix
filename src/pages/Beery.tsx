@@ -110,7 +110,7 @@ function Beery() {
 
     return (
         <div className="w-screen">
-            <Loading context="Beery 채점 중 입니다." hidden={visible} />
+            <Loading context="Beery 채점 중... 잠시만 기다려주세요." hidden={visible} />
             <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 mt-12 min-h-screen">
                 <Heading tag="h2" className="">
                     AI 기반 Beery VMI 답안 채점도구

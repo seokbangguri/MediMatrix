@@ -108,7 +108,7 @@ function Sperm() {
     return (
         <div className="w-screen">
             <SpermModal />
-            <Loading context="정자 동영상 분석 중..." hidden={visibleLoading} />
+            <Loading context="정자 동영상 분석 중... 5분정도 소요됩니다." hidden={visibleLoading} />
             <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 mt-12 h-screen">
                 <Heading tag="h2" className="">
                     AI 기반의 남성 난임 진단 지원 시스템
