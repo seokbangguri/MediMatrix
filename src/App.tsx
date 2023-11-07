@@ -9,6 +9,7 @@ import Results from './pages/Results';
 import Setting from './pages/Setting';
 import Admin from './pages/admin';
 import ResultsSperm from './pages/ResultsSperm';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/resultsSperm" element={<ResultsSperm />} />
           <Route path="/setting" element={<Setting />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path='*' element={<PageNotFound />} />
           {/* 기타 경로와 페이지 설정 */}
         </Routes>
 
