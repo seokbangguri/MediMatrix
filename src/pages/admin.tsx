@@ -32,6 +32,11 @@ const Admin = () => {
                 item.gender.toLowerCase().startsWith(text)
             );
             setFilteredPatients(filteredData)
+        } else if (text) {
+            const filteredData = patientData.filter((item) =>
+                item.therapist.toLowerCase() === text.toLowerCase()
+            );
+            setFilteredPatients(filteredData)
         } else if (text === 'test') {
             const sortedData = patientData.sort(function (a, b) {
                 if (a.test < b.test) {
@@ -99,14 +104,14 @@ const Admin = () => {
                     </div>
                     <div className="">
                         {filteredTherapists.map((item, i) => (
-                            <ListItem key={item.id} name={item.name} email={item.email} data={item.data} phone={item.phone} id={i} handleDelete={deleteTherapist} />
+                            <ListItem key={item.id} name={item.name} email={item.email} data={item.data} phone={item.phone} id={i} handleDelete={deleteTherapist} isTherapist={true} handleFilter={handleFilter} />
                         ))}
                     </div>
                 </div>
             </div>
             <div className="w-full self-start mt-16">
                 <div className="flex justify-between items-center w-full">
-                    <Heading tag="h3" className="tex-left">Therapist Kim's patients</Heading>
+                    <Heading tag="h3" className="tex-left">Patients</Heading>
                     <Filter handleFilter={handleFilter} />
                 </div>
                 <div className="w-full bg-white rounded-sm drop-shadow-2xl p-4 mt-8">
@@ -114,14 +119,14 @@ const Admin = () => {
                         <span className="font-bold text-[20px] w-[30px]">#</span>
                         <span className="font-bold text-[20px] w-[150px]">Name</span>
                         <span className="font-bold text-[20px] w-[150px]">ID</span>
-                        <span className="font-bold text-[20px] w-[150px]">Score</span>
+                        <span className="font-bold text-[20px] w-[150px]">Gender</span>
                         <span className="font-bold text-[20px] w-[150px] text-center">Type</span>
-                        <span className="font-bold text-[20px] w-[150px] text-center">See Results</span>
+                        <span className="font-bold text-[20px] w-[150px] text-center">Score</span>
                         <span className="font-bold text-[20px] w-[100px] text-center">Remove</span>
                     </div>
                     <div className="">
                         {filteredPatients.map((item, i) => (
-                            <ListItem key={item.id} name={item.name} email={item.patient_id} data={item.test} phone={item.gender} id={i} handleDelete={deletePatients} />
+                            <ListItem key={item.id} name={item.name} email={item.patient_id} data={item.test} phone={item.gender} id={i} handleDelete={deletePatients} score={item.score} handleFilter={handleFilter} />
                         ))}
                     </div>
                 </div>

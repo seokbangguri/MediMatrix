@@ -4,5 +4,8 @@ export interface patientsProps {
     email: string,
     phone?: string,
     data?: string,
+    isTherapist?: boolean,
+    score?: string,
     handleDelete: (id: string) => any;
+    handleFilter: (query: string) => any;
 }
