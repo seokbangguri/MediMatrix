@@ -11,6 +11,7 @@ const PatientCard = ({ patientList, getData }: PatientCardProps) => {
 
   //select에 뿌릴 환자 목록 배열화
   const patientsArray = Array.from(new Set(patientList.map((patient) => patient.patientNo)));
+  console.log(patientsArray);
   //선택 날짜
   const [selectedDate, setSelectedDate] = useState<string | undefined>(undefined);
   //선택된 환자의 전체 테스트 데이터
@@ -79,7 +80,9 @@ const PatientCard = ({ patientList, getData }: PatientCardProps) => {
   //url 파라미터에 환자번호가 없으면 인덱스[0]의 환자를 선택함
   useEffect(() => {
     if (!currentPatientId) {
-      if (patientList.length > 0) {
+      console.log(patientsArray.length);
+        console.log('test');
+      if (patientsArray.length > 0) {
         setSelectedOption(patientList[0].patientNo);
       }
     } else {
