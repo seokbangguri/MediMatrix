@@ -179,8 +179,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                 csvFiles.forEach((file) => {
                     data.append('files', file);
                 });
-                // const response = await axios.post(apiUrl + '/spermVideos', data);
-                const response = await axios.post('http://localhost:3001/api/v1/sperms/spermVideos', data);
+                const response = await axios.post(apiUrl + '/spermVideos', data);
                 if (response.status === 200) {
                     visible(false);
                     const result = response.data.data;
