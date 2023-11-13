@@ -30,7 +30,7 @@ const ResultsSperm = () => {
     }
   };
 
-  console.log(state.res);
+  // console.log(state.res);
 
   useEffect(() => {
     // 여기에 원하는 동작을 추가하세요.
@@ -230,18 +230,18 @@ const ResultsSperm = () => {
           <Heading tag='h3'>정자 분석결과</Heading>
           <hr />
           <div className="flex flex-center justify-between gap-4">
-            {spermAnalysis.map((item, i) => {
-              return <div key={i} className="w-[230px] drop-shadow-sm flex flex-col gap-2 text-white rounded-lg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] bg-slate-700">
+            {state.res.map((item: any, i: any) => (
+              <div key={i} className="w-[230px] drop-shadow-sm flex flex-col gap-2 text-white rounded-lg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] bg-slate-700">
                 <div className="py-4 font-bold text-xl text-center border-b">
-                  <span className='capitalize'>{item.name}</span>
+                  <span className='capitalize'>{item.name} Class</span>
                 </div>
                 <div className="flex flex-col gap-4 px-5 py-4 text-lg">
-                  <p className="font-semibold capitalize">평균 속도: <span className='ml-4 font-light lowercase'>{item.speed}&micro;m/s</span></p>
-                  <p className="font-semibold capitalize">평균 거리: <span className='ml-4 font-light lowercase'>{item.distance}&micro;m</span></p>
+                  <p className="font-semibold capitalize">평균 속도: <span className='ml-4 font-light lowercase'>{item.speed.toFixed(3)}&micro;m/s</span></p>
+                  <p className="font-semibold capitalize">평균 거리: <span className='ml-4 font-light lowercase'>{item.distance.toFixed(3)}&micro;m</span></p>
                   <p className="font-semibold capitalize">전체 개수: <span className='ml-4 font-light lowercase'>{item.count}개</span></p>
                 </div>
               </div>
-            })}
+            ))}
           </div>
         </div>
         <div className='my-10 flex flex-col gap-5 w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
