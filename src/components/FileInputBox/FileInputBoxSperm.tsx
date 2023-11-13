@@ -169,7 +169,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
         const mp4Files = selectedFiles.filter(file => file.name.endsWith('.mp4'));
         const csvFiles = selectedFiles.filter(file => file.name.endsWith('.csv'));
 
-        if (mp4Files.length % 5 == 0 && csvFiles.length == mp4Files.length / 5) {
+        // if (mp4Files.length % 5 == 0 && csvFiles.length == mp4Files.length / 5) {
             try {
                 visible(true);
                 const data = new FormData();
@@ -179,11 +179,12 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                 csvFiles.forEach((file) => {
                     data.append('files', file);
                 });
-                const response = await axios.post(apiUrl + '/spermVideos', data);
+                // const response = await axios.post(apiUrl + '/spermVideos', data);
+                const response = await axios.post('http://localhost:3001/api/v1/sperms/spermVideos', data);
                 if (response.status === 200) {
                     visible(false);
-                    const result = response.data;
-                    addData(result)
+                    const result = response.data.data;
+                    addData(JSON.parse(result));
                     Swal.fire({
                         title: '분석 완료!',
                         text: '확인을 누르면 결과로 이동합니다.',
@@ -221,13 +222,13 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                     navigate("/");
                 });
             }
-        } else {
-            Swal.fire({
-                title: "파일 개수 또는 형식 오류",
-                text: "한 환자 당 mp4 파일은 5개, csv 파일은 1개를 업로드해야 합니다.",
-                icon: "error",
-            });
-        }
+        // } else {
+        //     Swal.fire({
+        //         title: "파일 개수 또는 형식 오류",
+        //         text: "한 환자 당 mp4 파일은 5개, csv 파일은 1개를 업로드해야 합니다.",
+        //         icon: "error",
+        //     });
+        // }
     };
 
     return (

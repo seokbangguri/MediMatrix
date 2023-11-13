@@ -21,14 +21,16 @@ const ResultsSperm = () => {
   const [patientList, setPatientList] = useState<PatientListType>([]);
   //전달받은 선택된 날짜의 테스트 데이터
   const [selectedTestData, setSelectedTD] = useState<SelectedTestInterface>();
+  const [spermData, setSpermData] = useState<any>(state);
 
-  console.log(state.data);
 
   const handleGetData = (data: SelectedTestInterface) => {
     if (data) {
       setSelectedTD(data);
     }
   };
+
+  console.log(state.res);
 
   useEffect(() => {
     // 여기에 원하는 동작을 추가하세요.
