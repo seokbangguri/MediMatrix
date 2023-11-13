@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Swal from "sweetalert2";
 import uploadIcon from '../../assets/upload-icon.svg';
 import { Button, Text } from "..";
@@ -18,7 +18,7 @@ type finalData = {
 type onVisibleCallback = (b: boolean) => void;
 
 const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visible: onVisibleCallback }) => {
-    const { state, dispatch } = useAppContext();
+    const { dispatch } = useAppContext();
     const navigate = useNavigate();
 
     const addData = (newData: string) => {
@@ -26,7 +26,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
     }
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [test, setTest] = useState<any[]>([]);
+    // const [test, setTest] = useState<any[]>([]);
 
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -188,8 +188,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                 const response = await axios.post(apiUrl + '/spermVideos', data);
                 if (response.status === 200) {
                     visible(false);
-                    const result = response.data;
-                    addData(result)
+                    addData(response.data)
                     Swal.fire({
                         title: '분석 완료!',
                         text: '확인을 누르면 결과로 이동합니다.',

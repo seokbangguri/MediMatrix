@@ -11,11 +11,11 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const apiUrl = process.env.REACT_APP_API_PATIENTS;
+const apiUrl = process.env.REACT_APP_API_SPERMS;
 
 const ResultsSperm = () => {
   const navigate = useNavigate()
-  const { state, dispatch } = useAppContext();
+  const { state } = useAppContext();
   const [userName, setUserName] = useState('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [patientList, setPatientList] = useState<PatientListType>([]);
@@ -42,8 +42,8 @@ const ResultsSperm = () => {
               name: decodedToken.name,
               hospital: decodedToken.hospitalName
             };
-            const response = await axios.post(apiUrl + '/patientlist', data);
-            setPatientList(response.data.patients);
+            // const response = await axios.post(apiUrl + '', data);
+            // setPatientList(response.data.patients);
           } catch (error) {
             console.error('API 요청 에러:');
             Swal.fire({
@@ -360,3 +360,8 @@ export const data2 = [
     "color": "hsl(182, 70%, 50%)"
   }
 ]
+
+const dataExaple = {
+  count: "[{\"11655\": [32, 22, 52, 71]}]",
+  pythonOutput: "{\"11655\": [3.22781214405531, 1.9300825359437308, 3.578220584336224, 2.122072148492769, 3.15477071629887, 1.876118644819969, 3.7680648944518462, 2.230681320693992]}"
+}
