@@ -1,22 +1,22 @@
 import React, { ReactNode, createContext, useContext, useReducer } from 'react';
 
 interface AppState {
-    data: any;
+    res: any;
 }
 
 type AppAction = { type: 'ADD_DATA'; payload: any } | { type: 'RESET_DATA' };
 
 // Create the initial state
 const initialState: AppState = {
-    data: {},
+    res: {},
 }
 
 const appReducer = (state: AppState, action: AppAction): AppState => {
     switch (action.type) {
         case 'ADD_DATA':
-            return { ...state, data: action.payload };
+            return { ...state, res: action.payload };
         case 'RESET_DATA':
-            return { ...state, data: {} };
+            return { ...state, res: {} };
         default:
             return state;
     }

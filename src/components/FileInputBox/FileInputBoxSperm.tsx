@@ -169,64 +169,65 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
         const mp4Files = selectedFiles.filter(file => file.name.endsWith('.mp4'));
         const csvFiles = selectedFiles.filter(file => file.name.endsWith('.csv'));
 
-        if (mp4Files.length % 5 == 0 && csvFiles.length == mp4Files.length / 5) {
-            try {
-                visible(true);
-                const data = new FormData();
-                mp4Files.forEach((file, index) => {
-                    data.append('files', file);
-                });
-                csvFiles.forEach((file) => {
-                    data.append('files', file);
-                });
-                const response = await axios.post(apiUrl + '/spermVideos', data);
-                if (response.status === 200) {
-                    visible(false);
-                    addData(response.data)
-                    Swal.fire({
-                        title: '분석 완료!',
-                        text: '확인을 누르면 결과로 이동합니다.',
-                        icon: 'success',
-                        confirmButtonText: '확인',
-                    }).then(() => {
-                        navigate("/resultsSperm");
-                    });
-                } else if (response.status === 500) {
-                    Swal.fire({
-                        title: '저장 실패!',
-                        icon: 'error',
-                        confirmButtonText: '확인',
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                } else if (response.status === 400) {
-                    Swal.fire({
-                        title: '에러!',
-                        icon: 'error',
-                        confirmButtonText: '확인',
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                }
-            } catch (error) {
-                console.log(error);
+        // if (mp4Files.length % 5 == 0 && csvFiles.length == mp4Files.length / 5) {
+        try {
+            visible(true);
+            const data = new FormData();
+            mp4Files.forEach((file, index) => {
+                data.append('files', file);
+            });
+            csvFiles.forEach((file) => {
+                data.append('files', file);
+            });
+            const response = await axios.post(apiUrl + '/spermVideos', data);
+            if (response.status === 200) {
                 visible(false);
+                const result = response.data.data;
+                addData(JSON.parse(result));
                 Swal.fire({
-                    title: '에러!',
-                    text: '확인을 누르면 메인으로 이동합니다.',
+                    title: '분석 완료!',
+                    text: '확인을 누르면 결과로 이동합니다.',
+                    icon: 'success',
+                    confirmButtonText: '확인',
+                }).then(() => {
+                    navigate("/resultsSperm");
+                });
+            } else if (response.status === 500) {
+                Swal.fire({
+                    title: '저장 실패!',
                     icon: 'error',
                     confirmButtonText: '확인',
                 }).then(() => {
-                    navigate("/");
+                    window.location.reload();
+                });
+            } else if (response.status === 400) {
+                Swal.fire({
+                    title: '에러!',
+                    icon: 'error',
+                    confirmButtonText: '확인',
+                }).then(() => {
+                    window.location.reload();
                 });
             }
-        } else {
+        } catch (error) {
+            console.log(error);
+            visible(false);
             Swal.fire({
-                title: "파일 개수 또는 형식 오류",
-                text: "한 환자 당 mp4 파일은 5개, csv 파일은 1개를 업로드해야 합니다.",
-                icon: "error",
+                title: '에러!',
+                text: '확인을 누르면 메인으로 이동합니다.',
+                icon: 'error',
+                confirmButtonText: '확인',
+            }).then(() => {
+                navigate("/");
             });
         }
+        // } else {
+        //     Swal.fire({
+        //         title: "파일 개수 또는 형식 오류",
+        //         text: "한 환자 당 mp4 파일은 5개, csv 파일은 1개를 업로드해야 합니다.",
+        //         icon: "error",
+        //     });
+        // }
     };
 
     return (
