@@ -169,13 +169,7 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
         const mp4Files = selectedFiles.filter(file => file.name.endsWith('.mp4'));
         const csvFiles = selectedFiles.filter(file => file.name.endsWith('.csv'));
 
-        if (mp4Files.length !== 5 || csvFiles.length !== 1) {
-            Swal.fire({
-                title: "파일 개수 또는 형식 오류",
-                text: "mp4 파일은 5개, csv 파일은 1개를 업로드해야 합니다.",
-                icon: "error",
-            });
-        } else {
+        if (mp4Files.length % 5 == 0 && csvFiles.length == mp4Files.length / 5) {
             try {
                 visible(true);
                 const data = new FormData();
@@ -227,6 +221,12 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
                     navigate("/");
                 });
             }
+        } else {
+            Swal.fire({
+                title: "파일 개수 또는 형식 오류",
+                text: "한 환자 당 mp4 파일은 5개, csv 파일은 1개를 업로드해야 합니다.",
+                icon: "error",
+            });
         }
     };
 
