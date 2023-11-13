@@ -30,7 +30,7 @@ const ResultsSperm = () => {
     }
   };
 
-  // console.log(state.res);
+  console.log(state.res);
 
   useEffect(() => {
     // 여기에 원하는 동작을 추가하세요.
@@ -39,11 +39,11 @@ const ResultsSperm = () => {
         setUserName(decodedToken.name);
         const fetchData = async () => {
           try {
-            const data = {
-              email: decodedToken.email,
-              name: decodedToken.name,
-              hospital: decodedToken.hospitalName
-            };
+            // const data = {
+            //   email: decodedToken.email,
+            //   name: decodedToken.name,
+            //   hospital: decodedToken.hospitalName
+            // };
             // const response = await axios.post(apiUrl + '', data);
             // setPatientList(response.data.patients);
           } catch (error) {
@@ -71,6 +71,7 @@ const ResultsSperm = () => {
       }
     });
   }, []);
+  
   window.onload = function () {
     setIsLoading(false);
   };
@@ -230,7 +231,7 @@ const ResultsSperm = () => {
           <Heading tag='h3'>정자 분석결과</Heading>
           <hr />
           <div className="flex flex-center justify-between gap-4">
-            {state.res.map((item: any, i: any) => (
+            {state.res.length ? (state.res.map((item: any, i: any) => (
               <div key={i} className="w-[230px] drop-shadow-sm flex flex-col gap-2 text-white rounded-lg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] bg-slate-700">
                 <div className="py-4 font-bold text-xl text-center border-b">
                   <span className='capitalize'>{item.name} Class</span>
@@ -241,7 +242,9 @@ const ResultsSperm = () => {
                   <p className="font-semibold capitalize">전체 개수: <span className='ml-4 font-light lowercase'>{item.count}개</span></p>
                 </div>
               </div>
-            ))}
+            ))) : (
+              <Text size='l' styles='text-[#888]'>데이터가 없습니다.</Text>
+            )}
           </div>
         </div>
         <div className='my-10 flex flex-col gap-5 w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
@@ -278,47 +281,6 @@ const ResultsSperm = () => {
 }
 
 export default ResultsSperm;
-
-export const spermAnalysis = [
-  {
-    "name": "total",
-    "speed": "0.056",
-    "distance": "55.987",
-    "count": "220"
-  },
-  {
-    "name": "a Class",
-    "speed": "0.021",
-    "distance": "21.987",
-    "count": "60"
-
-  },
-  {
-
-    "name": "b Class",
-    "speed": "0.034",
-    "distance": "23.987",
-    "count": "120"
-
-  },
-  {
-
-    "name": "c Class",
-    "speed": "0.021",
-    "distance": "18.987",
-    "count": "30"
-
-  },
-  {
-
-    "name": "d Class",
-    "speed": "0.011",
-    "distance": "10.987",
-    "count": "10"
-
-  }
-]
-
 
 export const postionData = [
   {
@@ -362,8 +324,3 @@ export const data2 = [
     "color": "hsl(182, 70%, 50%)"
   }
 ]
-
-const dataExaple = {
-  count: "[{\"11655\": [32, 22, 52, 71]}]",
-  pythonOutput: "{\"11655\": [3.22781214405531, 1.9300825359437308, 3.578220584336224, 2.122072148492769, 3.15477071629887, 1.876118644819969, 3.7680648944518462, 2.230681320693992]}"
-}
