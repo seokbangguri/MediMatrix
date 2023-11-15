@@ -32,7 +32,9 @@ const Footer = () => {
             />
           </Link>
 
-          <Text size="s" styles="text-white">&copy; 2023 MediMatrix | Security | Privacy | Terms</Text>
+          <Link to='privacy'>
+            <Text size="s" styles="text-white">&copy; 2023 GoQba Medical | Security | Privacy | Terms</Text>
+          </Link>
         </div>
         <div className="flex flex-col md:flex-row gap-16">
           <div className="flex flex-col text-white gap-2 md:gap-4 lg:gap-5">

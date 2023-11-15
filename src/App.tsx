@@ -10,6 +10,7 @@ import Setting from './pages/Setting';
 import Admin from './pages/Admin';
 import ResultsSperm from './pages/ResultsSperm';
 import PageNotFound from './pages/PageNotFound';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/resultsSperm" element={<ResultsSperm />} />
           <Route path="/setting" element={<Setting />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path='*' element={<PageNotFound />} />
           {/* 기타 경로와 페이지 설정 */}
         </Routes>
