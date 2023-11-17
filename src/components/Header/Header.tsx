@@ -3,13 +3,14 @@ import imagetest1 from "../../assets/test1.svg";
 import userIcon from '../../assets/user.svg'
 import Button from "../Button/Button";
 import { verifyToken } from "../../auth/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const Header = () => {
-  const navigate = useNavigate()
   const [userName, setUserName] = useState('');
   const [role, setRole] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
     verifyToken().then(decodedToken => {
       if (decodedToken) {
@@ -18,9 +19,8 @@ const Header = () => {
       }
     });
 
-  }, []);
+  }, [userName]);
 
-  const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -103,7 +103,7 @@ const Header = () => {
             </a>
           </div> */}
         </nav>
-        {userName === '' ? <div className="flex items-center gap-2">
+        {!userName.length ? <div className="flex items-center gap-2">
           <Link to="/signin">
             <Button styles="text-lg font-semibold rounded-xs text-black border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 uppercase" >로그인</Button>
           </Link>

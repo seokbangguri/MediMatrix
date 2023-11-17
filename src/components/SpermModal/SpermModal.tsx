@@ -1,10 +1,10 @@
 import "../../../src/index.css";
 import { aclass, bclass, cclass, dclass, pgt } from "../../assets";
 import { Button } from "../../components"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const SpermModal = () => {
-  const [visibleModal, setVisibleModal] = useState(sessionStorage.getItem('modal')? false : true);
+  const [visibleModal, setVisibleModal] = useState(sessionStorage.getItem('modal') ? false : true);
   const sectionClasses = `fixed w-screen h-screen bg-zinc-700 bg-opacity-90 z-50 flex items-center ${visibleModal ? '' : 'hidden'}`;
 
   const handleModalButton = () => {
@@ -28,7 +28,7 @@ const SpermModal = () => {
             </p>
           </div>
           <hr />
-          <div>
+          <div className="mt-2">
             <span className="font-semibold text-xl">클래스</span>
             <ul className="text-lg py-5 list-disc list-inside">
               <p>정자의 행동패턴을 4가지의 클래스 구분하여 분석을 합니다.</p>
@@ -58,7 +58,7 @@ const SpermModal = () => {
             </div>
           </div>
           <hr />
-          <div>
+          <div className="mt-2">
             <span className="font-semibold text-xl">PGT-A</span>
             <p className="text-lg py-5">
               PGT-A 는 배아를 선별하여 배아를 이식할 수 있는 염색체 정상 배아를 선택할 수 있게 해줍니다.<br />
@@ -73,7 +73,7 @@ const SpermModal = () => {
             <img src={pgt} className="p-3" alt="sperm-examle" />
           </div>
           <hr />
-          <div>
+          <div className="mt-2">
             <span className="font-semibold text-xl">참고문헌</span>
             <p className="text-lg py-5">
               Dahdouh, Elias M. "Preimplantation genetic testing for aneuploidy: a review of the evidence." Obstetrics & Gynecology 137.3 (2021): 528-534.<br /><br />
@@ -87,7 +87,7 @@ const SpermModal = () => {
           <span onClick={handleModalButton}>
             <Button appearance="custom" styles="" >확인</Button>
           </span>
-          <div className="pt-5 hover:text-green-800 hover:cursor-pointer" onClick={handleModalSession}>
+          <div className="pt-5 hover:text-green-800 hover:cursor-pointer text-blue-500" onClick={handleModalSession}>
             <span>오늘 다시 보지않음.</span>
           </div>
         </div>
