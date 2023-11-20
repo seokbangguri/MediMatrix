@@ -31,6 +31,7 @@ const ResultsSperm = () => {
 
 
   useEffect(() => {
+    console.log(state.res);
     // 여기에 원하는 동작을 추가하세요.
     verifyToken().then(decodedToken => {
       if (decodedToken) {
@@ -99,12 +100,12 @@ const ResultsSperm = () => {
         <Heading tag='h2'>정자 분석 결과</Heading>
         {/* <Text size='s' styles='mt-3 text-[#888] text-center'>좌측 환자 번호를 선택하시면 해당 번호의 결과를 확인하실 수 있습니다.</Text> */}
         <div className='mb-10 mt-16 flex flex-col gap-5 w-[1000px] md:w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
-          <Heading tag='h3'>Title</Heading>
+          <Heading tag='h3'>염색체 이상 및 난임 예측</Heading>
           <hr />
           <div className='flex gap-8 items-center justify-evenly w-full'>
             <div className='flex flex-col gap-4'>
-              <div >
-                <Button onClick={getChromosomalAbnormality} appearance='custom' styles='px-10 py-3 flex items-center justify-between gap-4 bg-[#4F7F9D] w-[300px]' disabled={isButtonDisabled}>염색체 이상 예측 <VscRunAll /></Button>
+              <div onClick={getChromosomalAbnormality}>
+                <Button appearance='custom' styles='px-10 py-3 flex items-center justify-between gap-4 bg-[#4F7F9D] w-[300px]' disabled={isButtonDisabled}>염색체 이상 예측 <VscRunAll /></Button>
               </div>
               <div onClick={getPredictInfertility}>
                 <Button appearance='custom' styles='px-10 py-3 flex items-center justify-between gap-4 w-[300px]'>난임 예측 <VscRunAll /></Button>
@@ -169,13 +170,14 @@ const ResultsSperm = () => {
                   {Object.keys(item.relativePosition).map((key, subIndex) => (
                     <div key={subIndex} className="relative mb-5 pt-1">
                       <div className="mb-4 flex h-8 rounded bg-slate-100 text-xs w-[300px] overflow-visible">
-                        <div style={{ width: `${item.relativePosition[key]}%` }} className="bg-green-500 flex items-center justify-end rounded">
-                          <span className="pr-1 text-balck-500 font-bold">0.{item.relativePosition[key]}%</span>
+                        <div style={{ width: `${(parseFloat(item.patient[key]) / parseFloat(item.relativePosition[key]) * 100).toFixed(2)}%` }} className="bg-green-500 flex items-center justify-end rounded">
+                          <span className="pr-1 text-balck-500 font-bold">{(parseFloat(item.patient[key]) / parseFloat(item.relativePosition[key]) * 100).toFixed(2)}%</span>
                         </div>
                       </div>
                       <div className="mb-2 flex items-center justify-between text-xs">
                         <div className="text-gray-600 font-semibold">{key}</div>
-                        <div className="text-gray-600">0.100%</div>
+                        <div className='text-gray-600 '>평균 50%</div>
+                        <div className="text-gray-600">100%</div>
                       </div>
                     </div>
                   ))}
@@ -195,15 +197,25 @@ export default ResultsSperm;
 
 export const postionData = [
   {
+    "patient": {
+      "ageAClass": "29",
+      "ageBClass": "26",
+      "ageCClass": "20",
+      "ageDClass": "33",
+      "allAClass": "29",
+      "allBClass": "26",
+      "allCClass": "20",
+      "allDClass": "33",
+    },
     "relativePosition": {
-      "ageAClass": "20",
-      "ageBClass": "50",
-      "ageCClass": "70",
-      "ageDClass": "30",
-      "allAClass": "10",
-      "allBClass": "20",
-      "allCClass": "60",
-      "allDClass": "40"
+      "ageAClass": "59",
+      "ageBClass": "104",
+      "ageCClass": "73",
+      "ageDClass": "120",
+      "allAClass": "60",
+      "allBClass": "106",
+      "allCClass": "75",
+      "allDClass": "120"
     }
   }
 ]
