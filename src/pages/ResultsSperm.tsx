@@ -26,9 +26,8 @@ const ResultsSperm = () => {
   const { state } = useAppContext();
   const [userName, setUserName] = useState('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [chromosome, setChromose] = useState<module4>()
-  const [intertelity, setIntertelity] = useState<module4>()
-  const [isButtonDisabled, setButtonDisabled] = useState(false);
+  const [chromosome, setChromose] = useState<module4>();
+  const [intertelity, setIntertelity] = useState<module4>();
 
 
   useEffect(() => {
@@ -70,35 +69,41 @@ const ResultsSperm = () => {
   };
 
   const getChromosomalAbnormality = async () => {
-    console.log('clicked')
+    setIsLoading(true);
     try {
-      const response = await axios.post(apiUrl + '/getChromosome');
-      console.log(response.data);
-      setChromose(response.data)
-      setButtonDisabled(true);
+      const response = await axios.post(apiUrl + '/getChromosome').then((data)=> {
+        setChromose(data.data)
+        setIsLoading(false);
+      });
     } catch (error) {
       console.log('error');
 
     }
   };
   const getPredictInfertility = async () => {
+    setIsLoading(true);
     try {
-      const response = await axios.post(apiUrl + '/getInfertility');
-      console.log(response.data);
-      setIntertelity(response.data)
+      await axios.post(apiUrl + '/getInfertility').then((data) =>{
+        setIntertelity(data.data)
+        setIsLoading(false);
+      });
     } catch (error) {
       console.log('error');
 
     }
   };
 
-  if (isLoading) {
-    return <Loading context='로딩중 입니다.' hidden={isLoading} />;
-  }
+  // if (isLoading) {
+  //   return <Loading context='로딩중 입니다.' hidden={isLoading} />;
+  // }
   return (
     <div className='w-screen mt-[140px] '>
+      <Loading context='성능 체크 중 입니다.' hidden={isLoading} />
+      {/* <div className='flex fixed bottom-20 left-10 bg-dark-green w-20 h-20 rounded-full justify-center items-center'>
+        <span>?</span>
+      </div> */}
       <div className="flex flex-col items-center lg:px-10 mb-16">
-        <Heading tag='h2'>정자 분석 결과</Heading>
+        <Heading tag='h2'>모델 성능</Heading>
         {/* <Text size='s' styles='mt-3 text-[#888] text-center'>좌측 환자 번호를 선택하시면 해당 번호의 결과를 확인하실 수 있습니다.</Text> */}
         <div className='mb-10 mt-16 flex flex-col gap-5 w-[1000px] md:w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
           <Heading tag='h3'>염색체 이상 및 난임 예측</Heading>
@@ -106,7 +111,7 @@ const ResultsSperm = () => {
           <div className='flex gap-8 items-center justify-evenly w-full'>
             <div className='flex flex-col gap-4'>
               <div onClick={getChromosomalAbnormality}>
-                <Button appearance='custom' styles='px-10 py-3 flex items-center justify-between gap-4 bg-[#4F7F9D] w-[300px]' disabled={isButtonDisabled}>염색체 이상 예측 <VscRunAll /></Button>
+                <Button appearance='custom' styles='px-10 py-3 flex items-center justify-between gap-4 bg-[#4F7F9D] w-[300px]'>염색체 이상 예측 <VscRunAll /></Button>
               </div>
               <div onClick={getPredictInfertility}>
                 <Button appearance='custom' styles='px-10 py-3 flex items-center justify-between gap-4 w-[300px]'>난임 예측 <VscRunAll /></Button>
@@ -140,6 +145,7 @@ const ResultsSperm = () => {
             </div>
           </div>
         </div>
+        <Heading tag='h2' className=' mt-7'>정자 분석 결과</Heading>
         <SpermCharts />
         <div className='my-10 flex flex-col gap-5 w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
           <Heading tag='h3'>정자 분석결과</Heading>
