@@ -6,6 +6,7 @@ import { dataReal } from '../assets/testData.js';
 import { useAppContext } from '../state/index';
 import { useNavigate } from 'react-router-dom';
 import { VscRunAll } from "react-icons/vsc";
+import axios from 'axios';
 
 
 
@@ -62,6 +63,25 @@ const ResultsSperm = () => {
     setIsLoading(false);
   };
 
+  const getChromosomalAbnormality = async () => {
+    try {
+      const response = await axios.post(apiUrl + '/getChromosome');
+      console.log(response.data);
+    } catch (error) {
+      console.log('error');
+      
+    }
+  };
+  const getPredictInfertility = async () => {
+    try {
+      const response = await axios.post(apiUrl + '/getInfertility');
+      console.log(response.data);
+    } catch (error) {
+      console.log('error');
+      
+    }
+  };
+
   if (isLoading) {
     return <Loading context='로딩중 입니다.' hidden={isLoading} />;
   }
@@ -75,8 +95,12 @@ const ResultsSperm = () => {
           <hr />
           <div className='flex gap-8 items-center justify-evenly w-full'>
             <div className='flex flex-col gap-4'>
-              <Button appearance='custom' styles='px-10 py-3 flex items-center justify-between gap-4 bg-[#4F7F9D] w-[300px]'>염색체 이상 예측 <VscRunAll /></Button>
-              <Button appearance='custom' styles='px-10 py-3 flex items-center justify-between gap-4 w-[300px]'>난임 예측 <VscRunAll /></Button>
+              <div onClick={getChromosomalAbnormality}>
+                <Button appearance='custom' styles='px-10 py-3 flex items-center justify-between gap-4 bg-[#4F7F9D] w-[300px]'>염색체 이상 예측 <VscRunAll /></Button>
+              </div>
+              <div onClick={getPredictInfertility}>
+                <Button appearance='custom' styles='px-10 py-3 flex items-center justify-between gap-4 w-[300px]'>난임 예측 <VscRunAll /></Button>
+              </div>
             </div>
             <div className='w-[500px] md:w-[800px] rounded-sm overflow-x-auto bg-white drop-shadow-md'>
               <table className='w-full table-auto'>
