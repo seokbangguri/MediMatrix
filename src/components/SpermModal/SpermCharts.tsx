@@ -135,7 +135,7 @@ const SpermCharts = () => {
                                 ]}
                             />
                         </div>
-                        <div className='h-full ml-8 w-[400px]'>
+                        <div className='h-full ml-8 w-[400px] flex flex-col'>
                             {/* <Text size='l' styles='text-[#888] mb-2'>염색체 이상 분석결과</Text> */}
                             <ul className="flex flex-col list-disc">
                                 <li className='py-2 border-b'>
@@ -145,11 +145,11 @@ const SpermCharts = () => {
                                     <Text size='s' styles='text-[#888]'>내 연령대와 전체에 대한 염색체 이상 가능성을 보여줍니다.</Text>
                                 </li>
                             </ul>
-
+                            <span className='mt-20 py-6 px-24 bg-dark-green text-center text-lg rounded-md self-center text-white font-bold'>낮음</span>
                         </div>
                     </div>
                 </div>
-                <hr/>
+                <hr />
                 <Text size='l' styles='text-[#888]'>난임 이상 분석 결과 차트</Text>
                 <div className="">
                     <Text size='m' styles='text-[#888]'>난임 가능성은 58% 확률로 난임 가능성 낮습니다.</Text>
@@ -276,7 +276,7 @@ const SpermCharts = () => {
                                 ]}
                             />
                         </div>
-                        <div className='h-full ml-8 w-[400px]'>
+                        <div className='h-full ml-8 w-[400px]  flex flex-col'>
                             {/* <Text size='l' styles='text-[#888] mb-2'>염색체 이상 분석결과</Text> */}
                             <ul className="flex flex-col list-disc">
                                 <li className='py-2 border-b'>
@@ -285,7 +285,9 @@ const SpermCharts = () => {
                                 <li className='py-2 border-b'>
                                     <Text size='s' styles='text-[#888]'>내 연령대와 전체에 대한 난임 가능성을 보여줍니다.</Text>
                                 </li>
+
                             </ul>
+                            <span className='mt-20 py-6 px-24 bg-dark-green text-center text-lg rounded-md self-center text-white font-bold'>낮음</span>
 
                         </div>
                     </div>
