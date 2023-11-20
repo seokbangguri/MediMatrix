@@ -6,6 +6,7 @@ import { useAppContext } from '../state/index';
 import { useNavigate } from 'react-router-dom';
 import { VscRunAll } from "react-icons/vsc";
 import axios from 'axios';
+import SpermCharts from '../components/SpermModal/SpermCharts';
 
 
 
@@ -138,6 +139,7 @@ const ResultsSperm = () => {
             </div>
           </div>
         </div>
+        <SpermCharts />
         <div className='my-10 flex flex-col gap-5 w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
           <Heading tag='h3'>정자 분석결과</Heading>
           <hr />
