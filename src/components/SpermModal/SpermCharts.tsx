@@ -11,7 +11,7 @@ const SpermCharts = () => {
                 <hr />
                 <Text size='l' styles='text-[#888]'>염색체 이상 분석 결과 차트</Text>
                 <div className="">
-                    <Text size='m' styles='text-[#888]'>염색체 이상 가능성은 58% 확률로 염색체 이상 가능성 낮습니다.</Text>
+                    <Text size='m' styles='text-[#888]'>염색체 이상 가능성은 <span className=' text-red-600 font-black'>58%</span> 확률로 염색체 이상 가능성 <span className=' text-red-600 font-black'>낮습</span>니다.</Text>
                     <div className="flex justify-between gap-2 w-full mt-5">
                         <div className="text-center h-[400px] w-[400px]">
                             <span className="font-bold text-center">연령대 염색체 이상 가능성 비율</span>
@@ -145,14 +145,14 @@ const SpermCharts = () => {
                                     <Text size='s' styles='text-[#888]'>내 연령대와 전체에 대한 염색체 이상 가능성을 보여줍니다.</Text>
                                 </li>
                             </ul>
-                            <span className='mt-20 py-6 px-24 bg-dark-green text-center text-lg rounded-md self-center text-white font-bold'>낮음</span>
+                            <span className='mt-20 py-6 px-24 bg-dark-green text-center text-3xl rounded-md self-center text-white font-bold'>낮음</span>
                         </div>
                     </div>
                 </div>
                 <hr />
                 <Text size='l' styles='text-[#888]'>난임 이상 분석 결과 차트</Text>
                 <div className="">
-                    <Text size='m' styles='text-[#888]'>난임 가능성은 58% 확률로 난임 가능성 낮습니다.</Text>
+                    <Text size='m' styles='text-[#888]'>난임 가능성은 <span className=' text-red-600 font-black'>58%</span> 확률로 난임 가능성 <span className=' text-red-600 font-black'>낮습</span>니다.</Text>
                     <div className='flex justify-between gap-2 w-full mt-5'>
                         <div className="text-center h-[400px] w-[400px]">
                             <span className="font-bold text-center">연령대 난임 이상 가능성 비율</span>
@@ -287,7 +287,7 @@ const SpermCharts = () => {
                                 </li>
 
                             </ul>
-                            <span className='mt-20 py-6 px-24 bg-dark-green text-center text-lg rounded-md self-center text-white font-bold'>낮음</span>
+                            <span className='mt-20 py-6 px-24 bg-dark-green text-center text-3xl rounded-md self-center text-white font-bold'>낮음</span>
 
                         </div>
                     </div>

@@ -31,7 +31,6 @@ const ResultsSperm = () => {
 
 
   useEffect(() => {
-    console.log(state.res);
     // 여기에 원하는 동작을 추가하세요.
     verifyToken().then(decodedToken => {
       if (decodedToken) {
