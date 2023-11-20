@@ -11,7 +11,7 @@ const SpermCharts = () => {
                 <hr />
                 <Text size='l' styles='text-[#888]'>염색체 이상 분석 결과 차트</Text>
                 <div className="">
-                    <Text size='m' styles='text-[#888]'>염색체 이상 가능성은 80% 확률로 염색체 이상 가능성 높습니다</Text>
+                    <Text size='m' styles='text-[#888]'>염색체 이상 가능성은 58% 확률로 염색체 이상 가능성 낮습니다.</Text>
                     <div className="flex justify-between gap-2 w-full mt-5">
                         <div className="text-center h-[400px] w-[400px]">
                             <span className="font-bold text-center">연령대 염색체 이상 가능성 비율</span>
@@ -139,7 +139,7 @@ const SpermCharts = () => {
                             {/* <Text size='l' styles='text-[#888] mb-2'>염색체 이상 분석결과</Text> */}
                             <ul className="flex flex-col list-disc">
                                 <li className='py-2 border-b'>
-                                    <Text size='s' styles='text-[#888]'>진단한 사람들 중 내 염색체 이상의 비율을 나타낸 지표입니다.</Text>
+                                    <Text size='s' styles='text-[#888]'>진단한 사람들 중 염색체 이상의 비율을 나타낸 지표입니다.</Text>
                                 </li>
                                 <li className='py-2 border-b'>
                                     <Text size='s' styles='text-[#888]'>내 연령대와 전체에 대한 염색체 이상 가능성을 보여줍니다.</Text>
@@ -148,134 +148,145 @@ const SpermCharts = () => {
 
                         </div>
                     </div>
-                    <div className='mt-10'>
-                        <Text size='l' styles='text-[#888]'>난임 이상 분석 결과 차트</Text>
-                        <Text size='m' styles='text-[#888] mt-5'>염색체 이상 가능성은 80% 확률로 염색체 이상 가능성 높습니다</Text>
-                        <div className='flex gap-14 mt-5'>
-                            <div className="text-center h-[400px] w-[400px]">
-                                <span className="font-bold text-center">연령대 난임 이상 가능성 비율</span>
-                                <ResponsivePie
-                                    data={data}
-                                    margin={{ top: 20, right: 80, bottom: 80, left: 80 }}
-                                    innerRadius={0.5}
-                                    padAngle={0.7}
-                                    cornerRadius={3}
-                                    activeOuterRadiusOffset={8}
-                                    borderWidth={1}
-                                    borderColor={{
-                                        from: 'color',
-                                        modifiers: [
-                                            [
-                                                'darker',
-                                                0.2
-                                            ]
+                </div>
+                <hr/>
+                <Text size='l' styles='text-[#888]'>난임 이상 분석 결과 차트</Text>
+                <div className="">
+                    <Text size='m' styles='text-[#888]'>난임 가능성은 58% 확률로 난임 가능성 낮습니다.</Text>
+                    <div className='flex justify-between gap-2 w-full mt-5'>
+                        <div className="text-center h-[400px] w-[400px]">
+                            <span className="font-bold text-center">연령대 난임 이상 가능성 비율</span>
+                            <ResponsivePie
+                                data={data}
+                                margin={{ top: 20, right: 80, bottom: 80, left: 80 }}
+                                innerRadius={0.5}
+                                padAngle={0.7}
+                                cornerRadius={3}
+                                activeOuterRadiusOffset={8}
+                                borderWidth={1}
+                                borderColor={{
+                                    from: 'color',
+                                    modifiers: [
+                                        [
+                                            'darker',
+                                            0.2
                                         ]
-                                    }}
-                                    arcLinkLabelsSkipAngle={10}
-                                    arcLinkLabelsTextColor="#333333"
-                                    arcLinkLabelsThickness={2}
-                                    arcLinkLabelsColor={{ from: 'color' }}
-                                    arcLabelsSkipAngle={10}
-                                    arcLabelsTextColor={{
-                                        from: 'color',
-                                        modifiers: [
-                                            [
-                                                'darker',
-                                                2
-                                            ]
+                                    ]
+                                }}
+                                arcLinkLabelsSkipAngle={10}
+                                arcLinkLabelsTextColor="#333333"
+                                arcLinkLabelsThickness={2}
+                                arcLinkLabelsColor={{ from: 'color' }}
+                                arcLabelsSkipAngle={10}
+                                arcLabelsTextColor={{
+                                    from: 'color',
+                                    modifiers: [
+                                        [
+                                            'darker',
+                                            2
                                         ]
-                                    }}
-                                    legends={[
-                                        {
-                                            anchor: 'bottom',
-                                            direction: 'row',
-                                            justify: false,
-                                            translateX: 0,
-                                            translateY: 56,
-                                            itemsSpacing: 0,
-                                            itemWidth: 100,
-                                            itemHeight: 18,
-                                            itemTextColor: '#999',
-                                            itemDirection: 'left-to-right',
-                                            itemOpacity: 1,
-                                            symbolSize: 18,
-                                            symbolShape: 'circle',
-                                            effects: [
-                                                {
-                                                    on: 'hover',
-                                                    style: {
-                                                        itemTextColor: '#000'
-                                                    }
+                                    ]
+                                }}
+                                legends={[
+                                    {
+                                        anchor: 'bottom',
+                                        direction: 'row',
+                                        justify: false,
+                                        translateX: 0,
+                                        translateY: 56,
+                                        itemsSpacing: 0,
+                                        itemWidth: 100,
+                                        itemHeight: 18,
+                                        itemTextColor: '#999',
+                                        itemDirection: 'left-to-right',
+                                        itemOpacity: 1,
+                                        symbolSize: 18,
+                                        symbolShape: 'circle',
+                                        effects: [
+                                            {
+                                                on: 'hover',
+                                                style: {
+                                                    itemTextColor: '#000'
                                                 }
-                                            ]
-                                        }
-                                    ]}
-                                />
+                                            }
+                                        ]
+                                    }
+                                ]}
+                            />
 
 
-                            </div>
-                            <div className="text-center h-[400px] w-[400px]">
-                                <span className="font-bold text-center">전체 연령대에 이상 가능성 비율</span>
-                                <ResponsivePie
-                                    data={data2}
-                                    margin={{ top: 20, right: 80, bottom: 80, left: 80 }}
-                                    innerRadius={0.5}
-                                    padAngle={0.7}
-                                    cornerRadius={3}
-                                    activeOuterRadiusOffset={8}
-                                    borderWidth={1}
-                                    borderColor={{
-                                        from: 'color',
-                                        modifiers: [
-                                            [
-                                                'darker',
-                                                0.2
-                                            ]
+                        </div>
+                        <div className="text-center h-[400px] w-[400px]">
+                            <span className="font-bold text-center">전체 연령대에 이상 가능성 비율</span>
+                            <ResponsivePie
+                                data={data2}
+                                margin={{ top: 20, right: 80, bottom: 80, left: 80 }}
+                                innerRadius={0.5}
+                                padAngle={0.7}
+                                cornerRadius={3}
+                                activeOuterRadiusOffset={8}
+                                borderWidth={1}
+                                borderColor={{
+                                    from: 'color',
+                                    modifiers: [
+                                        [
+                                            'darker',
+                                            0.2
                                         ]
-                                    }}
-                                    arcLinkLabelsSkipAngle={10}
-                                    arcLinkLabelsTextColor="#333333"
-                                    arcLinkLabelsThickness={2}
-                                    arcLinkLabelsColor={{ from: 'color' }}
-                                    arcLabelsSkipAngle={10}
-                                    arcLabelsTextColor={{
-                                        from: 'color',
-                                        modifiers: [
-                                            [
-                                                'darker',
-                                                2
-                                            ]
+                                    ]
+                                }}
+                                arcLinkLabelsSkipAngle={10}
+                                arcLinkLabelsTextColor="#333333"
+                                arcLinkLabelsThickness={2}
+                                arcLinkLabelsColor={{ from: 'color' }}
+                                arcLabelsSkipAngle={10}
+                                arcLabelsTextColor={{
+                                    from: 'color',
+                                    modifiers: [
+                                        [
+                                            'darker',
+                                            2
                                         ]
-                                    }}
-                                    legends={[
-                                        {
-                                            anchor: 'bottom',
-                                            direction: 'row',
-                                            justify: false,
-                                            translateX: 0,
-                                            translateY: 56,
-                                            itemsSpacing: 0,
-                                            itemWidth: 100,
-                                            itemHeight: 18,
-                                            itemTextColor: '#999',
-                                            itemDirection: 'left-to-right',
-                                            itemOpacity: 1,
-                                            symbolSize: 18,
-                                            symbolShape: 'circle',
-                                            effects: [
-                                                {
-                                                    on: 'hover',
-                                                    style: {
-                                                        itemTextColor: '#000'
-                                                    }
+                                    ]
+                                }}
+                                legends={[
+                                    {
+                                        anchor: 'bottom',
+                                        direction: 'row',
+                                        justify: false,
+                                        translateX: 0,
+                                        translateY: 56,
+                                        itemsSpacing: 0,
+                                        itemWidth: 100,
+                                        itemHeight: 18,
+                                        itemTextColor: '#999',
+                                        itemDirection: 'left-to-right',
+                                        itemOpacity: 1,
+                                        symbolSize: 18,
+                                        symbolShape: 'circle',
+                                        effects: [
+                                            {
+                                                on: 'hover',
+                                                style: {
+                                                    itemTextColor: '#000'
                                                 }
-                                            ]
-                                        }
-                                    ]}
-                                />
+                                            }
+                                        ]
+                                    }
+                                ]}
+                            />
+                        </div>
+                        <div className='h-full ml-8 w-[400px]'>
+                            {/* <Text size='l' styles='text-[#888] mb-2'>염색체 이상 분석결과</Text> */}
+                            <ul className="flex flex-col list-disc">
+                                <li className='py-2 border-b'>
+                                    <Text size='s' styles='text-[#888]'>진단한 사람들 중 난임 가능성의 비율을 나타낸 지표입니다.</Text>
+                                </li>
+                                <li className='py-2 border-b'>
+                                    <Text size='s' styles='text-[#888]'>내 연령대와 전체에 대한 난임 가능성을 보여줍니다.</Text>
+                                </li>
+                            </ul>
 
-
-                            </div>
                         </div>
                     </div>
                 </div>
