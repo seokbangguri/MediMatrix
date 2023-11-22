@@ -1,4 +1,4 @@
-import { Heading, Text, Footer, Loading, Button } from '../components'
+import { Heading, Text, Footer, Button } from '../components'
 import { useState, useEffect } from 'react';
 import { verifyToken } from '../auth/auth';
 import Swal from "sweetalert2";
@@ -7,8 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { VscRunAll } from "react-icons/vsc";
 import axios from 'axios';
 import SpermCharts from '../components/SpermModal/SpermCharts';
-
-
 
 const apiUrl = process.env.REACT_APP_API_SPERMS;
 const TdStyle = {
@@ -24,17 +22,18 @@ interface module4 {
 const ResultsSperm = () => {
   const navigate = useNavigate()
   const { state } = useAppContext();
-  const [userName, setUserName] = useState('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [chromosome, setChromose] = useState<module4>();
   const [intertelity, setIntertelity] = useState<module4>();
+  const [chromosomeProcessing, setChromoseProcessing] = useState<boolean>(false);
+  const [intertelityProcessing, setIntertelityProcessing] = useState<boolean>(false);
+  
+  console.log(state.res);
 
 
   useEffect(() => {
     // 여기에 원하는 동작을 추가하세요.
     verifyToken().then(decodedToken => {
       if (decodedToken) {
-        setUserName(decodedToken.name);
         const fetchData = async () => {
           try {
           } catch (error) {
@@ -63,16 +62,12 @@ const ResultsSperm = () => {
     });
   }, []);
 
-  window.onload = function () {
-    setIsLoading(false);
-  };
-
   const getChromosomalAbnormality = async () => {
-    setIsLoading(true);
+    setChromoseProcessing(true);
     try {
-      const response = await axios.post(apiUrl + '/getChromosome').then((data)=> {
+      await axios.post(apiUrl + '/getChromosome').then((data)=> {
         setChromose(data.data)
-        setIsLoading(false);
+        setChromoseProcessing(false);
       });
     } catch (error) {
       console.log('error');
@@ -80,11 +75,11 @@ const ResultsSperm = () => {
     }
   };
   const getPredictInfertility = async () => {
-    setIsLoading(true);
+    setIntertelityProcessing(true);
     try {
       await axios.post(apiUrl + '/getInfertility').then((data) =>{
         setIntertelity(data.data)
-        setIsLoading(false);
+        setIntertelityProcessing(false);
       });
     } catch (error) {
       console.log('error');
@@ -92,18 +87,10 @@ const ResultsSperm = () => {
     }
   };
 
-  // if (isLoading) {
-  //   return <Loading context='로딩중 입니다.' hidden={isLoading} />;
-  // }
   return (
     <div className='w-screen mt-[140px] '>
-      <Loading context='성능 체크 중 입니다.' hidden={isLoading} />
-      {/* <div className='flex fixed bottom-20 left-10 bg-dark-green w-20 h-20 rounded-full justify-center items-center'>
-        <span>?</span>
-      </div> */}
       <div className="flex flex-col items-center lg:px-10 mb-16">
         <Heading tag='h2'>모델 성능</Heading>
-        {/* <Text size='s' styles='mt-3 text-[#888] text-center'>좌측 환자 번호를 선택하시면 해당 번호의 결과를 확인하실 수 있습니다.</Text> */}
         <div className='mb-10 mt-16 flex flex-col gap-5 w-[1000px] md:w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
           <Heading tag='h3'>염색체 이상 및 난임 예측</Heading>
           <hr />
@@ -122,9 +109,33 @@ const ResultsSperm = () => {
                   <thead className='text-center bg-dark-green'>
                     <tr>
                       <th className={TdStyle.ThStyle}> 평균 정확도: </th>
-                      <th className={TdStyle.ThStyle}> {chromosome ? (parseFloat(chromosome.ACC) * 100).toFixed(2) : ''}%</th>
+                      {chromosomeProcessing ? 
+                        (<th className={TdStyle.ThStyle}>
+                          <div className="inline-flex items-center font-semibold text-sm text-white cursor-default">
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            계산 중...
+                          </div>
+                        </th>)
+                        : 
+                        (<th className={TdStyle.ThStyle}> {chromosome ? (parseFloat(chromosome.ACC) * 100).toFixed(2) : ''}%</th>)
+                      }
                       <th className={TdStyle.ThStyle}> 평균 신뢰도: </th>
-                      <th className={TdStyle.ThStyle}>{chromosome ? (parseFloat(chromosome.AUC) * 100).toFixed(2) : ''}%</th>
+                      {chromosomeProcessing ? 
+                        (<th className={TdStyle.ThStyle}>
+                          <div className="inline-flex items-center font-semibold text-sm text-white cursor-default">
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            계산 중...
+                          </div>
+                        </th>)
+                        : 
+                        (<th className={TdStyle.ThStyle}> {chromosome ? (parseFloat(chromosome.AUC) * 100).toFixed(2) : ''}%</th>)
+                      }
                     </tr>
                   </thead>
                 </table>
@@ -134,9 +145,33 @@ const ResultsSperm = () => {
                   <thead className='text-center bg-dark-green'>
                     <tr>
                       <th className={TdStyle.ThStyle}> 평균 정확도: </th>
-                      <th className={TdStyle.ThStyle}> {intertelity ? (parseFloat(intertelity.ACC) * 100).toFixed(2) : ''}%</th>
+                      {intertelityProcessing ? 
+                        (<th className={TdStyle.ThStyle}>
+                          <div className="inline-flex items-center font-semibold text-sm text-white cursor-default">
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            계산 중...
+                          </div>
+                        </th>)
+                        : 
+                        (<th className={TdStyle.ThStyle}> {intertelity ? (parseFloat(intertelity.AUC) * 100).toFixed(2) : ''}%</th>)
+                      }
                       <th className={TdStyle.ThStyle}> 평균 신뢰도: </th>
-                      <th className={TdStyle.ThStyle}>{intertelity ? (parseFloat(intertelity.AUC) * 100).toFixed(2) : ''}%</th>
+                      {intertelityProcessing ? 
+                        (<th className={TdStyle.ThStyle}>
+                          <div className="inline-flex items-center font-semibold text-sm text-white cursor-default">
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            계산 중...
+                          </div>
+                        </th>)
+                        : 
+                        (<th className={TdStyle.ThStyle}> {intertelity ? (parseFloat(intertelity.AUC) * 100).toFixed(2) : ''}%</th>)
+                      }
                     </tr>
                   </thead>
                 </table>
@@ -147,10 +182,10 @@ const ResultsSperm = () => {
         <Heading tag='h2' className=' mt-7'>정자 분석 결과</Heading>
         <SpermCharts />
         <div className='my-10 flex flex-col gap-5 w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
-          <Heading tag='h3'>정자 분석결과</Heading>
+          <Heading tag='h3'>정자 분석 결과</Heading>
           <hr />
           <div className="flex flex-center justify-between gap-4">
-            {state.res.length ? (state.res.map((item: any, i: any) => (
+            {JSON.parse(state.res.data).length ? (JSON.parse(state.res.data).map((item: any, i: any) => (
               <div key={i} className="w-[230px] drop-shadow-sm flex flex-col gap-2 text-white rounded-lg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] bg-slate-700">
                 <div className="py-4 font-bold text-xl text-center border-b">
                   <span className='capitalize'>{item.name} Class</span>
@@ -176,14 +211,14 @@ const ResultsSperm = () => {
                 <div className='flex flex-wrap gap-6 justify-between' key={index}>
                   {Object.keys(item.relativePosition).map((key, subIndex) => (
                     <div key={subIndex} className="relative mb-5 pt-1">
-                      <div className="mb-4 flex h-8 rounded bg-slate-100 text-xs w-[300px] overflow-visible">
+                      <div className="mb-4 flex h-8 rounded bg-slate-100 text-xs w-[300px] overflow-visible duration-500 hover:scale-110">
                         <div style={{ width: `${(parseFloat(item.patient[key]) / parseFloat(item.relativePosition[key]) * 100).toFixed(2)}%` }} className="bg-green-500 flex items-center justify-end rounded">
                           <span className="pr-1 text-balck-500 font-bold">{(parseFloat(item.patient[key]) / parseFloat(item.relativePosition[key]) * 100).toFixed(2)}%</span>
                         </div>
                       </div>
                       <div className="mb-2 flex items-center justify-between text-xs">
                         <div className="text-gray-600 font-semibold">{key}</div>
-                        <div className='text-gray-600 '>평균 50%</div>
+                        <div className='text-gray-600 '>50%</div>
                         <div className="text-gray-600">100%</div>
                       </div>
                     </div>

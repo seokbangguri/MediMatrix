@@ -182,8 +182,8 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
             const response = await axios.post(apiUrl + '/spermVideos', data);
             if (response.status === 200) {
                 visible(false);
-                const result = response.data.data;
-                addData(JSON.parse(result));
+                const result = response.data;
+                addData(result);
                 Swal.fire({
                     title: '분석 완료!',
                     text: '확인을 누르면 결과로 이동합니다.',

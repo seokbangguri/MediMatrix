@@ -1,9 +1,11 @@
 import React from 'react'
 import Text from '../Text/Text'
+import { useAppContext } from '../../state'
 import { ResponsivePie } from '@nivo/pie'
 import Heading from '../Heading/Heading'
 
 const SpermCharts = () => {
+    const { state } = useAppContext();
     return (
         <div>
             <div className='mb-10 mt-16 flex flex-col gap-5 w-[1000px] md:w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
@@ -11,7 +13,7 @@ const SpermCharts = () => {
                 <hr />
                 <Text size='l' styles='text-[#888]'>염색체 이상 분석 결과 차트</Text>
                 <div className="">
-                    <Text size='m' styles='text-[#888]'>염색체 이상 가능성은 <span className=' text-red-600 font-black'>58%</span> 확률로 염색체 이상 가능성 <span className=' text-red-600 font-black'>낮습</span>니다.</Text>
+                    <Text size='m' styles='text-[#888]'>염색체 이상 가능성은 <span className=' text-red-600 font-black'>{(parseFloat(state.res.per.chromosome)*100).toFixed(0)}%</span> 확률로 염색체 이상 가능성 <span className=' text-red-600 font-black'>낮습</span>니다.</Text>
                     <div className="flex justify-between gap-2 w-full mt-5">
                         <div className="text-center h-[400px] w-[400px]">
                             <span className="font-bold text-center">연령대 염색체 이상 가능성 비율</span>
@@ -89,7 +91,7 @@ const SpermCharts = () => {
                                     from: 'color',
                                     modifiers: [
                                         [
-                                            'brighter',
+                                            'darker',
                                             0.2
                                         ]
                                     ]
@@ -103,7 +105,7 @@ const SpermCharts = () => {
                                     from: 'color',
                                     modifiers: [
                                         [
-                                            'brighter',
+                                            'darker',
                                             2
                                         ]
                                     ]
@@ -152,7 +154,7 @@ const SpermCharts = () => {
                 <hr />
                 <Text size='l' styles='text-[#888]'>난임 이상 분석 결과 차트</Text>
                 <div className="">
-                    <Text size='m' styles='text-[#888]'>난임 가능성은 <span className=' text-red-600 font-black'>58%</span> 확률로 난임 가능성 <span className=' text-red-600 font-black'>낮습</span>니다.</Text>
+                    <Text size='m' styles='text-[#888]'>난임 가능성은 <span className=' text-red-600 font-black'>{(parseFloat(state.res.per.intfertility)*100).toFixed(0)}%</span> 확률로 난임 가능성 <span className=' text-red-600 font-black'>낮습</span>니다.</Text>
                     <div className='flex justify-between gap-2 w-full mt-5'>
                         <div className="text-center h-[400px] w-[400px]">
                             <span className="font-bold text-center">연령대 난임 이상 가능성 비율</span>
@@ -302,29 +304,29 @@ export default SpermCharts
 
 export const data = [
     {
+        "id": "높음",
+        "label": "높음",
+        "value": '42',
+        "color": "hsl(0, 88.29268292682926%, 59.80392156862745%)"
+    },
+    {
         "id": "낮음",
         "label": "낮음",
         "value": '58',
         "color": "hsl(130, 92.30769230769232%, 64.31372549019608%)"
     },
+]
+export const data2 = [
     {
         "id": "높음",
         "label": "높음",
-        "value": '42',
-        "color": "hsl(0, 88.29268292682926%, 59.80392156862745%)"
-    }
-]
-export const data2 = [
+        "value": '43',
+        "color": "hsl(182, 70%, 50%)"
+    },
     {
         "id": "낮음",
         "label": "낮음",
         "value": '57',
         "color": "hsl(130, 70%, 50%)"
     },
-    {
-        "id": "높음",
-        "label": "높음",
-        "value": '43',
-        "color": "hsl(182, 70%, 50%)"
-    }
 ]

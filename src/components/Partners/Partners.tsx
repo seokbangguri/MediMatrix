@@ -15,8 +15,17 @@ function Partners() {
             <img src={goqimage} alt="goq" className="w-[150px] md:max-w-[250px]" />
           </div>
           <div>
-            <img src={chaimage} alt="cha" className="w-[270px] md:max-w-[340px]" />
+            <img src={goqimage} alt="goq" className="w-[150px] md:max-w-[250px]" />
           </div>
+          <div>
+            <img src={goqimage} alt="goq" className="w-[150px] md:max-w-[250px]" />
+          </div>
+          <div>
+            <img src={goqimage} alt="goq" className="w-[150px] md:max-w-[250px]" />
+          </div>
+          {/* <div>
+            <img src={chaimage} alt="cha" className="w-[270px] md:max-w-[340px]" />
+          </div> */}
         </div>
       </div>
       <div id="contact" className="absolute inset-x-0 bottom-28"></div>
