@@ -68,7 +68,7 @@ const ResultsSperm = () => {
   const getChromosomalAbnormality = async () => {
     setChromoseProcessing(true);
     try {
-      await axios.get(apiUrl + '/flask/getChromosome').then((data)=> {
+      await axios.get(apiUrl + '/getChromosome').then((data)=> {
         setChromose(data.data)
         setChromoseProcessing(false);
       });
@@ -80,7 +80,7 @@ const ResultsSperm = () => {
   const getPredictInfertility = async () => {
     setIntertelityProcessing(true);
     try {
-      await axios.get(apiUrl + '/flask/getInfertility').then((data) =>{
+      await axios.get(apiUrl + '/getInfertility').then((data) =>{
         setIntertelity(data.data)
         setIntertelityProcessing(false);
       });
