@@ -9,6 +9,7 @@ import axios from 'axios';
 import SpermCharts from '../components/SpermModal/SpermCharts';
 
 const apiUrl = process.env.REACT_APP_API_SPERMS;
+// const apiUrl = 'http://127.0.0.1:5000';
 const TdStyle = {
   ThStyle: `w-1/6 min-w-[160px] border-l border-transparent py-4 px-3 text-lg font-medium text-white lg:py-4 lg:px-4`,
   TdStyle: `text-dark border border-[#E8E8E8] bg-[#F3F6FF] dark:bg-dark-3 dark:border-dark dark:text-dark-7 py-5 px-2 text-center text-base font-medium`,
@@ -26,11 +27,13 @@ const ResultsSperm = () => {
   const [intertelity, setIntertelity] = useState<module4>();
   const [chromosomeProcessing, setChromoseProcessing] = useState<boolean>(false);
   const [intertelityProcessing, setIntertelityProcessing] = useState<boolean>(false);
+  const [data, setData] = useState<any>();
   
   console.log(state.res);
 
 
   useEffect(() => {
+    if(state.res.data) setData(JSON.parse(state.res.data));
     // 여기에 원하는 동작을 추가하세요.
     verifyToken().then(decodedToken => {
       if (decodedToken) {
@@ -65,7 +68,7 @@ const ResultsSperm = () => {
   const getChromosomalAbnormality = async () => {
     setChromoseProcessing(true);
     try {
-      await axios.post(apiUrl + '/getChromosome').then((data)=> {
+      await axios.get(apiUrl + '/flask/getChromosome').then((data)=> {
         setChromose(data.data)
         setChromoseProcessing(false);
       });
@@ -77,7 +80,7 @@ const ResultsSperm = () => {
   const getPredictInfertility = async () => {
     setIntertelityProcessing(true);
     try {
-      await axios.post(apiUrl + '/getInfertility').then((data) =>{
+      await axios.get(apiUrl + '/flask/getInfertility').then((data) =>{
         setIntertelity(data.data)
         setIntertelityProcessing(false);
       });
@@ -185,7 +188,7 @@ const ResultsSperm = () => {
           <Heading tag='h3'>정자 분석 결과</Heading>
           <hr />
           <div className="flex flex-center justify-between gap-4">
-            {JSON.parse(state.res.data).length ? (JSON.parse(state.res.data).map((item: any, i: any) => (
+            {data ? (data.map((item: any, i: any) => (
               <div key={i} className="w-[230px] drop-shadow-sm flex flex-col gap-2 text-white rounded-lg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] bg-slate-700">
                 <div className="py-4 font-bold text-xl text-center border-b">
                   <span className='capitalize'>{item.name} Class</span>

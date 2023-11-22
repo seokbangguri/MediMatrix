@@ -13,7 +13,7 @@ const SpermCharts = () => {
                 <hr />
                 <Text size='l' styles='text-[#888]'>염색체 이상 분석 결과 차트</Text>
                 <div className="">
-                    <Text size='m' styles='text-[#888]'>염색체 이상 가능성은 <span className=' text-red-600 font-black'>{(parseFloat(state.res.per.chromosome)*100).toFixed(0)}%</span> 확률로 염색체 이상 가능성 <span className=' text-red-600 font-black'>낮습</span>니다.</Text>
+                    <Text size='m' styles='text-[#888]'>염색체 이상 가능성은 <span className=' text-red-600 font-black'>{state.res.per ? (parseFloat(state.res.per.chromosome)*100).toFixed(0) : '데이터 없음'}%</span> 확률로 염색체 이상 가능성 <span className=' text-red-600 font-black'>낮습</span>니다.</Text>
                     <div className="flex justify-between gap-2 w-full mt-5">
                         <div className="text-center h-[400px] w-[400px]">
                             <span className="font-bold text-center">연령대 염색체 이상 가능성 비율</span>
@@ -154,7 +154,7 @@ const SpermCharts = () => {
                 <hr />
                 <Text size='l' styles='text-[#888]'>난임 이상 분석 결과 차트</Text>
                 <div className="">
-                    <Text size='m' styles='text-[#888]'>난임 가능성은 <span className=' text-red-600 font-black'>{(parseFloat(state.res.per.intfertility)*100).toFixed(0)}%</span> 확률로 난임 가능성 <span className=' text-red-600 font-black'>낮습</span>니다.</Text>
+                    <Text size='m' styles='text-[#888]'>난임 가능성은 <span className=' text-red-600 font-black'>{state.res.per ? (parseFloat(state.res.per.intfertility)*100).toFixed(0) : '데이터 없음'}%</span> 확률로 난임 가능성 <span className=' text-red-600 font-black'>낮습</span>니다.</Text>
                     <div className='flex justify-between gap-2 w-full mt-5'>
                         <div className="text-center h-[400px] w-[400px]">
                             <span className="font-bold text-center">연령대 난임 이상 가능성 비율</span>
