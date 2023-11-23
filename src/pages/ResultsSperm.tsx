@@ -28,12 +28,12 @@ const ResultsSperm = () => {
   const [chromosomeProcessing, setChromoseProcessing] = useState<boolean>(false);
   const [intertelityProcessing, setIntertelityProcessing] = useState<boolean>(false);
   const [data, setData] = useState<any>();
-  
+
   console.log(state.res);
 
 
   useEffect(() => {
-    if(state.res.data) setData(JSON.parse(state.res.data));
+    if (state.res.data) setData(JSON.parse(state.res.data));
     // 여기에 원하는 동작을 추가하세요.
     verifyToken().then(decodedToken => {
       if (decodedToken) {
@@ -68,7 +68,7 @@ const ResultsSperm = () => {
   const getChromosomalAbnormality = async () => {
     setChromoseProcessing(true);
     try {
-      await axios.get(apiUrl + '/getChromosome').then((data)=> {
+      await axios.get(apiUrl + '/getChromosome').then((data) => {
         setChromose(data.data)
         setChromoseProcessing(false);
       });
@@ -80,7 +80,7 @@ const ResultsSperm = () => {
   const getPredictInfertility = async () => {
     setIntertelityProcessing(true);
     try {
-      await axios.get(apiUrl + '/getInfertility').then((data) =>{
+      await axios.get(apiUrl + '/getInfertility').then((data) => {
         setIntertelity(data.data)
         setIntertelityProcessing(false);
       });
@@ -112,7 +112,7 @@ const ResultsSperm = () => {
                   <thead className='text-center bg-dark-green'>
                     <tr>
                       <th className={TdStyle.ThStyle}> 평균 정확도: </th>
-                      {chromosomeProcessing ? 
+                      {chromosomeProcessing ?
                         (<th className={TdStyle.ThStyle}>
                           <div className="inline-flex items-center font-semibold text-sm text-white cursor-default">
                             <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -122,11 +122,11 @@ const ResultsSperm = () => {
                             계산 중...
                           </div>
                         </th>)
-                        : 
+                        :
                         (<th className={TdStyle.ThStyle}> {chromosome ? (parseFloat(chromosome.ACC) * 100).toFixed(2) : ''}%</th>)
                       }
                       <th className={TdStyle.ThStyle}> 평균 신뢰도: </th>
-                      {chromosomeProcessing ? 
+                      {chromosomeProcessing ?
                         (<th className={TdStyle.ThStyle}>
                           <div className="inline-flex items-center font-semibold text-sm text-white cursor-default">
                             <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -136,7 +136,7 @@ const ResultsSperm = () => {
                             계산 중...
                           </div>
                         </th>)
-                        : 
+                        :
                         (<th className={TdStyle.ThStyle}> {chromosome ? (parseFloat(chromosome.AUC) * 100).toFixed(2) : ''}%</th>)
                       }
                     </tr>
@@ -148,7 +148,7 @@ const ResultsSperm = () => {
                   <thead className='text-center bg-dark-green'>
                     <tr>
                       <th className={TdStyle.ThStyle}> 평균 정확도: </th>
-                      {intertelityProcessing ? 
+                      {intertelityProcessing ?
                         (<th className={TdStyle.ThStyle}>
                           <div className="inline-flex items-center font-semibold text-sm text-white cursor-default">
                             <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -158,11 +158,11 @@ const ResultsSperm = () => {
                             계산 중...
                           </div>
                         </th>)
-                        : 
-                        (<th className={TdStyle.ThStyle}> {intertelity ? (parseFloat(intertelity.AUC) * 100).toFixed(2) : ''}%</th>)
+                        :
+                        (<th className={TdStyle.ThStyle}> {intertelity ? (parseFloat(intertelity.ACC) * 100).toFixed(2) : ''}%</th>)
                       }
                       <th className={TdStyle.ThStyle}> 평균 신뢰도: </th>
-                      {intertelityProcessing ? 
+                      {intertelityProcessing ?
                         (<th className={TdStyle.ThStyle}>
                           <div className="inline-flex items-center font-semibold text-sm text-white cursor-default">
                             <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -172,7 +172,7 @@ const ResultsSperm = () => {
                             계산 중...
                           </div>
                         </th>)
-                        : 
+                        :
                         (<th className={TdStyle.ThStyle}> {intertelity ? (parseFloat(intertelity.AUC) * 100).toFixed(2) : ''}%</th>)
                       }
                     </tr>
