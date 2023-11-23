@@ -1,5 +1,5 @@
 import blobImage from "../assets/home-blob.svg"
-import { Products, Partners, Hero, Contact, Footer } from "../components";
+import { Products, Partners, Hero, ContactCTO, Footer } from "../components";
 const Home = () => {
 
   const scrollToSection = (sectionId: string) => {
@@ -23,7 +23,7 @@ const Home = () => {
     <Hero />
     <Products />
     <Partners />
-    <Contact />
+    <ContactCTO />
     <div style={{
       backgroundImage: `url(${blobImage})`,
       backgroundRepeat: "no-repeat",

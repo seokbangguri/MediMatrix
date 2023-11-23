@@ -7,7 +7,7 @@ export { default as Products } from "./Products/Products";
 export { default as Heading } from "./Heading/Heading";
 export { default as Partners } from "./Partners/Partners";
 export { default as Hero } from "./Hero/Hero";
-export { default as Contact } from "./Contact/Contact";
+export { default as ContactCTO } from "./Contact/ContactCTO";
 export { default as PatientCard } from "./PatientCard/PatientCard";
 export { default as ResultsTable } from './ResultsTable/ResultsTable'
 export { default as ScoringTable } from './ScoringTable/ScoringTable'
