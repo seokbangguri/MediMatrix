@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { verifyToken } from '../auth/auth'
 import { SignInValuesInterface } from "../interface/pagesProps";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const apiUrl = process.env.REACT_APP_API_USERS;
 
@@ -20,6 +21,7 @@ const validationSchema = Yup.object({
 
 //Component
 const SignIn = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   useEffect(() => {
     verifyToken().then(decodedToken => {
@@ -88,7 +90,7 @@ const SignIn = () => {
     <div className="w-[500px] bg-white rounded-lg drop-shadow-2xl ">
       <div className="p-10 space-y-4 md:space-y-6 sm:p-8">
         <Heading tag='h3' className="text-center">
-          로그인
+          {t('signin')}
         </Heading>
         <Formik
           initialValues={{ email: '', password: '' }}
@@ -98,7 +100,7 @@ const SignIn = () => {
           {({ handleSubmit }) => (
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">이메일</label>
+                <label htmlFor="email" className="block mb-2 text-sm font-medium text-slate-900">{t('email')}</label>
                 <Field
                   type="email"
                   name="email"
@@ -111,7 +113,7 @@ const SignIn = () => {
                 <ErrorMessage name="email" component="div" className="text-red-600 text-sm" />
               </div>
               <div>
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호</label>
+                <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">{t('password')}</label>
                 <div className="relative">
                   <Field
                     type={showPassword ? 'text' : 'password'}
@@ -126,9 +128,9 @@ const SignIn = () => {
                 {/* Display validation error if any */}
                 <ErrorMessage name="password" component="div" className="text-red-600 text-sm" />
               </div>
-              <Button appearance="primary" type="button" styles="w-full text-center">로그인</Button>
+              <Button appearance="primary" type="button" styles="w-full text-center">{t('signin')}</Button>
               <p className="text-sm font-light text-[#7a7a7a]">
-                계정이 없으십니까? <Link to="/signup" className="font-medium text-blue-600 hover:underline ">회원가입</Link>
+                {t('noaccaunt')} <Link to="/signup" className="font-medium text-blue-600 hover:underline ">{t('signup')}</Link>
               </p>
             </form>
           )}

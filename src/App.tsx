@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import "node_modules/flag-icons/css/flag-icons.min.css";
 import { Header } from "./components";
 import Beery from "./pages/Beery";
 import Sperm from "./pages/Sperm";
@@ -16,7 +17,7 @@ import Contact from './pages/Contact';
 function App() {
 
   return (
-    <div className="App font-roboto flex flex-col justify-center items-center select-none">
+    <div className="App font-roboto flex flex-col justify-center items-center">
       <Router>
         <Header />
         <Routes>

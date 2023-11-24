@@ -9,6 +9,7 @@ import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 import { verifyToken } from '../auth/auth'
 import { SignUpValuesInterface } from "../interface/pagesProps";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const apiUrl = process.env.REACT_APP_API_USERS;
 
@@ -39,6 +40,7 @@ const bgStyle = {
     height: '100vh',
 };
 const SignUp: React.FC = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     useEffect(() => {
         verifyToken().then(decodedToken => {
@@ -117,7 +119,7 @@ const SignUp: React.FC = () => {
         <div className="w-[800px] bg-white rounded-lg drop-shadow-2xl ">
             <div className="p-10 space-y-4 md:space-y-6 sm:p-8">
                 <Heading tag='h3' className="text-center">
-                    회원가입
+                    {t('signup')}
                 </Heading>
                 <Formik
                     initialValues={initialValues}
@@ -130,50 +132,50 @@ const SignUp: React.FC = () => {
                             <div className="flex flex-col gap-5 w-full">
                                 <div className="flex w-full gap-6">
                                     <div className="w-1/2">
-                                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">이름</label>
-                                        <Field type="text" name="name" id="name" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="이름...." required />
+                                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-slate-900">{t('labelname')}</label>
+                                        <Field type="text" name="name" id="name" className="bg-stone-100 border border-slate-300 text-slate-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter a your full name...." required />
                                         <ErrorMessage name="name" component="div" className="text-red-700 text-sm" />
                                     </div>
                                     <div className="w-1/2">
-                                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">이메일</label>
-                                        <Field type="email" name="email" id="email" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="name@company.com" required />
+                                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-slate-900">{t('email')}</label>
+                                        <Field type="email" name="email" id="email" className="bg-stone-100 border border-slate-300 text-slate-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="name@company.com" required />
                                         <ErrorMessage name="email" component="div" className="text-red-700 text-sm" />
                                     </div>
                                 </div>
                                 <div className="flex w-full gap-6">
                                     <div className="w-1/2">
-                                        <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">전화번호</label>
-                                        <Field type="tel" name="phoneNumber" id="phoneNumber" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter phone number..." />
+                                        <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-slate-900">{t('phoneNumber')}</label>
+                                        <Field type="tel" name="phoneNumber" id="phoneNumber" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" className="bg-stone-100 border border-slate-300 text-slate-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter phone number..." />
                                         <ErrorMessage name="phoneNumber" component="div" className="text-red-700 text-sm" />
                                     </div>
                                     <div className="w-1/2">
-                                        <label htmlFor="hospitalName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">병원 이름</label>
-                                        <Field type="text" name="hospitalName" id="hospitalName" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter hospital name..." required />
+                                        <label htmlFor="hospitalName" className="block mb-2 text-sm font-medium text-slate-900">{t('hospitalName')}</label>
+                                        <Field type="text" name="hospitalName" id="hospitalName" className="bg-stone-100 border border-slate-300 text-slate-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder="Enter hospital name..." required />
                                         <ErrorMessage name="hospitalName" component="div" className="text-red-700 text-sm" />
                                     </div></div>
                                 <div className="flex w-full gap-6">
 
                                     <div className="w-1/2">
-                                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호</label>
+                                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-slate-900 ">{t('password')}</label>
                                         <div className="relative">
-                                            <Field type={showPassword ? 'text' : 'password'} name="password" id="password" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
+                                            <Field type={showPassword ? 'text' : 'password'} name="password" id="password" placeholder="••••••••" className="bg-stone-100 border border-slate-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
                                             <button onClick={() => togglePasswordVisibility('password')} type='button' className="p-1 text-lg absolute top-2 right-2 ">{showPassword ? <PiEyeBold /> : <PiEyeClosedBold />}</button>
                                         </div>
                                         <ErrorMessage name="password" component="div" className="text-red-700 text-sm" />
                                     </div>
                                     <div className="w-1/2">
-                                        <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-slate-900 ">비밀번호 확인</label>
+                                        <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-slate-900 ">{t('passwordCheck')}</label>
                                         <div className="relative">
-                                            <Field type={showPasswordConfirm ? 'text' : 'password'} name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-stone-100 border border-gray-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
+                                            <Field type={showPasswordConfirm ? 'text' : 'password'} name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-stone-100 border border-slate-300  sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required />
                                             <button onClick={() => togglePasswordVisibility('confirm')} type='button' className="p-1 text-lg absolute top-2 right-2 ">{showPasswordConfirm ? <PiEyeBold /> : <PiEyeClosedBold />}</button>
                                         </div><ErrorMessage name="confirmPassword" component="div" className="text-red-700 text-sm" />
                                     </div></div>
                                 <div className="flex w-full gap-6">
                                     <div className="w-1/2">
-                                        <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">역할</label>
-                                        <Field as="select" name="role" className="bg-stone-100 border border-gray-300 text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required>
-                                            <option value="therapists">치료사</option>
-                                            <option value="administrators">관리자</option>
+                                        <label htmlFor="role" className="block mb-2 text-sm font-medium text-slate-900 ">{t('role')}</label>
+                                        <Field as="select" name="role" className="bg-stone-100 border border-slate-300 text-slate-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required>
+                                            <option value="therapists">{t('therapist')}</option>
+                                            <option value="administrators">{t('administrator')}</option>
                                         </Field>
                                     </div>
                                     <div className="w-1/2"></div>
@@ -182,10 +184,10 @@ const SignUp: React.FC = () => {
 
 
                             <div className="mt-10 mb-6 text-center">
-                                <Button appearance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>회원가입</Button>
+                                <Button appearance="primary" type="submit" styles="w-full text-center" disabled={isSubmitting}>{t('signup')}</Button>
                             </div>
                             <p className="text-sm font-light text-[#7a7a7a] text-right">
-                                계정이 있으십니까? <Link to="/signin" className="font-medium text-blue-600 hover:underline "> 로그인</Link>
+                                {t('haveaccaunt')} <Link to="/signin" className="font-medium text-blue-600 hover:underline "> {t('signin')}</Link>
                             </p>
                         </Form>
                     )}
