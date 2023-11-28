@@ -5,6 +5,7 @@ import { Button, Text } from "..";
 import axios from "axios";
 import { useAppContext } from "../../state";
 import { useNavigate } from 'react-router-dom';
+import { showWarning } from "../../utils/errorHandling";
 
 const apiUrl = process.env.REACT_APP_API_SPERMS;
 type finalData = {
@@ -130,40 +131,6 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
             fileInputRef.current.click();
         }
     };
-    const handlePostData = async (data: finalData) => {
-        const response = await axios.post(apiUrl + '/patientexist', data)
-        if (response.status === 200) {
-            visible(false);
-            Swal.fire({
-                title: '채점 완료!',
-                text: '확인을 누르면 결과로 이동합니다.',
-                icon: 'success',
-                confirmButtonText: '확인',
-            }).then(() => {
-                navigate(`/results?patientId=${finalData.id}`);
-            });
-        } else if (response.status === 201) {
-            visible(false);
-            Swal.fire({
-                title: '채점 완료!(신규환자)',
-                text: '확인을 누르면 결과로 이동합니다.',
-                icon: 'success',
-                confirmButtonText: '확인',
-            }).then(() => {
-                navigate(`/results?patientId=${finalData.id}`);
-            });
-        } else {
-            visible(false);
-            Swal.fire({
-                title: '에러가 발생했습니다!',
-                text: response.data.error,
-                icon: 'error',
-                confirmButtonText: '확인',
-            }).then(() => {
-                navigate("/sperm");
-            });
-        }
-    };
 
     const handleScoreButtonClick = async () => {
         const mp4Files = selectedFiles.filter(file => file.name.endsWith('.mp4'));
@@ -212,22 +179,8 @@ const FileInputBoxSperm = ({ finalData, visible }: { finalData: finalData, visib
         } catch (error) {
             console.log(error);
             visible(false);
-            Swal.fire({
-                title: '에러!',
-                text: '확인을 누르면 메인으로 이동합니다.',
-                icon: 'error',
-                confirmButtonText: '확인',
-            }).then(() => {
-                navigate("/");
-            });
+            showWarning('There is no file to submit')
         }
-        // } else {
-        //     Swal.fire({
-        //         title: "파일 개수 또는 형식 오류",
-        //         text: "한 환자 당 mp4 파일은 5개, csv 파일은 1개를 업로드해야 합니다.",
-        //         icon: "error",
-        //     });
-        // }
     };
 
     return (

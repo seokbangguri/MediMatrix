@@ -1,5 +1,6 @@
-import blobImage from "../assets/home-blob.svg"
 import { Products, Partners, Hero, ContactCTO, Footer } from "../components";
+import { firstBlobStyle, secondBlobStyle, thirdBlobStyle } from "../styles/generalStyles";
+
 const Home = () => {
 
   const scrollToSection = (sectionId: string) => {
@@ -24,32 +25,13 @@ const Home = () => {
     <Products />
     <Partners />
     <ContactCTO />
-    <div style={{
-      backgroundImage: `url(${blobImage})`,
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "40%",
-      width: '100%',
-      height: '100%',
-    }}
+    <div style={firstBlobStyle}
       className="absolute left-[-100px] top-[900px] -z-10"
     ></div>
-    <div style={{
-      backgroundImage: `url(${blobImage})`,
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "100%",
-      width: '700px',
-      height: '800px',
-      transform: 'rotate(30deg)',
-    }}
+    <div style={secondBlobStyle}
       className="absolute right-[-300px] top-[1800px] -z-10"
     ></div>
-    <div style={{
-      backgroundImage: `url(${blobImage})`,
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "100%",
-      width: '700px',
-      height: '800px',
-    }}
+    <div style={thirdBlobStyle}
       className="absolute right-[-300px] top-[-300px] -z-10"
     ></div>
     <Footer />

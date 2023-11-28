@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { Heading, Text, Footer, FileInputBox, PatientInput, Progress, Loading } from "../components";
-import Swal from "sweetalert2";
 import hospital from '../contracted';
 import { useSpring, animated } from "react-spring";
 import beery_main_img from "../assets/beery_main.svg"
 import { verifyToken } from "../auth/auth";
 import { PatientInfoInterface, finalDataInterface } from "../interface/pagesProps";
 import { useNavigate } from "react-router-dom";
-
+import { useTranslation } from 'react-i18next';
+import { showError } from "./SignUp";
 
 function Beery() {
+    const { t } = useTranslation();
     const [step, setStep] = useState(1);
     const [visible, setVisible] = useState(false);
     const [progressStep, setProgressStep] = useState(step);
@@ -18,7 +19,6 @@ function Beery() {
     const [therapists, setTherapists] = useState<string>('');
     const navigate = useNavigate();
 
-
     const [finalData, setFinalData] = useState<finalDataInterface>({
         name: '',
         id: '',
@@ -26,6 +26,11 @@ function Beery() {
         hospital: '',
         therapists: '',
     });
+
+    useEffect(() => {
+        // Scroll to the top of the page on component mount
+        window.scrollTo(0, 0);
+    }, []);
 
     const handleNextStep = (data: PatientInfoInterface) => {
         // 1단계에서 입력한 환자 정보 저장하고 2단계로 이동
@@ -82,22 +87,14 @@ function Beery() {
                 setTherapists(decodedToken.email);
                 const selectedHospital = hospital[decodedToken.hospitalName]; // 병원 이름을 사용하여 hospital 객체에서 해당 병원 정보 가져오기
                 if (!selectedHospital || !selectedHospital.beery) {
-                    Swal.fire({
-                        title: "Beery와 계약되어 있지 않습니다.",
-                        icon: "error",
-                        confirmButtonText: "확인",
-                    }).then((result) => {
+                    showError(`Beery와 계약되어 있지 않습니다.`).then((result) => {
                         if (result.isConfirmed) {
                             navigate('/');
                         }
                     });
                 }
             } else {
-                Swal.fire({
-                    title: "로그인 후 이용 가능합니다.",
-                    icon: "error",
-                    confirmButtonText: "확인",
-                }).then((result) => {
+                showError(`${t('login_first')}`).then((result) => {
                     if (result.isConfirmed) {
                         navigate("/signin");
                     }
@@ -113,13 +110,13 @@ function Beery() {
             <Loading context="Beery 채점 중... 잠시만 기다려주세요." hidden={visible} />
             <section className="px-5 lg:px-10 flex flex-col justify-center items-center py-20 mt-12 min-h-screen">
                 <Heading tag="h2" className="">
-                    AI 기반 Beery VMI 답안 채점도구
+                    {`${t('beery_heading')}`}
                 </Heading>
                 <Text size="m" styles="max-w-[700px] text-center pt-5">
-                    채점을 진행하기 위해 환자의 Beery VMI 답안지를 넣어주세요.
+                    {`${t('beery_text')}`}
                 </Text>
                 <Text size="s" styles=" mb-16">
-                    Beery VMI 답안지는 .pdf 형태 또는 .png .jpg .jpeg 등 형태로 파일 이름을 작성해주세요.
+                    {`${t('beery_file_rule')}`}
                 </Text>
                 <div className="flex flex-col md:flex-row items-center justify-between w-[1445px] px-5 md:px-10">
                     <div className="max-w-[600px] flex justify-center">

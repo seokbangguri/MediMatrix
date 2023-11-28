@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
-import { Heading, Searchbar } from "../components";
+import { Filter, Heading, Searchbar } from "../components";
 import axios from "axios";
 import { ListItem } from "../components/AdminComponents/AdminListItem/ListItem";
 
@@ -24,7 +25,7 @@ const Admin = () => {
     const handleFilter = (text: string) => {
         if (text === 'male') {
             const filteredData = patientData.filter((item) =>
-                item.gender.toLowerCase().startsWith(text)
+                item.gender.toLowerCase() === 'male'
             );
             setFilteredPatients(filteredData);
         } else if (text === 'female') {
@@ -39,10 +40,10 @@ const Admin = () => {
             setFilteredPatients(filteredData)
         } else if (text === 'test') {
             const sortedData = patientData.sort(function (a, b) {
-                if (a.test < b.test) {
+                if (a.test.toLowerCase() < b.test.toLowerCase()) {
                     return -1;
                 }
-                if (a.test > b.test) {
+                if (a.test.toLowerCase() > b.test.toLowerCase()) {
                     return 1;
                 }
                 return 0;
@@ -136,19 +137,6 @@ const Admin = () => {
 };
 
 export default Admin;
-
-interface SearchBarProps {
-    handleFilter: (query: string) => any;
-}
-export const Filter = ({ handleFilter }: SearchBarProps) => {
-
-    return <div className='w-[400px] flex items-center h-12 rounded-lg drop-shadow-xl px-4 bg-white overflow-hidden'>
-        <span className="font-bold text-base">Filter:</span>
-        <button onClick={() => handleFilter('test')} className="ml-auto bg-neutral-500/80 px-4 rounded-sm text-white mr-2 hover:bg-button-green" type="button">Test</button>
-        <button onClick={() => handleFilter('female')} className="bg-neutral-500/80 px-4 rounded-sm text-white mr-2 hover:bg-button-green" type="button">Female</button>
-        <button onClick={() => handleFilter('male')} className="bg-neutral-500/80 px-4 rounded-sm text-white hover:bg-button-green" type="button">Male</button>
-    </div>
-}
 
 export const data = [
     {

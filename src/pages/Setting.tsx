@@ -7,6 +7,9 @@ import { useState, useEffect } from 'react';
 import { verifyToken } from '../auth/auth';
 import { UpdateInfoInterface, UpdatePasswordInterface } from '../interface/pagesProps';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { showError } from './SignUp';
+import { showErrorNoConfirm, showSuccess, showWarning } from '../utils/errorHandling';
 
 const apiUrl = process.env.REACT_APP_API_USERS;
 
@@ -32,6 +35,7 @@ const passwordValidationSchema = Yup.object({
 })
 
 const Setting = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [changePassword, setChangePassword] = useState<boolean>(false)
     const [role, setRole] = useState('');
@@ -67,28 +71,19 @@ const Setting = () => {
                         setInitialFormValues(response.data);
                     } catch (error) {
                         console.error('API 요청 에러:');
-                        Swal.fire({
-                            title: '에러!',
-                            text: '확인을 누르면 메인로 이동합니다.',
-                            icon: 'error',
-                            confirmButtonText: '확인',
-                        }).then(() => {
+                        showError(`${t('error')}`, `${t('back_main')}`).then(() => {
                             navigate('/');
                         });
                     }
                 };
                 fetchData();
             } else {
-                Swal.fire({
-                    title: '잘못된 접근!',
-                    text: '확인을 누르면 메인로 이동합니다.',
-                    icon: 'error',
-                    confirmButtonText: '확인',
-                }).then(() => {
+                showError(`${t('error_invalid')}`, `${t('back_main')}`).then(() => {
                     navigate('/');
                 });
             }
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Handle update info
@@ -107,8 +102,8 @@ const Setting = () => {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: '수정',
-                cancelButtonText: '취소'
+                confirmButtonText: `${t('modify')}`,
+                cancelButtonText: `${t('cancel')}`
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
@@ -124,30 +119,15 @@ const Setting = () => {
 
                         if (response.status === 200) {
                             sessionStorage.setItem('token', response.data.token);
-                            Swal.fire({
-                                icon: 'success',
-                                title: '회원정보 변경 완료!',
-                                showConfirmButton: false,
-                                timer: 1500
-                            }).then(() => {
+                            showSuccess(`${t('you_are_done')}`).then(() => {
                                 window.location.reload();
                             });
                         } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: response.status,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            showErrorNoConfirm(response.status)
                             console.error('서버 응답 오류:');
                         }
                     } catch (error) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: '에러가 발생했습니다.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
+                        showErrorNoConfirm(`${t('error_rised')}`)
                         console.error('정보 수정 에러:');
                     }
                     setSubmitting(false);
@@ -155,17 +135,11 @@ const Setting = () => {
                 }
             })
         } else {
-            Swal.fire({
-                icon: 'warning',
-                title: '수정사항이 없습니다!',
-                showConfirmButton: false,
-                timer: 1500
-            })
+            showWarning(`${t('no_changes')}`)
         }
     };
     //Handle reset password
-    const handleResetPassword = async (values: any, { setSubmitting }: any) => {
-        const { confirmPassword, password, } = values;
+    const handleResetPassword = async ({ confirmPassword, password }: any, { setSubmitting }: any) => {
         try {
             // 전송할 데이터
             const userData = {
@@ -180,30 +154,15 @@ const Setting = () => {
 
             // 서버 응답 확인
             if (response.status === 200) {
-                Swal.fire({
-                    icon: 'success',
-                    title: '비밀번호 변경 완료!',
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(() => {
+                showSuccess(`${t('password_changed')}`).then(() => {
                     window.location.reload();
                 });
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: response.status,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
+                showErrorNoConfirm(response.status)
                 console.error('서버 응답 오류:');
             }
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: '에러가 발생했습니다.',
-                showConfirmButton: false,
-                timer: 1500
-            })
+            showErrorNoConfirm(`${t('error_rised')}`)
             console.error('비밀번호 변경 에러:');
         }
         setSubmitting(false);
@@ -213,19 +172,19 @@ const Setting = () => {
         <div className="flex  px-6 py-2 my-[150px] mx-auto h-fit" >
             <div className="w-[900px] bg-white rounded-sm py-5 px-8 drop-shadow-2xl flex flex-col ">
                 <div className="flex flex-col items-start pb-5 border-b border-[#cecece]">
-                    <Heading tag='h2'>마이페이지</Heading>
-                    <span className='mt-2 text-xl '>프로필</span>
+                    <Heading tag='h2'>{`${t('mypage')}`}</Heading>
+                    <span className='mt-2 text-xl '>{`${t('profil')}`}</span>
                 </div>
                 <div className="w-full flex">
                     <div className="w-2/6 py-5 px-2 border-r border-[#cecece]">
-                        <h6 className='pb-2 text-md text-semibold'>회원정보</h6>
+                        <h6 className='pb-2 text-md text-semibold'>{`${t('user_info')}`}</h6>
                         <div className=" flex flex-col gap-5 pb-5 border-b border-[#cecece] ">
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-900 py-2.5">이름</label>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-900 py-2.5">이메일(수정불가)</label>
-                            <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-900 py-2.5">전화번호</label>
-                            <label htmlFor="hospitalName" className="block text-sm font-medium text-gray-900 py-2.5">병원 이름</label>
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-900 py-2.5">{`${t('labelname')}`}</label>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-900 py-2.5">{`${t('email')}`}<span className='text-xs text-red-500'>(cannot change)</span></label>
+                            <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-900 py-2.5">{`${t('phoneNumber')}`}</label>
+                            <label htmlFor="hospitalName" className="block text-sm font-medium text-gray-900 py-2.5">{`${t('hospitalName')}`}</label>
                         </div>
-                        <button onClick={() => setChangePassword(!changePassword)} className='pt-5 underline text-blue-400'>비밀번호 변경</button>
+                        <button onClick={() => setChangePassword(!changePassword)} className='pt-5 underline text-blue-400'>{`${t('password_change')}`}</button>
                     </div>
                     <div className="w-4/6 py-5 px-7 flex flex-col">
                         <Formik
@@ -237,7 +196,7 @@ const Setting = () => {
                                 <Form className="w-full pb-5 border-b border-[#cecece]" >
                                     <div className="flex flex-col gap-5 w-full">
                                         <p className='text-xs'>
-                                            수정하고 싶으시면, 수정 내용을 입력하시고 저장 버튼을 누르시면 됩니다.
+                                            {`${t('setting_text')}`}
                                         </p>
                                         <div className="">
                                             <Field type="text" name="name" id="name" className="bg-white border border-[#888] text-gray-900 sm:text-sm rounded-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  " placeholder={initialFormValues.name} />
@@ -257,9 +216,9 @@ const Setting = () => {
                                         </div>
                                         <div className="flex items-center justify-center gap-8">
                                             <Link to='/'>
-                                                <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >취소</Button>
+                                                <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >{`${t('cancel')}`}</Button>
                                             </Link>
-                                            <Button appearance="custom" styles="uppercase" >저장</Button>
+                                            <Button appearance="custom" styles="uppercase" >{`${t('save')}`}</Button>
                                         </div>
                                         <p></p>
                                     </div>
@@ -276,11 +235,9 @@ const Setting = () => {
                                     <Form className="w-full pt-5" >
                                         <div className="flex flex-col gap-5 w-full">
                                             <div>
-                                                <h6 className='pb-2 text-lg text-semibold'>비밀번호 변경</h6>
+                                                <h6 className='pb-2 text-lg text-semibold'>{`${t('password_change')}`}</h6>
                                                 <p className='text-xs'>
-                                                    Password must have a Good or Strong rating. Password must be at least 8 characters long.
-                                                    Good password contain either a combination of uppercase and lowercase letters or a combination of letters and one digit.
-                                                    Strong passwords contain either a combination of letters and more than one digit or special characters.
+                                                    {`${t('password_instruction')}`}.
                                                 </p>
                                             </div>
                                             <div className="flex gap-5">
@@ -295,9 +252,9 @@ const Setting = () => {
                                             </div>
                                             <div className="flex items-center justify-center gap-8">
                                                 <Link to="/">
-                                                    <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >취소</Button>
+                                                    <Button styles="text-lg font-semibold rounded-xs text-black border-2 border-red-300 inline-block min-w-[130px] py-2 hover:opacity-75 uppercase" >{`${t('cancel')}`}</Button>
                                                 </Link>
-                                                <Button appearance="custom" styles="uppercase" >변경</Button>
+                                                <Button appearance="custom" styles="uppercase" >{`${t('change')}`}</Button>
                                             </div>
                                         </div>
 

@@ -1,12 +1,4 @@
-import mapimage from "../assets/map.png"
-const contactBg = {
-    backgroundImage: `url(${mapimage})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    backgroundPosition: 'center center',
-    width: '100%',
-    height: '100%',
-}
+import { contactBg } from "../styles/generalStyles"
 
 const Contact = () => {
     return (

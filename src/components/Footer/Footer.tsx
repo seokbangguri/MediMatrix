@@ -1,25 +1,17 @@
 import imagetest1 from "../../assets/test1.svg";
-import footerImage from "../../assets/footer-blob.svg";
 import instagram from "../../assets/instagram.svg";
 import facebook from "../../assets/facebook.svg";
 import twitter from "../../assets/twitter.svg";
 import youtube from "../../assets/youtube.svg";
 import Text from "../Text/Text";
 import { Link } from "react-router-dom";
+import { footerBackgroundStyle } from "../../styles/generalStyles";
 
 
 const Footer = () => {
-  const backgroundStyle = {
-    backgroundImage: `url(${footerImage})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover', // You can adjust this based on your needs
-    // Other CSS properties for the container
-    backgroundPosition: 'top',
-    width: '100%',
-    height: '',
-  };
+
   return (
-    <footer style={backgroundStyle} className="w-screen flex flex-col md:flex-row  justify-center">
+    <footer style={footerBackgroundStyle} className="w-screen flex flex-col md:flex-row  justify-center">
       <div className="w-full lg:max-w-[1445px] flex flex-col md:flex-row  justify-between items-center gap-10 pb-10 pt-32 px-5 lg:px-10">
         <div className="flex flex-col justify-between gap-4 h-full">
           <Link to="/">
@@ -79,9 +71,9 @@ export const MediaLinks = ({ address, text, iconImage }: { address: string, text
     className="text-md font-semibold  tracking-wider hover:opacity-70 flex items-center"
   >
     <img
-      className="pt-1 mr-4"
+      className="pt-1 mr-4 block"
       src={iconImage}
-      width={40}
+      width={30}
 
       alt="social media link"
     />{text}

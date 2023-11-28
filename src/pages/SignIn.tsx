@@ -1,51 +1,47 @@
 import { Button, Heading } from "../components";
-import signinBg from '../assets/signin-blob.svg'
 import axios from 'axios';
 import * as Yup from 'yup';
 import { Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
-import Swal from "sweetalert2";
 import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi'
 import { useState, useEffect } from 'react';
 import { verifyToken } from '../auth/auth'
 import { SignInValuesInterface } from "../interface/pagesProps";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
+import { showErrorNoConfirm, showSuccessConfirm } from "../utils/errorHandling";
+import { signupBgStyle } from "../styles/generalStyles";
 
 const apiUrl = process.env.REACT_APP_API_USERS;
-
-const validationSchema = Yup.object({
-  email: Yup.string().email("유효한 이메일을 입력하세요").required("이메일은 필수 항목입니다"),
-  password: Yup.string().required("비밀번호는 필수 항목입니다"),
-});
-
 
 //Component
 const SignIn = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
   useEffect(() => {
     verifyToken().then(decodedToken => {
       if (decodedToken) {
-        Swal.fire({
-          title: '이미 로그인되어 있습니다!',
-          text: '확인을 누르면 홈페이지로 이동합니다.',
-          icon: 'info',
-          confirmButtonText: '확인',
-        }).then(() => {
+        showSuccessConfirm(`${t('success_signup_title')}`, `${t('success_signup_text')}`).then(() => {
           navigate("/");
         });
       }
     });
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const [showPassword, setShowPassword] = useState(false);
+
+
+  const validationSchema = Yup.object({
+    email: Yup.string().email(`${t('email_warn')}`).required(`${t('email_required')}`),
+    password: Yup.string().required(`${t('password_required')}`),
+  });
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSignIn = async (values: SignInValuesInterface, { setSubmitting }: FormikHelpers<SignInValuesInterface>) => {
-    const { email, password } = values;
+  const handleSignIn = async ({ email, password }: SignInValuesInterface, { setSubmitting }: FormikHelpers<SignInValuesInterface>) => {
     try {
       // 전송할 데이터
       const userData = {
@@ -62,31 +58,17 @@ const SignIn = () => {
         window.location.href = '/';
       } else {
         console.error('서버 응답 오류:');
-        Swal.fire({
-          title: "로그인 에러",
-          icon: "error",
-        });
+        showErrorNoConfirm(`${t('signin_fail_text')}`)
       }
     } catch (error: any) {
       console.error('로그인 에러:');
-      Swal.fire({
-        title: "로그인 에러",
-        icon: "error",
-      });
+      showErrorNoConfirm(`${t('signin_fail_text')}`)
     } finally {
       setSubmitting(false);
     }
   };
 
-  const bgStyle = {
-    backgroundImage: `url(${signinBg})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: '100% auto',
-    backgroundPosition: '0 500px',
-    width: '100%',
-    height: '100vh',
-  };
-  return <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0" style={bgStyle}>
+  return <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0" style={signupBgStyle}>
     <div className="w-[500px] bg-white rounded-lg drop-shadow-2xl ">
       <div className="p-10 space-y-4 md:space-y-6 sm:p-8">
         <Heading tag='h3' className="text-center">

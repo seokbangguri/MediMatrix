@@ -1,5 +1,4 @@
 import { Button, Heading } from "../components";
-import signinBg from '../assets/signin-blob.svg'
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -10,7 +9,9 @@ import { verifyToken } from '../auth/auth'
 import { SignUpValuesInterface } from "../interface/pagesProps";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-
+import { signupBgStyle } from "../styles/generalStyles";
+import { showError } from "../utils/errorHandling";
+export { showError } from '../utils/errorHandling'
 const apiUrl = process.env.REACT_APP_API_USERS;
 
 const getCharacterValidationError = (str: string) => {
@@ -31,33 +32,27 @@ const validationSchema = Yup.object({
         .notRequired(),
 });
 
-const bgStyle = {
-    backgroundImage: `url(${signinBg})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: '100% auto',
-    backgroundPosition: '0 500px',
-    width: '100%',
-    height: '100vh',
-};
 const SignUp: React.FC = () => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
+    const navigate = useNavigate(); const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+
     useEffect(() => {
         verifyToken().then(decodedToken => {
             if (decodedToken) {
                 Swal.fire({
-                    title: '이미 로그인되어 있습니다!',
-                    text: '확인을 누르면 홈페이지로 이동합니다.',
+                    title: `${t('success_signup_title')}`,
+                    text: `${t('success_signup_text')}`,
                     icon: 'info',
-                    confirmButtonText: '확인',
+                    confirmButtonText: `${t('confirm')}`,
                 }).then(() => {
                     navigate('/');
                 });
             }
         });
-    }, []);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+    }, [navigate, t]);
+
+
     const togglePasswordVisibility = (type: 'password' | 'confirm') => {
         if (type === 'password') {
             setShowPassword(!showPassword);
@@ -78,8 +73,7 @@ const SignUp: React.FC = () => {
     }
 
     // Handle signup
-    const handleSignUp = async (values: SignUpValuesInterface, { setSubmitting }: FormikHelpers<SignUpValuesInterface>) => {
-        const { email, password, hospitalName, phoneNumber, name, role } = values;
+    const handleSignUp = async ({ email, password, hospitalName, phoneNumber, name, role }: SignUpValuesInterface, { setSubmitting }: FormikHelpers<SignUpValuesInterface>) => {
         try {
             // 전송할 데이터
             const userData = {
@@ -91,31 +85,23 @@ const SignUp: React.FC = () => {
                 role: role
             };
 
-            // Axios를 사용하여 서버로 POST 요청 보내기
             const response = await axios.post(apiUrl + '/signup', userData);
 
-            // 서버 응답 확인
             if (response.status === 201) {
                 sessionStorage.setItem('token', response.data.token);
-                navigate('/'); // 회원가입이 성공하면 홈페이지로 이동
+                navigate('/');
             } else {
                 console.error('서버 응답 오류:');
-                Swal.fire({
-                    title: "회원가입 에러",
-                    icon: "error",
-                });
+                showError(`${t('signup_fail_text')}`)
             }
         } catch (error: any) {
-            console.error('회원가입 에러:');
-            Swal.fire({
-                title: "회원가입 에러",
-                icon: "error",
-            });
+            console.error('회원가입 에러:', error);
+            showError(`${t('signup_fail_text')}`)
         }
         setSubmitting(false);
     };
 
-    return <div className="flex items-center justify-center px-6 mt-10 mx-auto md:h-screen lg:py-0" style={bgStyle}>
+    return <div className="flex items-center justify-center px-6 mt-10 mx-auto md:h-screen lg:py-0" style={signupBgStyle}>
         <div className="w-[800px] bg-white rounded-lg drop-shadow-2xl ">
             <div className="p-10 space-y-4 md:space-y-6 sm:p-8">
                 <Heading tag='h3' className="text-center">

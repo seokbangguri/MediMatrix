@@ -1,19 +1,19 @@
-import { Heading, PatientCard, ResultsCharts, ResultsChartAge, ResultsTable, ScoringTable, Text, Footer, Loading } from '../components'
+import { Heading, PatientCard, ResultsCharts, ResultsChartAge, ResultsTable, ScoringTable, Text, Footer } from '../components'
 import { useState, useEffect } from 'react';
 import { verifyToken } from '../auth/auth';
-import Swal from "sweetalert2";
 import axios from 'axios';
 import { PatientListType, SelectedTestInterface } from '../interface/pagesProps';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { showError } from './SignUp';
 
 const apiUrl = process.env.REACT_APP_API_PATIENTS;
 
 const Results = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [patientList, setPatientList] = useState<PatientListType>([]);
-  //전달받은 선택된 날짜의 테스트 데이터
   const [selectedTestData, setSelectedTD] = useState<SelectedTestInterface>();
 
   const handleGetData = (data: SelectedTestInterface) => {
@@ -23,7 +23,6 @@ const Results = () => {
   };
 
   useEffect(() => {
-    // 여기에 원하는 동작을 추가하세요.
     verifyToken().then(decodedToken => {
       if (decodedToken) {
         setUserName(decodedToken.name);
@@ -38,42 +37,26 @@ const Results = () => {
             setPatientList(response.data.patients);
           } catch (error) {
             console.error('API 요청 에러:');
-            Swal.fire({
-              title: '에러!',
-              text: '확인을 누르면 메인로 이동합니다.',
-              icon: 'error',
-              confirmButtonText: '확인',
-            }).then(() => {
+            showError(`${t('error')}`, `${t('back_main')}`).then(() => {
               navigate("/");
             });
           }
         };
         fetchData();
       } else {
-        Swal.fire({
-          title: '잘못된 접근!',
-          text: '확인을 누르면 메인로 이동합니다.',
-          icon: 'error',
-          confirmButtonText: '확인',
-        }).then(() => {
+        showError(`${t('error_invalid')}`, `${t('back_main')}`).then(() => {
           navigate("/");
         });
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // window.onload = function () {
-  //   setIsLoading(false);
-  // };
-
-  // if (isLoading) {
-  //   return <Loading context='로딩중 입니다.' hidden={isLoading} />;
-  // }
   return (
     <div className='w-screen mt-[140px] '>
       <div className="flex flex-col items-center px-5 lg:px-10 mb-16">
         <Heading tag='h2'>{userName}님의 환자 목록</Heading>
-        <Text size='s' styles='mt-3 text-[#888] text-center'>좌측 환자 번호를 선택하시면 해당 번호의 결과를 확인하실 수 있습니다.</Text>
+        <Text size='s' styles='mt-3 text-[#888] text-center'>{`${t('beery_result_text')}`}</Text>
         <div className='my-5 lg:my-10 flex gap-5 max-w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
           <PatientCard patientList={patientList} getData={handleGetData} />
           <ResultsTable patientData={selectedTestData} />

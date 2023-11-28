@@ -176,13 +176,14 @@ const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: o
             } catch (error) {
                 visible(false);
                 Swal.fire({
-                    title: '에러!',
+                    title: '에러! aaa',
                     text: '확인을 누르면 메인로 이동합니다.',
                     icon: 'error',
                     confirmButtonText: '확인',
-                }).then(() => {
-                    navigate("/");
-                });
+                })
+                // .then(() => {
+                //     navigate("/");
+                // });
 
             }
 
@@ -224,9 +225,9 @@ const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: o
                     onChange={handleFileChange}
                 />
             </div>
-            <a onClick={handleScoreButtonClick}>
+            <div onClick={handleScoreButtonClick}>
                 <Button appearance="primary" styles="mt-10 lg:w-[300px]">채점</Button>
-            </a>
+            </div>
         </div>
     );
 };
