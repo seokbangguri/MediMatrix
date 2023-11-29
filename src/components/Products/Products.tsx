@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, Card, Heading } from "../../components";
 import BeeryImage from "../../assets/Beery.png"
 import HoduImage from "../../assets/hodu.png"
@@ -8,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 function Products() {
   const { t } = useTranslation();
   return (
-    <section className="px-5 my-10 flex flex-col justify-center lg:max-w-[1445px] lg:px-10 mx-auto relative">
+    <section className="px-5 my-10 flex flex-col justify-center container lg:px-10 mx-auto relative">
       <Heading tag="h2" className=''>
         Products and Services
       </Heading>

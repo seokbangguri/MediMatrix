@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 function ContactCTO() {
   const { t } = useTranslation();
   return (
-    <section className="lg:px-10 mt-20 mb-20 flex items-center w-full lg:max-w-[1445px] mx-auto" id="contact">
+    <section className="px-5 lg:px-10 mt-20 mb-20 flex items-center w-full container mx-auto" id="contact">
       <div className="w-full bg-white-blue py-10 md:py-20 rounded-tr-[100px] rounded-bl-[100px] ">
         <Heading tag="h2">{t('contact')}</Heading>
         <Text size="m" styles="text-center mt-6 max-w-[400px] md:max-w-[600px] m-auto text-sm md:text-lg">

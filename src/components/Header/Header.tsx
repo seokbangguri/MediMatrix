@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, MouseEvent, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import imagetest1 from "../../assets/test1.svg";
 import userIcon from '../../assets/user.svg'
 import Button from "../Button/Button";
@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useOutsideClick } from "./useOutsideClick";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from 'react-i18next';
+import MobileMenu from "./MobileMenu";
 
 const Header = () => {
   const { t } = useTranslation();
@@ -36,8 +37,8 @@ const Header = () => {
   }
 
   return (
-    <header className="fixed top-0 z-30 w-screen bg-white mx-auto drop-shadow-xl">
-      <div className="lg:max-w-[1445px] flex items-center justify-between py-3 px-3 md:px-5 mx-auto">
+    <header className="fixed top-0 z-30 w-screen bg-white mx-auto drop-shadow-md">
+      <div className="container flex items-center justify-between py-3 px-3 md:px-5 mx-auto">
         <div className="flex items-center justify-center shrink-0">
           <Link to="/"
             onClick={(e) => {
@@ -55,11 +56,11 @@ const Header = () => {
             />
           </Link>
         </div>
-        <nav className="hidden md:flex items-center ">
+        <nav className="hidden lg:flex items-center ">
           {/* 헤더 home products contack 숨김 */}
           <div className="flex items-center gap-4 md:gap-6 lg:gap-9">
-            <a
-              href="/#home"
+            <Link
+              to="/#home"
               onClick={(e) => {
                 if (window.location.pathname === '/') {
                   e.preventDefault();
@@ -69,9 +70,9 @@ const Header = () => {
               className="text-lg font-semibold text-black tracking-wider hover:opacity-75  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Home
-            </a>
-            <a
-              href="/#products"
+            </Link>
+            <Link
+              to="/#products"
               onClick={(e) => {
                 if (window.location.pathname === '/') {
                   e.preventDefault();
@@ -81,7 +82,7 @@ const Header = () => {
               className="text-lg font-semibold text-black tracking-wider hover:opacity-70  border-transparent border-b-[2px] hover:border-button-green hover:scale-105 duration-150"
             >
               Products
-            </a>
+            </Link>
             <Link to="/#partners"
               onClick={(e) => {
                 if (window.location.pathname === '/') {
@@ -108,7 +109,7 @@ const Header = () => {
           </div>
         </nav>
         <div className="flex items-center gap-5">
-          {!userName.length ? <div className="flex items-center gap-2">
+          {!userName.length ? <div className="hidden lg:flex items-center gap-2">
             <Link to="/signin">
               <Button styles="text-lg font-semibold rounded-xs text-black border-transparent inline-block min-w-[130px] py-2 border hover:opacity-75 uppercase" >{t('signin')}</Button>
             </Link>
@@ -155,6 +156,9 @@ const Header = () => {
           }
 
           <LanguageSwitcher />
+          <div className=" z-50">
+            <MobileMenu />
+          </div>
         </div>
       </div>
     </header>

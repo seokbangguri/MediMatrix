@@ -21,3 +21,4 @@ export { default as Progress } from './Progress/Progress';
 export { default as Searchbar } from './AdminComponents/Searchbar/Searchbar';
 export { default as Filter } from './AdminComponents/Filter/Filter';
 export { default as SpermModal } from './SpermModal/SpermModal'
+export { default as ModuleMenu } from './Header/MobileMenu'

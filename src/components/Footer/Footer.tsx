@@ -12,8 +12,8 @@ const Footer = () => {
 
   return (
     <footer style={footerBackgroundStyle} className="w-screen flex flex-col md:flex-row  justify-center">
-      <div className="w-full lg:max-w-[1445px] flex flex-col md:flex-row  justify-between items-center gap-10 pb-10 pt-32 px-5 lg:px-10">
-        <div className="flex flex-col justify-between gap-4 h-full">
+      <div className="w-full container flex flex-col md:flex-row  justify-between items-center gap-14 pb-10 mt-20 md:pt-32 px-5 lg:px-10">
+        <div className="flex flex-col items-center md:items-start justify-between gap-4 h-full">
           <Link to="/">
             <img
               className="pt-1"
@@ -28,7 +28,7 @@ const Footer = () => {
             <Text size="s" styles="text-white">&copy; 2023 GoQba Medical | Security | Privacy | Terms</Text>
           </Link>
         </div>
-        <div className="flex flex-col md:flex-row gap-16">
+        <div className="flex flex-row gap-16">
           <div className="flex flex-col text-white gap-2 md:gap-4 lg:gap-5">
             <NavLinks address={'/'} text='Home' />
             <NavLinks address={'#products'} text='Products' />

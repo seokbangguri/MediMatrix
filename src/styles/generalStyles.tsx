@@ -31,8 +31,8 @@ export const thirdBlobStyle = {
 export const signupBgStyle = {
     backgroundImage: `url(${signinBg})`,
     backgroundRepeat: 'no-repeat',
-    backgroundSize: '100% auto',
-    backgroundPosition: '0 500px',
+    backgroundSize: '100% 40%',
+    backgroundPosition: '0 bottom',
     width: '100%',
     height: '100vh',
 };

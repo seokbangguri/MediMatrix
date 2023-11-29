@@ -68,7 +68,7 @@ const SignIn = () => {
     }
   };
 
-  return <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0" style={signupBgStyle}>
+  return <div className="flex items-center justify-center px-6 md:py-8 mx-auto min-h-screen lg:py-0" style={signupBgStyle}>
     <div className="w-[500px] bg-white rounded-lg drop-shadow-2xl ">
       <div className="p-10 space-y-4 md:space-y-6 sm:p-8">
         <Heading tag='h3' className="text-center">
@@ -110,7 +110,7 @@ const SignIn = () => {
                 {/* Display validation error if any */}
                 <ErrorMessage name="password" component="div" className="text-red-600 text-sm" />
               </div>
-              <Button appearance="primary" type="button" styles="w-full text-center">{t('signin')}</Button>
+              <Button appearance="primary" type="submit" styles="w-full text-center">{t('signin')}</Button>
               <p className="text-sm font-light text-[#7a7a7a]">
                 {t('noaccaunt')} <Link to="/signup" className="font-medium text-blue-600 hover:underline ">{t('signup')}</Link>
               </p>

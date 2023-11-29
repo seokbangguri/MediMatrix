@@ -34,6 +34,8 @@ module.exports = {
           "linear-gradient(100deg, #000000 0%, #29CFAE 40%, #42C6B9 50%, #62BFC2 60%, #3ECDB3 90%, #36ACEA 100%)",
         "gradient-white":
           "linear-gradient(100deg, #fff 0%, #FFF 40%, #FFFF 50%, #FFF 60%, #FFF 90%, #FFF 100%)",
+        "gradient-black":
+          "linear-gradient(100deg, #000 0%, #000 40%, #000 50%, #000 60%, #000 90%, #000 100%)",
       },
     },
   },
