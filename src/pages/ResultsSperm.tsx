@@ -94,7 +94,7 @@ const ResultsSperm = () => {
     <div className='w-screen mt-[140px] '>
       <div className="flex flex-col items-center lg:px-10 mb-16">
         <Heading tag='h2'>모델 성능</Heading>
-        <div className='mb-10 mt-16 flex flex-col gap-5 w-[1000px] md:w-[1445px] p-5 bg-white drop-shadow-2xl rounded-md'>
+        <div className='mb-10 mt-16 flex flex-col gap-5 container  p-5 bg-white drop-shadow-2xl rounded-md'>
           <Heading tag='h3'>염색체 이상 및 난임 예측</Heading>
           <hr />
           <div className='flex gap-8 items-center justify-evenly w-full'>

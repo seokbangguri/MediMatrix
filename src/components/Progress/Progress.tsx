@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 
 const Progress = ({ step, completed }: { step: String, completed: Boolean }) => {
+    const { t } = useTranslation();
     const [width, setWidth] = useState(!completed ? '0%' : '50%');
     useEffect(() => {
-        // completed 값이 변경될 때마다 너비를 업데이트하여 애니메이션 효과를 줍니다.
         setWidth(completed ? "100%" : "50%");
     }, [completed]);
     return (
         <div className='flex flex-col w-full mb-4'>
-            <p className="text-lg font-semibold">환자 등록을 완료해주세요.</p>
+            <p className="text-lg font-semibold">{t('complate_patient_registration')}</p>
             <div className="text-sm text-right mb-2">
                 <span className='text-blue-500'>Step {step} of </span>
                 2</div>

@@ -4,6 +4,7 @@ import uploadIcon from '../../assets/upload-icon.svg';
 import { Button, Text } from "../../components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const apiUrl = process.env.REACT_APP_API_PATIENTS;
 type finalData = {
@@ -17,6 +18,7 @@ type finalData = {
 type onVisibleCallback = (b: boolean) => void;
 
 const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: onVisibleCallback }) => {
+    const { t } = useTranslation();
     const navigate = useNavigate()
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -193,7 +195,7 @@ const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: o
     return (
         <div className="flex flex-col justify-center items-center">
             <Text size="m" styles="text-[#888888] font-bold pb-5 pt-5">
-                파일 업로드
+                {t('upload_file')}
             </Text>
             <div
                 onDrop={handleDrop}
@@ -212,8 +214,8 @@ const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: o
                 ) : (
                     <button className="flex flex-col items-center gap-2" onClick={handleFileButtonClick}>
                         <img src={uploadIcon} alt="uload file" width={25} />
-                        <p className="text-black text-sm">클릭해서 파일을 추가하거나 마우스로 끌어서 추가할 수 있습니다.</p>
-                        <span className="text-xs">최대 파일 크기 10MB</span>
+                        <p className="text-black text-sm">{t('drop_file')}</p>
+                        <span className="text-xs">{t('max_file_size')} 10MB</span>
                     </button>
                 )}
                 {/* 파일 입력(input) 요소를 숨겨놓고 버튼 클릭 시 파일 선택 창 열리도록 함 */}
@@ -226,7 +228,7 @@ const FileInputBox = ({ finalData, visible }: { finalData: finalData, visible: o
                 />
             </div>
             <div onClick={handleScoreButtonClick}>
-                <Button appearance="primary" styles="mt-10 lg:w-[300px]">채점</Button>
+                <Button appearance="primary" styles="mt-10 lg:w-[300px]">{t('score')}</Button>
             </div>
         </div>
     );

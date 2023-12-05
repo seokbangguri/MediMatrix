@@ -12,6 +12,7 @@
     "logout": "Log Out",
     "email": "Email",
     "password": "Password",
+    "gender": "Gender",
     "noaccaunt": "Don't you have an account?",
     "haveaccaunt": "Do you have an account?",
     "labelname": "Name",
@@ -21,6 +22,8 @@
     "role": "Role",
     "therapist": "Therapist",
     "administrator": "Aministrator",
+    "male": "Male",
+    "female": "Female",
     "beery": "(Name) is a solution that automatically scores Beery VMI-6 answer sheets with an AI model and provides results.",
     "sperm": "(Name) is a solution where an AI model analyzes sperm movement and gives a numerical rating.",
     "hodu": "Hodu is a rehabilitation monitoring and customized mild cognitive impairment rehabilitation content through cognitive testing.",
@@ -42,6 +45,7 @@
     "save": "Save",
     "modify": "Modify",
     "change": "Change",
+    "next": "Next",
     "password_change": "Change Password",
     "password_changed": "Password changed successfully!",
     "password_instruction": "Password must have a Good or Strong rating. Password must be at least 8 characters long. Good password contain either a combination of uppercase and lowercase letters or a combination of letters and one digit. Strong passwords contain either a combination of letters and more than one digit or special characters.",
@@ -55,5 +59,10 @@
     "beery_heading": "AI-powered Beery VMI answer scoring tool",
     "beery_text": "Insert the patient's Beery VMI answer sheet to proceed with grading.",
     "beery_file_rule": "Beery VMI answer sheets should be one of these formats .pdf, .png .jpg .jpeg, etc.",
-    "beery_result_text": "Select the patient number on the left to see the results for that number."
+    "beery_result_text": "Select the patient number on the left to see the results for that number.",
+    "complate_patient_registration": "Complete patient registration.",
+    "score": "Score",
+    "drop_file": "You can click to add files or drag them with your mouse.",
+    "max_file_size": "Maximum file size ",
+    "upload_file": "Uploud files"
 }
