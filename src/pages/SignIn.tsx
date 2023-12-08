@@ -43,25 +43,21 @@ const SignIn = () => {
 
   const handleSignIn = async ({ email, password }: SignInValuesInterface, { setSubmitting }: FormikHelpers<SignInValuesInterface>) => {
     try {
-      // 전송할 데이터
-      const userData = {
-        email: email,
-        password: password,
-      };
-
-      // Axios를 사용하여 서버로 POST 요청 보내기
-      const response = await axios.post(apiUrl + '/signin', userData);
-
-      // 서버 응답 확인
+      // Data to be sent
+      const userData = { email, password };
+      // Axios post request
+      const response = await axios.post(`${apiUrl}/signin`, userData);
+      // check server response
       if (response.status === 200) {
-        sessionStorage.setItem('token', response.data.token);
+        const authToken = response.headers['x-auth-token']
+        sessionStorage.setItem('token', authToken);
         window.location.href = '/';
       } else {
-        console.error('서버 응답 오류:');
+        console.error('Server Response Error:', response.status);
         showErrorNoConfirm(`${t('signin_fail_text')}`)
       }
     } catch (error: any) {
-      console.error('로그인 에러:');
+      console.error('Sign-In Error:', error.message || 'Unknown error');
       showErrorNoConfirm(`${t('signin_fail_text')}`)
     } finally {
       setSubmitting(false);

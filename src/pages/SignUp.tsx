@@ -75,27 +75,21 @@ const SignUp: React.FC = () => {
     // Handle signup
     const handleSignUp = async ({ email, password, hospitalName, phoneNumber, name, role }: SignUpValuesInterface, { setSubmitting }: FormikHelpers<SignUpValuesInterface>) => {
         try {
-            // 전송할 데이터
-            const userData = {
-                email: email,
-                name: name,
-                password: password,
-                hospitalName: hospitalName,
-                phoneNumber: phoneNumber,
-                role: role
-            };
+            // Data to be sent
+            const userData = { email, password, hospitalName, phoneNumber, name, role };
 
-            const response = await axios.post(apiUrl + '/signup', userData);
+            const response = await axios.post(`${apiUrl}/signup`, userData);
 
             if (response.status === 201) {
-                sessionStorage.setItem('token', response.data.token);
+                const authToken = response.headers['x-auth-token']
+                sessionStorage.setItem('token', authToken);
                 navigate('/');
             } else {
-                console.error('서버 응답 오류:');
+                console.error('Server Response Error:', response.status);
                 showError(`${t('signup_fail_text')}`)
             }
         } catch (error: any) {
-            console.error('회원가입 에러:', error);
+            console.error('Sign-Up Error:', error.message || 'Unknown error');
             showError(`${t('signup_fail_text')}`)
         }
         setSubmitting(false);
