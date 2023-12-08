@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import userIcon from '../../assets/user.svg'
 import { Link } from 'react-router-dom';
-
+import { FaUser } from "react-icons/fa";
+import { MdOutlineManageAccounts, MdOutlineSettings, MdOutlineLogout  } from "react-icons/md";
 
 const LANGUAGE_SELECTOR_ID = 'language-selector';
 interface SignoutProps {
@@ -59,22 +60,22 @@ const Account = ({ handleSignOut, role }: SignoutProps) => {
                         </button>
                     </div>
                     {isOpen && <div
-                        className="origin-top-right absolute right-0 mt-2 w-[200px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
+                        className="origin-top-right absolute right-0 mt-2 min-w-[220px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
                         role="menu"
                         aria-orientation="vertical"
                         aria-labelledby="language-selector"
                     >
                         <div className="w-full flex flex-col gap-2" role="none">
                             <div className="w-full">
-                                <h6 className="py-2 px-4 font-semibold text-lg tracking-wider bg-neutral-200 border-b border-slate-400">{'userName'}님</h6>
-                                <Link to="/setting" className="py-2 px-4 block text-base tracking-wide hover:bg-neutral-200 cursor-pointer">
-                                    {t('mypage')}
+                                <h6 className="py-2 px-4 flex items-center gap-2 font-semibold text-lg tracking-wider bg-neutral-200 border-b border-slate-400 uppercase"><FaUser /> {'userName'}님</h6>
+                                <Link to="/setting" className="py-2 px-4 flex items-center gap-2 text-base tracking-wide hover:bg-neutral-200 cursor-pointer">
+                                <MdOutlineManageAccounts /> {t('mypage')}
                                 </Link>
                                 {role === 'therapists' ?
-                                    <Link to="/results" className="py-2 px-4 block text-base tracking-wide hover:bg-neutral-200 cursor-pointer">{t('patientMan')}</Link> :
-                                    <Link to="/admin" className="py-2 px-4 block text-base tracking-wide hover:bg-neutral-200 cursor-pointer">{t('therapistMan')}</Link>
+                                    <Link to="/results" className="py-2 px-4 flex items-center gap-2 text-base tracking-wide hover:bg-neutral-200 cursor-pointer"><MdOutlineSettings /> {t('patientMan')}</Link> :
+                                    <Link to="/admin" className="py-2 px-4 flex items-center gap-2 text-base tracking-wide hover:bg-neutral-200 cursor-pointer"><MdOutlineSettings /> {t('therapistMan')}</Link>
                                 }
-                                <div className="p-2 px-4 hover:bg-neutral-200 cursor-pointer" onClick={handleSignOut}>{t('logout')}</div>
+                                <div className="p-2 px-4 text-red-500 font-semibold hover:bg-neutral-200 cursor-pointer flex items-center gap-2" onClick={handleSignOut}><MdOutlineLogout /> {t('logout')}</div>
                             </div>
                         </div>
                     </div>}

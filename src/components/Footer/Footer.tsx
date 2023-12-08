@@ -11,7 +11,7 @@ import { footerBackgroundStyle } from "../../styles/generalStyles";
 const Footer = () => {
 
   return (
-    <footer style={footerBackgroundStyle} className="w-screen flex flex-col md:flex-row  justify-center">
+    <footer style={footerBackgroundStyle} className="w-screen flex flex-col md:flex-row  justify-center bg-gradient-green pt-20">
       <div className="w-full container flex flex-col md:flex-row  justify-between items-center gap-14 pb-10 mt-20 md:pt-14 px-5 lg:px-10">
         <div className="flex flex-col items-center md:items-start justify-between gap-4 h-full">
           <Link to="/">
