@@ -5,7 +5,7 @@ import axios from 'axios';
 import { PatientListType, SelectedTestInterface } from '../interface/pagesProps';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { showError } from './SignUp';
+import { showError } from '../utils/errorHandling';
 
 const apiUrl = process.env.REACT_APP_API_PATIENTS;
 

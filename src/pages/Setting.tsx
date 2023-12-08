@@ -8,8 +8,7 @@ import { verifyToken } from '../auth/auth';
 import { UpdateInfoInterface, UpdatePasswordInterface } from '../interface/pagesProps';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { showError } from './SignUp';
-import { showErrorNoConfirm, showSuccess, showWarning } from '../utils/errorHandling';
+import { showError, showErrorNoConfirm, showSuccess, showWarning } from '../utils/errorHandling';
 
 const apiUrl = process.env.REACT_APP_API_USERS;
 

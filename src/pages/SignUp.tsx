@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { signupBgStyle } from "../styles/generalStyles";
 import { showError } from "../utils/errorHandling";
-export { showError } from '../utils/errorHandling'
+
 const apiUrl = process.env.REACT_APP_API_USERS;
 
 const getCharacterValidationError = (str: string) => {
@@ -81,9 +81,9 @@ const SignUp: React.FC = () => {
             const response = await axios.post(`${apiUrl}/signup`, userData);
 
             if (response.status === 201) {
-                const authToken = response.headers['x-auth-token']
+                const authToken = response.data.token
                 sessionStorage.setItem('token', authToken);
-                navigate('/');
+                window.location.href = '/';
             } else {
                 console.error('Server Response Error:', response.status);
                 showError(`${t('signup_fail_text')}`)

@@ -1,11 +1,11 @@
 import axios from "axios";
-import Swal from "sweetalert2";
+import { showError } from "../utils/errorHandling";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export async function verifyToken() {
   const token = sessionStorage.getItem('token');
-
+  
   if (!token) {
     return false;
   }
@@ -16,7 +16,7 @@ export async function verifyToken() {
     });
 
     return response.data.decoded;
-  } catch (error) {
+  } catch (error: any) {
     handleVerificationError();
     return false;
   }
@@ -24,13 +24,8 @@ export async function verifyToken() {
 
 function handleVerificationError() {
   sessionStorage.removeItem('token');
-
-  Swal.fire({
-    title: '다시 로그인!',
-    text: '확인을 누르면 로그인으로 이동합니다.',
-    icon: 'error',
-    confirmButtonText: '확인',
-  }).then(() => {
+  showError('다시 로그인!', '확인을 누르면 로그인으로 이동합니다')
+  .then(() => {
     window.location.href = "/signin";
   });
 }

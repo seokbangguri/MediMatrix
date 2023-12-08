@@ -49,7 +49,7 @@ const SignIn = () => {
       const response = await axios.post(`${apiUrl}/signin`, userData);
       // check server response
       if (response.status === 200) {
-        const authToken = response.headers['x-auth-token']
+        const authToken = response.data.token
         sessionStorage.setItem('token', authToken);
         window.location.href = '/';
       } else {

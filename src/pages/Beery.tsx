@@ -7,7 +7,8 @@ import { verifyToken } from "../auth/auth";
 import { PatientInfoInterface, finalDataInterface } from "../interface/pagesProps";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { showError } from "./SignUp";
+import { showError } from "../utils/errorHandling";
+
 
 function Beery() {
     const { t } = useTranslation();
